@@ -1,174 +1,270 @@
-# Week 4
+# Week 7
 
-In deze oefening gaan we vragen over een document beantwoorden met een taalmodel. Je werkt in drie losse projecten:
+- Werken met Neural Networks in Javascript
+- Data, trainen en model opslaan
+- Voorspellingen doen
+- Expert level
+- Troubleshooting
 
-- Voorbereiding: tekst inladen, embedden, model opslaan
-- Server: model inladen, vragen beantwoorden met LLM
-- Client: vragen sturen vanuit de user interface
+<br><br><br>
+
+## Neural Networks
+
+<img src="../images/neural-classification.png" width="550">
 
 <br>
 
-### Inhoud
+In week 6 hebben we pose data leren herkennen met het "K-Nearest-Neighbour" algoritme. We gaan nu het "Neural Network" algoritme gebruiken. Een aantal voordelen:
 
-- Werken met grote hoeveelheden tekst
-- Tekst omzetten naar vectoren
-- Tekstbestand inlezen
-- Vragen beantwoorden
-- Vector stores
-- Privacy en copyright
-
-<br><br><br>
-
-## Tekst omzetten naar vectoren
-
-In het college heb je gezien waarom teksten als `vectordata` worden gebruikt in taalmodellen. Jouw tekst moet je dus omzetten naar vectordata. Dit noemen we `embedding`. Om tekst te `embedden` heb je een taalmodel nodig dat *geen* volledig chat model is. OpenAI gebruikt hier het `ada` model voor. 
-
-We gebruiken het `embedding` (ada) model om vectordata te maken. We hebben het `chat` model (chatgpt) uit de vorige les ook nodig om vragen te stellen. De waarden voor de keys staan in de `.env` file.
-
-```js
-import { OpenAIEmbeddings, ChatOpenAI } from "@langchain/openai"
-
-const chatmodel = new ChatOpenAI({
-    temperature: 0.3,
-    azureOpenAIApiKey: process.env...,
-    azureOpenAIApiVersion: process.env...,
-    azureOpenAIApiInstanceName: process.env...,
-    azureOpenAIApiDeploymentName: process.env..., // hier vul je het `chatgpt` model in
-})
-
-const embeddings = new OpenAIEmbeddings({
-    temperature: 0.1,
-    azureOpenAIApiKey: process.env...,
-    azureOpenAIApiVersion: process.env...,
-    azureOpenAIApiInstanceName: process.env...,
-    azureOpenAIApiDeploymentName: process.env...,  // hier vul je het 'ada' model in
-})
-```
-#### Hello world test
-
-```js
-const vectordata = await embeddings.embedQuery("Hello world")
-console.log(vectordata)
-console.log(`Created vector with ${vectordata.length} values.`)
-```
-[Langchain documentatie voor Azure OpenAI embedding](https://js.langchain.com/docs/integrations/text_embedding/azure_openai).
+- Het KNN model moet altijd alle data onthouden. 
+- Een KNN model kan erg groot zijn als er veel data is.
+- Het NN model kan juist erg klein zijn, ongeacht hoeveel data er is.
+- Een NN is beter in het vinden van complexe of onlogisch lijkende patronen *(een grote dikke kat wordt toch als kat herkend en niet als hond)*
+- Een NN kan focussen op de belangrijke onderdelen *(de "claws" van een kat bepalen eigenlijk al dat het een kat is)*
 
 <br>
+<br>
+<br>
 
-## Tekstbestand inlezen
+# Neural Network: the basics
 
-Langchain heeft verschillende opties om tekstbestanden te lezen, zoals [.txt, PDF, JSON, CSV, etc.](https://js.langchain.com/docs/modules/data_connection/document_loaders/). Je kan zelfs een [hele github repository](https://js.langchain.com/docs/integrations/document_loaders/web_loaders/github#usage) inlezen. In dit voorbeeld lezen we een `.txt` file. De ingelezen tekst 'knip' je op in chunks. Doordat de chuncks een vaste grootte hebben kan het gebeuren dat je midden in een zin/passage knipt. Om te voorkomen dat je chunks met halve informatie krijgt geef je de chunks een overlap. De grootte van de chunks en de overlap moet je zelf kiezen.
+Om te oefenen gebruiken we dezelfde cat/dog data als in week 6.
+
+| Body length | Height | Weight | Ear length |  Label |
+| ----------- | ------ | ------ | ---------- |  ----- |
+| 18 | 9.2 | 8.1 | 2 | 'cat' |
+| 20.1 | 17 | 15.5 | 5 | 'dog' |
+| 17 | 9.1 | 9 | 1.95 | 'cat' |
+| 23.5 | 20 | 20 | 6.2 | 'dog' |
+| 16 | 9.0 | 10 | 2.1 | 'cat' |
+| 21 | 16.7 | 16 | 3.3 | 'dog' |
+
+We voegen de [ML5](https://learn.ml5js.org/#/reference/neural-network) library toe aan ons project met een `<script>` tag.
+
+```html
+<script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+```
+We maken een neural network aan voor classification, en voegen de cat/dog data toe. Vul dit zelf helemaal in.
 
 ```js
-import { RecursiveCharacterTextSplitter } from "langchain/text_splitter"
-import { TextLoader } from "langchain/document_loaders/fs/text"
-import { MemoryVectorStore } from "langchain/vectorstores/memory"
-import { RetrievalQAChain } from "langchain/chains"
-
-const loader = new TextLoader("./myfile.txt")
-const data = await loader.load()
-const textSplitter = new RecursiveCharacterTextSplitter({chunkSize: 1500, chunkOverlap: 100})
-const splitDocs = await textSplitter.splitDocuments(data)
+const nn = ml5.neuralNetwork({ task: 'classification', debug: true })
+nn.addData([18,9.2,8.1,2], {label:"cat"})
+nn.addData([20.1,17,15.5.5], {label:"dog"})
+// vul hier zelf de rest van de data in
+// ...
+nn.normalizeData()
+nn.train({ epochs: 10 }, () => finishedTraining()) 
+async function finishedTraining(){    
+    const results = await nn.classify([29,11,10,3])
+    console.log(results)
+}
 ```
-<br><br><br>
+Zorg dat je cats and dogs kan voorspellen voordat je verder gaat met de mediapipe oefening.
 
-## Vectordata maken en vragen stellen
-Je gaat de ingeladen tekstdata omzetten naar vectordata. In dit voorbeeld slaan we de vectordata op in een `MemoryVectorStore`. 
-```js
-const vectorStore = await MemoryVectorStore.fromDocuments(splitDocs, embeddings)
-```
-🤯 Je kan nu vragen stellen aan je eigen document! 
+> *In bovenstaande code wordt zowel een `callback` als een `async await` code gebruikt. Je moet wachten tot het trainen klaar is, en je moet ook wachten tot een `classify` klaar is. Vergeet dit niet bij het bouwen van je eigen app*.
 
-```js
-const chain = RetrievalQAChain.fromLLM(chatmodel, vectorStore.asRetriever())
-const response = await chain.call({ query: "who is the text about?" })
-console.log(response.text)
-```
-- Let op dat in dit voorbeeld nog geen chat history wordt bijgehouden. Dit is ook niet altijd nodig, als je alleen vragen over het document wil stellen.
-- De `MemoryVectorStore` verdwijnt uit het geheugen zodra je de node app afsluit.
+<br>
+<br>
+<br>
 
-<br><br><br>
+# Workflow
 
-### Automatic Chat History
+We gaan nu werken aan opdracht 2. Je gaat posedata gebruiken om een neural network te trainen. Je werkt in drie projecten:
 
-In onderstaand voorbeeld wordt de chat history automatisch bijgehouden dankzij de `BufferMemory` class van langchain. Je hoeft nu niet meer zelf een chat history in een array op te slaan.
-
-We geven de `vectorStore` en de `bufferMemory` mee aan langchain als we een vraag stellen.
-
-```js
-const memory = new BufferMemory({ memoryKey: "chat_history", returnMessages: true })
-const chain = ConversationalRetrievalQAChain.fromLLM(model, vectorStore.asRetriever(), { memory })
-const answer = await chain.call({ question: "Waar gaat deze tekst over?" })
-console.log(answer)
-```
-
-### De volledige conversatie-ketting
-
-Je hebt nu met relatief weinig code een chatbot waarmee je kunt praten over je document. Dit is wat LangChain voor je doet nadat je een `call` met een `question` doet: 
-* De `question` wordt samen met de `chat_history` naar het chatmodel gestuurd met als prompt:  
-  'Gebruik deze `chat_history` en vervolgvraag `question` om een op zichzelf staande vraag te maken'
-* Het chatmodel stuurt een op zichzelf staande vraag terug.
-* Er wordt een call gedaan naar het embeddingsmodel om de op zichzelf staande vraag te embedden.
-* Deze embedding wordt gebruikt om relevante teksten voor deze vraag in de vectorstore op te zoeken.
-* Daarna wordt de op zichzelf staande vraag, samen met de relevante teksten naar het chatmodel gestuurd met prompt:  
-  'Gebruik deze teksten om antwoord te geven op deze vraag'
-* Het chatmodel stuurt een anwtoord terug dat komt uit de informatie van jouw documenten.
-* Het antwoord wordt samen met jouw `question` toegevoegd aan de `chat_history`.
+| Voorbereiding | Training | Applicatie | 
+| ----------- | ------ | ------ | 
+| Data verzamelen uit MediaPipe | Data gereed maken | Webcam stream lezen |
+| Opslaan in JSON of JS file | Neural Network trainen | Model laden |
+|  | Model opslaan | Voorspelling doen | 
 
 <br><br><br>
 
-## Vector stores
+# Werken met posedata
 
-Het doen van prompts (genereren van tokens) kost geld. Een simpele prompt kost bijna niets, maar het maken van embeddings kan sneller oplopen, als je veel tekst laat embedden. Daarnaast is het zonde om steeds dezelfde embeddings te laten maken, vandaar dat je de wilt kunnen opslaan. Bekijk [hier een lijst van vectorstores](https://js.langchain.com/docs/integrations/vectorstores) die je via langchain kan gebruiken. In het algemeen kan je dit onderscheid maken:
-
-- *Lokaal bestand*. De vectordata wordt als lokaal bestand binnen je project opgeslagen.
-- *Vector database*. Dit is een "echte" database op je systeem, zoals ChromaDB, MongoDB.
-- *Cloud database*. Je vectordata staat in de cloud, waardoor het vanuit meerdere projecten online toegankelijk is. Sommige cloud services, zoals [pinecone](https://www.pinecone.io) bieden 1 gratis online vectorstore.
-
-### FAISS
-
-Voor deze les werken we met [FAISS - Facebook Vector Store](https://js.langchain.com/docs/integrations/vectorstores/faiss). Hiermee sla je de vector embeddings lokaal op in een een folder van je project. Let op dat de documentatie van FAISS recent is aangepast.
-
-#### Opdracht
-
-- Maak een embedding van een tekstbestand en sla deze op met [FAISS](https://js.langchain.com/docs/integrations/vectorstores/faiss)
-- Maak een nieuwe `.js` file waarin de [FAISS](https://js.langchain.com/docs/integrations/vectorstores/faiss) data wordt ingeladen. Gebruik deze file om vragen over het document te stellen met het `chatgpt` model.
-<br><br><br>
-
-## Troubleshooting
-
-Je krijgt een error over `size of k`. OpenAI verwacht minimaal 3 chunks in je tekst. Als er minder zijn kan je dit aangeven. In dit voorbeeld zijn er maar 2 chunks:
+Zorg dat je posedata beschikbaar is in je project. Data kan in de vorm van objecten of arrays zijn. Voor een neural network is het belangrijk om je *data te randomizen*. 
 
 ```js
-const chain = RetrievalQAChain.fromLLM(model, vectorStore.asRetriever({ k: 2 }))
+let data = [
+    {pose:[4,2,5,2,1,...], label:"rock"},
+    {pose:[3,1,4,4,1,...], label:"rock"},
+    {pose:[5,2,5,3,3,...], label:"paper"},
+    ...
+]
+data = data.toSorted(() => (Math.random() - 0.5))
 ```
+<br><br><br>
 
-De FAISS documentatie is recent veranderd. Je kan deze waarschuwing krijgen. 
+## Data gereed maken voor Neural network
 
-> *[WARNING]: Importing from "langchain/vectorstores/faiss" is deprecated. Instead, please add the "@langchain/community" package to your project with e.g. `npm install @langchain/community` en `import from "@langchain/community/vectorstores/faiss"`.*
+Na het randomizen kan je poses aan het neural network toevoegen via de `addData` functie. Dit doe je door je data op te splitsen in een array van numbers: `[3,5,2,1,4,3,5,2]`, gevolgd door een object met het label: `{label:"rock"}`. Je voegt één pose als volgt toe:
+```js
+nn.addData([3,5,2,1,4,3,5,2], {label:"rock"})
+```
+Je hebt een `for` loop nodig om één voor één al je pose data toe te voegen. 
 
-
+> *🚨 Een veel voorkomende fout is dat je posedata uit mediapipe niet naar de juiste vorm is omgezet voor de `addData` functie. Wat ook vaak fout gaat is dat niet **elke pose** evenveel punten bevat, of dat je labels niet overeenkomen.*
 
 <br><br><br>
 
-## Privacy en copyright
+## Trainen
 
-Bij het maken van embeddings verstuur je een document naar OpenAI en/of Microsoft. Het is daarom belangrijk dat je geen data verstuurt die auteursrechtelijk beschermd is. Om data helemaal veilig te houden zou je kunnen werken met een [Lokaal LLM of je eigen LLM hosting](../snippets/local.md)
+Nadat je al je data hebt toegevoegd roep je de `normalize` functie aan. Daarna begin je met trainen. Bij het trainen kan je experimenteren met het aantal `epochs`. De blauwe lijn moet zo dicht mogelijk bij de waarde 0 komen. 
+
+> *Als de blauwe lijn nauwelijks verbetert, ook bij een hoog aantal epochs, dan is er waarschijnlijk een probleem met je data. Zie het `troubleshooting` hoofdstuk*.
+
+```javascript
+function startTraining() {
+    nn.normalizeData()
+    nn.train({ epochs: 10 }, () => finishedTraining()) 
+}
+async function finishedTraining(){
+    console.log("Finished training!")
+}
+```
+
+| Training kan beter | Training gaat goed | 
+| ----------- | ------ | 
+| <img src="../images/epochs.png" width="350"> | <img src="../images/training-good.png" width="350"> | 
+
+
 
 
 <br>
 <br>
 <br>
 
+## Maak een voorspelling
 
-## Voorbeeld
+Als je een model hebt, kan je met de `classify` functie testen of je nieuwe data kan voorspellen. Neem bijvoorbeeld handmatig een pose uit je data, of uit mediapipe, en kijk of dit ook goed voorspeld wordt. Let op dat je posedata evenveel punten bevat als bij het trainen!
 
-Stel vragen over dit vak aan de [PRG8 assistent](https://ai-assistent-mu.vercel.app)
+```js
+async function makePrediction() {
+    const results = await nn.classify([2,4,2,1,3,5,6]) // dit is een pose uit mediapipe
+    console.log(results)
+}
+```
+
+<br>
+<br>
+<br>
+
+## Model opslaan
+
+Omdat je niet telkens opnieuw een model wil trainen gaan we het opslaan.
+
+```js
+nn.save("model", () => console.log("model was saved!"))
+```
+<br>
+<br>
+<br>
+
+# De frontend applicatie bouwen
+
+Dit is je game of applicatie die door de eindgebruiker gebruikt gaat worden. Hierin wordt de live webcam getoond met poses. Je gaat nu ook weer posedata uit de webcam halen. Het doel is nu om te voorspellen welke pose de gebruiker aanneemt, dit doen we met ons getrainde model.
+
+- Toon de webcam en lees posedata met mediapipe
+- Laad het getrainde model
+- Maak een voorspelling van de live posedata
 
 <br><br><br>
 
- ## Links
+## Model laden
 
-- [Langchain Azure OpenAI Text Embedding](https://js.langchain.com/docs/integrations/text_embedding/azure_openai)
-- [Langchain document loaders](https://js.langchain.com/docs/modules/data_connection/document_loaders/)
-- [FAISS - Facebook Vector Store](https://js.langchain.com/docs/integrations/vectorstores/faiss)
+```js
+const nn = ml5.neuralNetwork({ task: 'classification', debug: true })
+const modelDetails = {
+    model: 'model/model.json',
+    metadata: 'model/model_meta.json',
+    weights: 'model/model.weights.bin'
+}
+nn.load(modelDetails, () => console.log("het model is geladen!"))
+```
+Nadat het model is geladen *(let op de callback functie)*, kan je live posedata uit de webcam gaan voorspellen met het neural network. Verzamel data van één live pose, en roep hiermee de `classify()` functie aan.
+
+<br>
+<br>
+<br>
+
+# Expert level
+
+- Je kan zelf extra [hidden layers](../snippets/layers.md) toevoegen om complexere data te kunnen leren.
+- Je kan [React](../snippets/react.md) gebruiken om de MediaPipe data te verzamelen.
+- Je kan het [ML5 Neural Network in React](../snippets/reactml5.md) gebruiken om voorspellingen in de UI te tonen.
+
+<br>
+<br>
+<br>
+
+# Troubleshooting
+
+### Workflow
+
+Bij het werken met Neural Networks heb je vaak meerdere projecten tegelijk open staan:
+
+- Het project waarin je data verzamelt uit de webcam en er een label aan geeft. 
+- Het project waarin je een model aan het trainen bent met de gelabelde data. Hier heb je de webcam input niet nodig.
+- Het project waarin je test of je model goed werkt met nieuwe input. Dit kan je doen met testdata of met live webcam input. In het eindproduct hoef je niet altijd de pose als lijntjes over het webcam beeld heen te tekenen.
+
+<br>
+
+### Asynchrone functies en callbacks
+
+Een ML5 neural network werkt met [callbacks en asynchrone functies](https://learn.ml5js.org/#/tutorials/promises-and-callbacks). Dat betekent dat je moet *wachten* totdat een bepaalde taak is afgrond, *voordat* je de volgende taak kan uitvoeren! Bijvoorbeeld:
+
+- Laden van een JSON file met `fetch`
+- Trainen van een ML5 Neural Network
+- Inladen van een model
+- Doen van een voorspelling
+
+Je moet wachten totdat een call klaar is voordat je naar de volgende stap door kan gaan. In dit codevoorbeeld wachten we tot het laden van het model klaar is:
+
+```js
+nn.load(modelDetails, () => nextStep())
+
+function nextStep(){
+    console.log("het model is geladen!")
+}
+```
+
+> *🚨Een veel voorkomende fout is om te proberen een voorspelling te doen terwijl het trainen nog niet klaar is, of als het model nog niet is ingeladen.*
+
+<br>
+
+### Fouten bij trainen
+
+Het trainen van een model kan makkelijk mis gaan. De meest voorkomende oorzaken:
+
+- De data is niet consistent. De inhoud van elk datapunt *(een array met getallen)* moet hetzelfde zijn (bv. een array van 20 numbers).
+- Er is te weinig data. Probeer minimaal 20 tot 30 poses per label op te slaan. 100 poses zou nog beter zijn.
+- De data bevat niet genoeg variatie. Dit valt op als het trainen wel goed gaat maar het voorspellen werkt niet goed. Probeer voor elk label verschillende variaties op te slaan *(dichtbij camera, ver van camera, links in beeld, rechts in beeld)*.
+- De labels kloppen niet of je bent labels vergeten.
+- Er is iets mis gegaan bij het omzetten van je webcam data naar training data. Je moet een array van getallen en een object met een label doorgeven `[3,3,4,32,2], {label:"Rock"}`.
+- De labels komen niet overeen (bv. `"Rock"` en `"rock"` is niet hetzelfde).
+- Je data in de `classify` aanroep heeft een andere vorm dan de data die je bij `addData` hebt gebruikt.
+
+#### 🚫 De pose is hier een object, maar het moet alleen een array met numbers zijn
+
+```js
+nn.addData({pose:[2,4,5,3]}, {label:"rock"})
+```
+#### 🚫 De classify aanroep is niet hetzelfde als de addData aanroep
+```js
+nn.addData([2,3,4], {label:"rock"})
+nn.addData([5,3,1], {label:"paper"})
+let result = await nn.classify([2,3,4,5,6,7])
+```
+<br>
+<br>
+<br>
+
+## Documentatie
+
+- [ML5 AI library voor Javascript](https://learn.ml5js.org/#/)
+- [ML5 Neural Networks](https://learn.ml5js.org/#/reference/neural-network)
+- [Callbacks en asynchrone functies](https://learn.ml5js.org/#/tutorials/promises-and-callbacks)
+- [ML5 Neural Networks Hidden Layers](./snippets/layers.md)
+- [MediaPipe in React](../snippets/react.md) 
+- [ML5 Neural Network in React](../snippets/reactml5.md) 
+- [📺 Crash Course Neural Networks](https://www.youtube.com/watch?v=JBlm4wnjNMY)
+- [📺 But what is a neural network?](https://www.youtube.com/watch?v=aircAruvnKk)

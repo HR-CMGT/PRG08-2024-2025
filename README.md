@@ -8,17 +8,20 @@ In deze repository vind je oefeningen en startcode voor het vak PRG08. De presen
 
 | Week | Les | Onderwerp | Lesoefening | 
 |------|-----|-----------|-------------|
-| 1 | 1 | [Kennismaking Taalmodellen](./les1) | Werkomgeving opzetten |
-|   | 2 | [Prompt Engineering](./les2) | Chatbot bouwen |
-|   | 3 | [Documenten lezen met een taalmodel](./les3) | Document assistent bouwen |
-| 2 | 4 | [Verbeteren van je chatbot](./les4) | Chatbot live zetten |
-|   |   | DEADLINE OPDRACHT 1 |
-|   | 5 | [Van generative AI naar pattern recognition](./les5) | Pose detection game bouwen | 
-|   | 6 | [Data, algoritmes en modellen](./les6) | Posedata opslaan en gebruiken | 
-| 3 | 7 | [Neural Networks](./les7) | Een model trainen en opslaan | 
-|   | 8 | [Accuracy](./les8) | Je model verbeteren | 
-|   | 9 | [AI in de praktijk](./les9) | Werken met bestaande data |
-|   |   | DEADLINE OPDRACHT 2 |
+| 2.10 | 1 | [Posedetection in de browser](./les1) | Werkomgeving opzetten |
+|      | 2 | [Poses leren herkennen](./les2) | Data verzamelen en herkennen |
+|      |   | TLE |
+| 3.8  | 3 | [Herhaling](./les3) | Herhaling international week |
+|      | 4 | [Neural networks](./les3) | Posedetectie verbeteren |
+|      | 5 | [Accuracy](./les4) | Hoe goed is je voorspelling? |
+|      |   | DEADLINE OPDRACHT 1 |
+| 3.9  | 5 | [Kennismaking Taalmodellen](./les5) | Werkomgeving opzetten | 
+|      | 6 | [Prompt engineering](./les6) | Chatbot bouwen | 
+|      | 7 | [Documenten lezen](./les7) | Document assistant bouwen | 
+| 3.10 | 8 | [Verbeteren chatbot](./les8) | Online zetten. Verschillende LLMs | 
+|      | 9 | [AI in de praktijk](./les9) | Werken met bestaande data |
+|      |   | DEADLINE OPDRACHT 2 |
+
 
 <br>
 <br>
@@ -28,25 +31,6 @@ In deze repository vind je oefeningen en startcode voor het vak PRG08. De presen
 
 Tijdens de cursus werk je aan twee opdrachten die ingaan op de stof uit de les. Je levert deze in via Brightspace. Zie de cursushandleiding.
 
-- [Opdracht 1: werken met taalmodellen](./opdracht1.md)
-- [Opdracht 2: werken met posedata](./opdracht2.md)
+- [Opdracht 1: werken met posedata](./opdracht1.md)
+- [Opdracht 2: werken met taalmodellen](./opdracht2.md)
 
-<br>
-<br>
-<br>
-
-## Links
-
-Code snippets en links voor werken met AI in Javascript
-
-- [LangChain](https://js.langchain.com/docs/get_started/quickstart)
-- [MediaPipe](https://mediapipe-studio.webapps.google.com/home)
-- [Prompt Engineering](https://platform.openai.com/docs/guides/prompt-engineering)
-- [Browser speech](./snippets/speech.md)
-- [Lees de webcam](./snippets/camera.md)
-
-In de lessen benaderen we Azure OpenAI via LangChain. Je kan hier meer lezen over Azure, OpenAI en AI in Javascript in het algemeen.
-
-- [OpenAI API](https://platform.openai.com/docs/introduction)
-- [Azure REST API](https://learn.microsoft.com/en-gb/azure/ai-services/openai/reference)
-- [Javascript AI Reading List](https://github.com/HR-CMGT/Javascript-Machine-Learning)
