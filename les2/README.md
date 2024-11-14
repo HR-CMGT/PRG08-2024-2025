@@ -1,32 +1,34 @@
-# Week 6
+# Les 2 - Intl. week - Pose detection
 
-- Herhaling data>training>model. 
+In deze les gaan we leren hoe je specifieke handposes, zoals bijvoorbeeld 👊 📃 ✂️ kan herkennen! Daarmee kunnen we "rock, paper, scissors" gaan spelen.
+
 - Werken met KNN in javascript
 - Data verzamelen uit MediaPipe en opslaan als JSON.
 - Data uit MediaPipe voorspellen met KNN
-- Troubleshooting
+
 
 <br><br><br>
 
 ## Introductie K-Nearest-Neighbour
 
-Dit algoritme gebruikt afstanden tussen punten om te bepalen waar een punt bij hoort. Je leert de termen *Classification* en *Supervised Learning*.
+Dit algoritme kan sets van getallen met elkaar vergelijken om te zien welke het meest overeenkomen. We gaan dit gebruiken om handposes te vergelijken.
 
-In dit voorbeeld tekenen we de *weight* en *ear length* van katten en honden in een 2D grafiek als X en Y coördinaten:
+Een handpose heeft 20 punten, maar het werkt ook met kleinere getallenreeksen.
+
+In deze afbeelding zie je hoe KNN werkt. Door de getallenreeks `weight, ear length` als een `x,y` grafiek te tekenen kan je goed zien dat katten en honden in een eigen groepje zitten qua afstand.
 
 ![knn](../images/knn_catdog_icons.png)
 
-Als we een nieuw punt tekenen in de grafiek, kunnen we via de **afstand tot de andere punten** bepalen of het nieuwe punt een kat of een hond is! Dit is wat het KNN algoritme doet. Zie ook dit [interactief voorbeeld op Codepen](https://codepen.io/Qbrid/pen/OwpjLX). 
+Als we een nieuw punt tekenen in de grafiek, kunnen we via de **afstand tot de andere punten** bepalen of het nieuwe punt een kat of een hond is! Zie ook dit [interactief voorbeeld op Codepen](https://codepen.io/Qbrid/pen/OwpjLX). 
 
 <br>
 <br>
 <Br>
 
-## Werken met KNN in Javascript
+## Oefenen met KNN
 
-In de map van [week 6](./) staat [knear.js](./knear.js). Deze kun je downloaden en toevoegen aan jouw project. We raden je aan om deze versie van de library te gebruiken. We hebben error messages toegevoegd aan de library wanneer er met onjuiste data wordt gewerkt. 
+Download het bestand [knear.js](./knear.js) en voeg het toe aan jouw project. Maak een app.js aan:
 
-Maak het algoritme aan in app.js
 ```sh
 import kNear from "./knear.js"
 
@@ -35,14 +37,17 @@ const machine = new kNear(k);
 ```
 <br><br><br>
 
-## Classifying
+## Katten en honden
 
-Je gaat het KNN algoritme trainen met gelabelde data. In dit voorbeeld zie je twee datapunten. Vul hier alle data uit onderstaande tabel in! 
+Je gaat het KNN algoritme trainen met data. Je ziet dat data bestaat uit een array van getallen en een label.
 
 ```javascript
 machine.learn([6, 5, 9, 4], 'cat')
 machine.learn([12, 20, 19, 3], 'dog')
 ```
+### Opdracht
+
+Vul het voorbeeld aan met alle data uit onderstaande tabel.
 
 | Body length | Height | Weight | Ear length |  Label |
 | ----------- | ------ | ------ | ---------- |  ----- |
@@ -53,7 +58,7 @@ machine.learn([12, 20, 19, 3], 'dog')
 | 16 | 9.0 | 10 | 2.1 | 'cat' |
 | 21 | 16.7 | 16 | 3.3 | 'dog' |
 
-Als je met voldoende data getraind hebt, kan je een `classification` doen.
+Als je met voldoende data getraind hebt, kan je een voorspelling doen. Dit betekent dat je van een onbekend dier gaat voorspellen of het een hond of een kat is.
 
 ```javascript
 let prediction = machine.classify([12,18,17,12])
@@ -63,87 +68,133 @@ console.log(`I think this is a ${prediction}`)
 <br>
 <br>
 
-## Werken met MediaPipe data
+# Handposes herkennen
 
-Het volgende doel is om een handpose, bodypose of facepose uit MediaPipe te classificeren *(bijvoorbeeld het herkennen van "rock" "paper" "scissors" poses)*. Om dit te kunnen doen ga je de volgende stappen zelfstandig doorlopen:
+Als je de basis van KNN onder de knie hebt, dan kan je deze kennis gaan gebruiken om handposes te herkennen.
 
-### Pose data verzamelen
+Dit werkt eigenlijk precies hetzelfde, alleen moet je nu met handpose data gaan werken. Die data hadden we in les 1 al in de console gelogd:
 
-Verzamel handpose, bodypose of facepose data uit mediapipe.
+```js
+console.log(results.landmarks)
+```
+De uitdaging wordt nu om deze data om te zetten naar het formaat waar KNN mee kan werken.
 
-Laat de webcam detectie lopen en toon de `x,y,z` coördinaten voor de pose in de console of in een html veld. 
 
-> *🚨 Zorg dat de data uit één enkele array van getallen bestaat. De mediapipe posedata bestaat vaak uit meerdere nested arrays en objecten. Dit moet je vereenvoudigen.*
+<br><br><br>
+
+
+# Opdracht
+
+Maak een button die `console.log(results.landmarks[0])` uitvoert zodra je er op klikt. 
+
+> *Let op dat er twee handen kunnen zijn, dit  zijn `results.landmarks[0]` en `results.landmarks[1]`.*
+
+Een enkele pose bestaat uit een array van 20 punten, een `console.log` moet er als volgt uit gaan zien:
 ```js
 [
      {x: 0.1, y: 0.3, z: 0.6},
      {x: 0.2, y: 0.7, z: 0.9},
-     ...
+     // ...in totaal 20 punten
 ]
 ```
-Moet je omzetten naar
-```js
-[0.1, 0.3, 0.6, 0.2, 0.7, 0.9, ...]
-```
+De volgende stap is om dit console bericht te versimpelen. Kijk of je de `x,y,z` waarden van alle 20 punten achter elkaan in de console kan tonen. *Dit zijn dus 60 getallen.*. 
 
-Vervolgens geef je een **label** aan de data. Het geheel sla je op in een javascript array of in een JSON file. Hieronder een voorbeeld met één pose:
+```js
+[0.3.0.1.0.13.0.41.0.24.0.24,0.3...] // 60 getallen
+```
+> *Je kan de data omzetten met een `for` loop, of je kan de `map()` en `flat()` functie gebruiken.*
+
+<br><br><br>
+
+### JSON file
+
+Als het je gelukt is om een pose te tonen als simpele array, dan kan je een JSON file aanmaken waarin je jouw posedata gaat opslaan. De data van een pose kan je telkens handmatig copy>pasten uit de console naar je JSON file. 
+
+Je moet per array een label opslaan, anders weet je niet wat voor pose bij de data hoort. Doe dit voor drie poses, waarbij je per pose 5 voorbeelden verzamelt. Je JSON file kan er dan zo uit gaan zien:
 
 ```js
 [
-    {pose:[3,34,6,3,...], label:"rock"}
+    {points:[0.3.0.1.0.13.0.41.0.24.0,...], label:"rock"},
+    {points:[0.3.0.1.0.13.0.41.0.24.0,...], label:"rock"},
+    {points:[0.3.0.1.0.13.0.41.0.24.0,...], label:"rock"},
+    // .. en nog meer poses voor paper en scissors
 ]
 ```
-Let op dat je voor elke pose die je wil leren *tientallen voorbeelden* nodig hebt.
+
+> *Bekijk [dit voorbeeld bestand](./data/data-rps.json) als je er niet uit komt.*
+
 
 <br><br><br>
 
-### Pose data gebruiken
+# Pose data gebruiken
 
-Nu kan je de posedata aan het KNN algoritme leren op dezelfde manier als bij het *cats and dogs* voorbeeld hierboven.
+Het omzetten van data was meer werk dan het tonen van poses uit de webcam! Dit is waarom het vak van AI ook wel Data Science heet...
 
-### Nieuwe poses herkennen
+Nu we posedata als json file hebben kunnen we dit leren aan KNN. Mocht je nog geen werkend JSON bestand hebben gebruik dan [dit voorbeeld bestand](./data/data-rps.json).
 
-Maak een nieuw project waarin ook weer de MediaPipe pose detection met de webcam draait. Echter, nu ga je de poses proberen te herkennen met je getrainde model!
+*json laden*
+```js
+fetch("mydata.json")
+    .then(response => response.json())
+    .then(data => train(data))
+    .catch(error => console.log(error))
+```
+*data in knn*
+```js
+function train(poses) {
+    for(let pose of poses) {
+        // dubbel check of je hier een correct pose ziet:
+        // {points:[2,4,5,3,...]}, "rock"}
+        console.log(pose) 
+        // geef de data aan de learn functie
+        // machine.learn([2,4,5,3,...], "rock")
+        machine.learn(pose.points, pose.label)
+    }
+}
+```
+
+## Poses herkennen
+
+Als het trainen gelukt is kunnen we eindelijk testen of het hele proces goed is gegaan. 
+
+Je kan met `classify` een van je bestaande poses invoeren, ***zonder het label*** om te kijken of KNN ziet welke pose dit is:
+
+```js
+function classifyPose(newpose) {
+    let result = machine.classify(newpose)
+}
+
+classifyPose([2,3,4,5,6,7,...]) // een array uit je json file, zonder label
+```
 
 <br><br><br>
 
-# Expert level
+### Webcam poses herkennen
 
-- Je kan KNN trainen in [React](../snippets/reactknn.md)
-- Je kan [React](../snippets/react.md) gebruiken om de MediaPipe interface te bouwen.
+Als al het bovenstaande werkt kan je de `console.log()` code van je button aanpassen. De button gaat de array van getallen nu ook naar de `classifyPose()` functie sturen.
+
+
+
 
 <br><br><br>
 
 # Troubleshooting
 
-### Workflow
-
-Bij het werken met KNN heb je meerdere projecten tegelijk open staan:
-
-- Het project waarin je data verzamelt uit de webcam en er een label aan geeft. In dit project heb je een live webcam en teken je de posedata over het webcam beeld. Dit project slaat de data op om te kunnen gebruiken in je live applicatie. Natuurlijk kan je KNN alvast toevoegen om te kunnen testen of je poses kunt detecteren (in de console).
-- De live applicatie waarin de verzamelde data ingeladen wordt om KNN mee te kunnen trainen. Het getrainde model is direct te gebruiken op nieuwe data (bijv inputdata van je webcam) in dit project. In het eindproduct hoef je niet altijd de pose als lijntjes over het webcam beeld heen te tekenen of de output van de webcam te laten zien.
-
-
-### Fouten bij trainen
-
-Het trainen van een model kan makkelijk mis gaan. De meest voorkomende oorzaken:
-
-- De data is niet consistent. De inhoud van elk datapunt *(een array met getallen)* moet voor elk datapunt exact hetzelfde zijn. Als één pose uit 100 punten bestaat, dan moeten alle poses uit 100 punten bestaan.
 - De labels kloppen niet of je bent labels vergeten.
-- Er is iets mis gegaan bij het opslaan van de posedata. Niet elke pose heeft evenveel getallen, of je hebt getallen opgeslagen als strings. (bv. `pose="5,2,5,2"`)
-- Je verzamelde data geef je niet in de juiste vorm door aan het algoritme.
-- Je data in de classify aanroep heeft een andere vorm dan de data die je bij addData hebt gebruikt.
+- Niet elke handpose heeft 60 getallen, of je hebt getallen opgeslagen als strings. (bv. `pose="5,2,5,2"`)
+- De data in je `machine.learn()` aanroep moet een array zijn, gevolgd door een label. Dit mag dus geen object zijn.
+- De array in je `machine.classify()` aanroep moet óók precies 60 getallen bevatten.
 
 #### Veel voorkomende fouten
 
 ```js
-// de pose is hier een object, maar het moet alleen een array met numbers zijn
-machine.learn({pose:[2,4,5,3]}, "rock")
+// fout
+machine.learn({pose:[2,4,5,3,...], label:"rock"})
+let result = machine.classify({pose:[2,4,5,3,...]})
 
-// hier gaat het trainen wel goed, maar bij classify is de data array ineens veel langer
-machine.learn([2,3,4], "rock")
-machine.learn([5,3,1], "paper")
-let result = machine.classify([2,3,4,5,6,7])
+// goed
+machine.learn([2,4,5,3,...], "rock")
+let result = machine.classify([2,4,5,3,...])
 ```
 
 <br>

@@ -104,8 +104,6 @@ Bedenk een toepassing waarbij de positie van de hand(en) gebruikt wordt. Denk bi
 > *Let op dat een handpose ook een `z` coordinaat heeft (de afstand tot de camera)*
 
 
-
-
 <br><br><br>
 
 ## Inspiratie
