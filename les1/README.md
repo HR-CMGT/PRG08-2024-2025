@@ -78,10 +78,18 @@ Je kan de landmarks data gebruiken voor je eigen creatieve toepassingen. In deze
 
 <img src="../images/hand-landmarks.png" width="600"/>
 
-<br>
+<br><br><br>
 
-🚨 Let op! de landmarks zijn getallen tussen de 0 en 1. De waarde `0,0` betekent linksboven. De waarde `1,1` betekent rechtsonder. Je moet deze waarden vermenigvuldigen met de breedte en hoogte van het video element. Als de duim bv. een `x,y` heeft van `0.2, 0.4` dan is de waarde in pixels `0.2 * videoWidth, 0.4 * videoHeight`.
+## Oefening
 
+Plaats een DOM element of teken een canvas cirkel op de plek van de duim.
+
+- De landmarks zijn getallen tussen de 0 en 1. De waarde `0,0` betekent linksboven. De waarde `1,1` betekent rechtsonder. 
+- Je moet deze waarden vermenigvuldigen met de breedte en hoogte van het video element. 
+
+> *Als de duim bv. een `x,y` heeft van `0.2, 0.4` dan is de waarde in pixels `0.2 * videoWidth, 0.4 * videoHeight`.*
+
+*voorbeeld*
 ```js
 let image = document.querySelector("myimage")
 let thumb = result.landmarks[0][4]
