@@ -74,7 +74,15 @@ for (let i = 0; i < results.landmarks.length; i++) {
 
 # Coordinaten gebruiken
 
-Je kan de landmarks data gebruiken voor je eigen creatieve toepassingen. In deze afbeelding zie je hoe de landmarks arrays zijn opgedeeld. De duim van hand `0` is dus: `result.landmarks[0][4]`. Hand `0` is de eerste hand die gedetecteerd is. Je kan in `results.handednesses[0]` zien of dit de linkerhand of rechterhand is.
+Je kan de landmarks data gebruiken voor je eigen creatieve toepassingen. We gaan oefenen met het plaasen van een element op de plek van de duim. 
+
+In de afbeelding zie je hoe de landmarks arrays zijn opgedeeld. De duim van hand `0` is dus: `result.landmarks[0][4]`. Hand `0` is de eerste hand die gedetecteerd is. Je kan in `results.handednesses[0]` zien of dit de linkerhand of rechterhand is.
+
+- De `x,y,z` getallen gaan van 0 tot 1. De `x,y` waarde `0,0` betekent linksboven en `1,1` betekent rechtsonder.
+- Je moet de `x,y` waarden vermenigvuldigen met de breedte en hoogte van het video element om het op de juiste plek te plaatsen. 
+- De `z` waarde is de afstand tot de camera. Dit kan je gebruiken voor de schaal van een element. Dichtbij is groter.
+
+> *Als de duim bv. een `x,y` heeft van `0.2, 0.4` dan is de waarde in pixels `0.2 * videoWidth, 0.4 * videoHeight`.*
 
 <img src="../images/hand-landmarks.png" width="600"/>
 
@@ -82,16 +90,16 @@ Je kan de landmarks data gebruiken voor je eigen creatieve toepassingen. In deze
 
 ## Oefening
 
-Plaats een DOM element of teken een canvas cirkel op de plek van de duim.
-
-- De landmarks zijn getallen tussen de 0 en 1. De waarde `0,0` betekent linksboven. De waarde `1,1` betekent rechtsonder. 
-- Je moet deze waarden vermenigvuldigen met de breedte en hoogte van het video element. 
-
-> *Als de duim bv. een `x,y` heeft van `0.2, 0.4` dan is de waarde in pixels `0.2 * videoWidth, 0.4 * videoHeight`.*
+Plaats een DOM element met id `myimage` in je HTML file, bovenop het canvas. Gebruik nu de positie van de duim om het html element mee te laten bewegen. 
 
 *voorbeeld*
+```css
+#myimage {
+    position:absolute;
+}
+```
 ```js
-let image = document.querySelector("myimage")
+let image = document.querySelector("#myimage")
 let thumb = result.landmarks[0][4]
 image.style.transform = `translate(${thumb.x * videoWidth}px, ${thumb.y * videoHeight}px)`
 ```
