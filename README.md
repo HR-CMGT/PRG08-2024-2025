@@ -22,6 +22,11 @@ In deze repository vind je oefeningen en startcode voor het vak PRG08. De presen
 |      | 9 | [AI in de praktijk](./les9) | Werken met bestaande data |
 |      |   | DEADLINE OPDRACHT 2 |
 
+<br>
+
+## Herkansers
+
+Herkansers kunnen aansluiten vanaf week 3.8, in de herhalingsles worden les 1 en 2 nog een keer doorgenomen.
 
 <br>
 <br>
