@@ -1,123 +1,126 @@
-# Week 5 - Pose detection
+# Les 1 - Intl. week - Pose detection
 
-## Introductie opdracht 2
+## Pose Detection
 
-- Introductie Machine Learning. 
-- Werken met pose detection en mediapipe.
-- Een game of app besturen met poses
+- In les 1 en 2 gaan we met de webcam handgebaren leren herkennen in Javascript.
+- Dit kan je toepassen in de TLE opdracht.
 
-In deze les leer je werken met MediaPipe en het verzamelen van PoseData uit de webcam: dit kan zijn de houding van je hand, lichaam of gezicht. ***⚠️ Deze data heb je nodig voor de komende 3 lessen!*** 
+
 
 <br><br><br>
 
 ## MediaPipe
 
-[MediaPipe](https://developers.google.com/mediapipe/solutions/examples) is een library van google, waarin een model is getraind om poses in webcam beelden te herkennen. Je krijgt deze poses terug als vector data (`x,y,z` coördinaten). 
-
-Je kan een `<canvas>` element gebruiken om de poses over het webcam beeld heen te tekenen. Je HTML ziet er dan als volgt uit:
-
-```html
-<section>
-    <video></video>    <!--- de webcam stream -->
-    <canvas></canvas>  <!--- pose tekening -->
-</section>
-```
-
-In het geval van [Hand Landmark Detection](https://mediapipe-studio.webapps.google.com/studio/demo/hand_landmarker), [Pose Landmark Detection](https://mediapipe-studio.webapps.google.com/studio/demo/pose_landmarker) en [Face Landmark Detection](https://mediapipe-studio.webapps.google.com/studio/demo/face_landmarker) kun je gebruik maken van de [DrawingUtils](https://developers.google.com/mediapipe/api/solutions/js/tasks-vision.drawingutils) uit de tasks-vision library om te testen of je hand, lichaam of gezicht herkend wordt. Je hoeft dan alleen de landmarks mee te geven en de DrawUtils class zorgt ervoor dat ze meteen op de juiste plek getekend worden.
+[MediaPipe](https://developers.google.com/mediapipe/solutions/examples) is een library van google, waarin een model is getraind om poses in webcam beelden te herkennen. 
 
 | Hand | Body | Face |
 | ---- | ---- | ---- |
 | <img src="../images/hand_landmark_960.png" width="400"> | <img src="../images/pose_detector_960.png" width="400"> | <img src="../images/face_landmarker_960.png" width="400"> |
+| [Demo](https://codepen.io/eerk/pen/oNKVWvY?editors=0111) | [Demo](https://codepen.io/eerk/pen/QWPEYxj?editors=0011) | [Demo](https://mediapipe-studio.webapps.google.com/studio/demo/face_landmarker) |
+
+<br><br><br>
+
+## MediaPipe project
+
+Je kan deze [boilerplate](./boilerplate/) code gebruiken om handposes te tekenen met de webcam.
+
+
+<br><br><br>
+
+## Posedata ophalen
+
+MediaPipe geeft **per hand** een array terug van vector data. Dit bestaat uit een *`x,y,z` coördinaat* voor elk botje in je hand. 
+
+<img src="../images/hand-landmarks.png" width="600"/>
+
+De handen staan in `result.landmarks[0]` en `result.landmarks[1]`. Je kan dit in de console loggen. De detectie code moet je telkens herhalen met behulp van `requestAnimationFrame`. 
+
+*voorbeeld*
+```js
+let result = handLandmarker.detectForVideo(video, performance.now());
+if(result.landmarks) {
+    console.log(result)
+}
+```
+
+
+*resultaat*
+```js
+{
+    handednesses: [],     
+    worldlandmarks: [],   
+    landmarks:[
+        [{x:2, y:3, z:1}, {x:2, y:3, z:1}, {x:2, y:3, z:1}, ...],   // first hand
+        [{x:2, y:3, z:1}, {x:2, y:3, z:1}, {x:2, y:3, z:1}, ...],   // second hand
+    ]
+}
+```
+
+<br><br><br>
+
+## Posedata tekenen
+
+In het code voorbeeld wordt de data uit [Hand Landmark Detection](https://mediapipe-studio.webapps.google.com/studio/demo/hand_landmarker) meteen in een canvas getekend, met behulp van [DrawingUtils](https://developers.google.com/mediapipe/api/solutions/js/tasks-vision.drawingutils). ⚠️ Dit kan je ook uitzetten.
+
+*code voor tekenen*
+```js
+for (let i = 0; i < results.landmarks.length; i++) {
+    let handmarks = results.landmarks[i]
+    drawConnectors(canvasCtx, handmarks, HAND_CONNECTIONS, { color: "#03F600", lineWidth: 4 });
+    drawLandmarks(canvasCtx, handmarks, { color: "#F40000", lineWidth: 3 })
+}
+```
+<br><br><br>
+
+# Coordinaten gebruiken
+
+Je kan de landmarks data gebruiken voor je eigen creatieve toepassingen. In deze afbeelding zie je hoe de landmarks arrays zijn opgedeeld. De duim van hand `0` is dus: `result.landmarks[0][4]`. Hand `0` is de eerste hand die gedetecteerd is. Je kan in `results.handednesses[0]` zien of dit de linkerhand of rechterhand is.
+
+<img src="../images/hand-landmarks.png" width="600"/>
+
+<br>
+
+🚨 Let op! de landmarks zijn getallen tussen de 0 en 1. De waarde `0,0` betekent linksboven. De waarde `1,1` betekent rechtsonder. Je moet deze waarden vermenigvuldigen met de breedte en hoogte van het video element. Als de duim bv. een `x,y` heeft van `0.2, 0.4` dan is de waarde in pixels `0.2 * videoWidth, 0.4 * videoHeight`.
+
+```js
+let image = document.querySelector("myimage")
+let thumb = result.landmarks[0][4]
+image.style.transform = `translate(${thumb.x * videoWidth}px, ${thumb.y * videoHeight}px)`
+```
+
+
 
 <br><br><br>
 
 # Opdracht
 
-## Webpagina
+Bedenk een toepassing waarbij de positie van de hand(en) gebruikt wordt. Denk bijvoorbeeld aan:
 
-Bouw een html pagina met webcam pose detection van [MediaPipe](https://developers.google.com/mediapipe/solutions/examples). Kies hand, body of face detection. Gebruik de documentatie om de webcam te lezen en de poses in een canvas te tekenen.
+- Tekenprogramma
+- Fruit Ninja (elementen weg slaan)
+- Drumstel 
+- Game karakter besturen
+
+> *Let op dat een handpose ook een `z` coordinaat heeft (de afstand tot de camera)*
 
 
 
-|Pose|Demo|Docs|Codepen|
-|---|---|---|---|
-| ✌️ Hand | [demo](https://mediapipe-studio.webapps.google.com/demo/hand_landmarker) | [docs](https://developers.google.com/mediapipe/solutions/vision/hand_landmarker#get_started) | [codepen](https://codepen.io/mediapipe-preview/pen/gOKBGPN) |
-| 🕺 Body | [demo](https://mediapipe-studio.webapps.google.com/demo/pose_landmarker) | [docs](https://developers.google.com/mediapipe/solutions/vision/pose_landmarker#get_started) | [simple codepen](https://codepen.io/eerk/pen/QWPEYxj?editors=0011),<br> [google codepen](https://codepen.io/mediapipe-preview/pen/abRLMxN) |
-| 😱 Face | [demo](https://mediapipe-studio.webapps.google.com/demo/face_landmarker) | [docs](https://developers.google.com/mediapipe/solutions/vision/face_landmarker#get_started) | [codepen](https://codepen.io/mediapipe-preview/pen/OJBVQJm) |
-
-> *Bekijk ook dit [vereenvoudigd voorbeeld voor het lezen van de webcam](https://codepen.io/eerk/pen/QWPEYxj?editors=0011)*
 
 <br><br><br>
 
-## Posedata tonen
+## Inspiratie
 
-MediaPipe heeft ingebouwd dat je de poses meteen in een canvas kan tekenen. Dit werkt als volgt:
+|  |  |
+|--|--|
+| <img src="../images/posepong.png" width="400"><br>Handpositie gebruiken om pong paddles te besturen | <img src="../images/pose-squid.png" width="400"><br>Afstand en beweging gebruiken om squid-game na te bouwen |
+| <img src="../images/paint.png" width="400"><br>Wijsvinger gebruiken als verfkwast, duim als gum |<img src="../images/drumgesture.png" width="400"><br>[Gestures gebruiken om drumcomputer te besturen](https://youtube.com/shorts/zQ8Il7xyVQk) | 
 
-- Start een video stream
-- `MediaPipe` detecteert poses in de video en geeft dit terug als `x,y,z` coördinaten.
-- `DrawingUtils` tekent de poses over het webcam beeld heen.
-
-Je kan dit goed zien in het [vereenvoudigd voorbeeld voor het lezen van de webcam](https://codepen.io/eerk/pen/QWPEYxj?editors=0011). Toon nu de `x,y,z` coördinaten in de console. In dit voorbeeld worden de `landmarks` van de `body pose` in de console getoond:
-
-### Code voorbeeld bodypose
-
-```js
-poseLandmarker.detectForVideo(video, startTimeMs, (result) => {
-    // alle gedecteerde personen in de video stream
-    console.log(result.landmarks)
-    // per body door alle gedecteerde punten loopen
-    for (const landmark of result.landmarks) {
-        // loggen
-        console.log(landmark)
-        // tekenen
-        drawingUtils.drawLandmarks(landmark, { radius : 2 })
-        drawingUtils.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS)
-    }
-})
-```
-In deze afbeelding zie je alle punten van de bodypose. Zie ook de documentatie.
-
-<img src="../images/pose_landmarks_index.png" width="300">
 
 <br><br><br>
 
-## Posedata gebruiken
-
-In plaats van de posedata rechtstreeks als punten en lijnen te tekenen met `DrawingUtils` kan je ook zelf de `x,y,z` waarden gebruiken. Kies een van de volgende oefeningen:
-
-- Dezelfde pose vaker tekenen (een kopie van jezelf)
-- In het canvas tekenen
-- Een HTML element plaatsen
-
-<br><br><br>
-
-## Dezelfde pose vaker tekenen
-
-Je kan spelen met de `drawingUtils` door een kopie van de persoon te maken waarbij de handmatig de `x,y` waarden aanpast. Zie de afbeelding en deze [animatie](https://www.instagram.com/p/C2zBrOcthmI/?img_index=1).
-
-<img src="../images/dance.png" width="300">
 
 
-```js
-poseLandmarker.detectForVideo(video, startTimeMs, (result) => {
-    // DIT IS TEKENING 1
-    for (const landmark of result.landmarks) {
-        drawingUtils....
-    }
-    // DIT IS TEKENING 2
-    for (const landmark of result.landmarks) {
-        drawingUtils....
-    }
-    // DIT IS TEKENING 3
-    for (const landmark of result.landmarks) {
-        drawingUtils....
-    }
-})
-```
-
-<br><br><br>
-
-## In het canvas tekenen
+### Voorbeeldcode tekenprogramma
 
 Je kan ook handmatig in het canvas element tekenen, dan heb je meer controle over wat je precies wil tekenen. Je kan hier ook kiezen om geen `clearRect()` te doen waardoor al je tekeningen over elkaar heen getekend worden. Je ziet hier een code voorbeeld voor het tekenen van een cirkel in het canvas element.
 
@@ -139,65 +142,19 @@ canvasCtx.fill()
 ```
 > *TIP: Als je niet bekend bent met het `<canvas>` element kan je eerst [deze MDN tutorial volgen](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial)*
 
-
 <br><br><br>
 
-## Een HTML Element plaatsen
-
-Plaats deze zonnebril als IMG element in de HTML pagina. Het doel is dat de zonnebril altijd op de plek van je neus wordt getoond. De coördinaten van je neus kan je vinden met de Face landmarks of body pose landmarks. De positie kan je bepalen met CSS/JS:
-
-```css
-.sunglasses {
-    position:absolute;
-}
-```
-En vervolgens kan je met javascript de positie bepalen:
-```js
-let element = document.querySelector(".sunglasses");
-let translateX = 50
-let translateY = 50
-element.style.transform = "translate(" + translateX + "px, " + translateY + "px)";
-```
-
-> *🚨 Let op! de landmarks zijn getallen tussen de 0 en 1. De waarde `0,0` betekent linksboven. De waarde `1,1` betekent rechtsonder. Je kan deze waarden vermenigvuldigen met de breedte en hoogte van het video element. Als de neus bv. een `x,y` heeft van `0.2, 0.4` dan is de waarde in pixels `0.2 * videoWidth, 0.4 * videoHeight`.*
-
-<img src="../images/sunglasses.png" width="180">
-
-<br><br><br>
-
-# Posedata toepassing
-
-Bedenk een game of applicatie waarbij je gebruik maakt van de coördinaten van de pose. Hieronder zie je een aantal voorbeelden. Het doel is dat je leert werken met de coördinaten die het posemodel teruggeeft. Lees de documentatie om precies te weten welk getal bij welk lichaamsdeel hoort.
-
-> *Tip: gebruik de `z` coördinaat om te zien hoe ver weg iets is.*
-
-<br><br><br>
-
-# Expert level
-
-- Je kan [React](../snippets/react.md) gebruiken om de MediaPipe interface te bouwen.
-
-
-<br><br><br>
-
-|  |  |
-|--|--|
-| <img src="../images/pose-sun.png" width="400"><br>Fashion site om zonnebrillen uit te proberen| <img src="../images/posture.png" width="400"><br>Afstand tot de laptop gebruiken om te zien of iemand rechtop zit. |
-| <img src="../images/posepong.png" width="400"><br>Handpositie gebruiken om pong paddles te besturen | <img src="../images/pose-squid.png" width="400"><br>Afstand en beweging gebruiken om squid-game na te bouwen |
-| <img src="../images/paint.png" width="400"><br>Wijsvinger gebruiken als verfkwast, duim als gum |<img src="../images/drumgesture.png" width="400"><br>[Gestures gebruiken om drumcomputer te besturen](https://youtube.com/shorts/zQ8Il7xyVQk) | 
-
-
-<br><br><br>
 
 ## Links
 
+- [Hand Landmark Detection](https://mediapipe-studio.webapps.google.com/studio/demo/hand_landmarker)
+- [DrawingUtils](https://developers.google.com/mediapipe/api/solutions/js/tasks-vision.drawingutils)
 - [Canvas Drawing Tutorial](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial)
 - [MediaPipe Guide](https://developers.google.com/mediapipe/solutions/guide)
 - [MediaPipe Javascript Documentation](https://developers.google.com/mediapipe/api/solutions/js/tasks-vision)
 - [MediaPipe Examples](https://developers.google.com/mediapipe/solutions/examples)
-- [Codepen Hand](https://codepen.io/mediapipe-preview/pen/gOKBGPN)
-- [Codepen Body](https://codepen.io/mediapipe-preview/pen/abRLMxN)
-- [Codepen Face](https://codepen.io/mediapipe-preview/pen/OJBVQJm)
+- [Codepen Hand](https://codepen.io/eerk/pen/oNKVWvY?editors=0111)
+- [Codepen Body](https://codepen.io/eerk/pen/QWPEYxj?editors=0011)
 - [Hand as computer interface](https://medium.spatialpixel.com/turning-your-hand-into-a-keyboard-6b21d092cfd0)
 - [Charlie Gerard pose experiments](https://charliegerard.dev/projects)
 - [MediaPipe in React](../snippets/react.md)
