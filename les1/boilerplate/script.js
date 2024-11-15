@@ -8,7 +8,6 @@ const logButton = document.getElementById("logButton")
 
 let handLandmarker = undefined;
 let webcamRunning = false;
-let lastVideoTime = -1;
 let results = undefined;
 
 /********************************************************************

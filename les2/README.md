@@ -29,7 +29,7 @@ Als we een nieuw punt tekenen in de grafiek, kunnen we via de **afstand tot de a
 
 Download het bestand [knear.js](./knear.js) en voeg het toe aan jouw project. Maak een app.js aan:
 
-```sh
+```js
 import kNear from "./knear.js"
 
 const k = 3
