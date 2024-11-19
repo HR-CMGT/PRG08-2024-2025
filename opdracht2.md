@@ -33,6 +33,15 @@ Code snippets en links voor werken met AI in Javascript
 
 <br><br><br>
 
+## React
+
+Je kan MediaPipe en KNN toepassen in een React project
+
+- [MediaPipe](./snippets/react.md)
+- [KNN](./snippets/reactknn.md)
+
+<br><br><br>
+
 ## Inspiratie
 
 - Maak een online chatbot die vragen kan beantwoorden over een bepaald onderwerp. Voed de chatbot met veel data over dat onderwerp. 

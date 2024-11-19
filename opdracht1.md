@@ -20,6 +20,16 @@ Code snippets en links voor werken met AI in Javascript
 - [MediaPipe](https://mediapipe-studio.webapps.google.com/home)
 - [Lees de webcam](./snippets/camera.md)
 
+<br><br><br>
+
+
+## React
+
+Je kan MediaPipe en KNN toepassen in een React project
+
+- [MediaPipe](./snippets/react.md)
+- [KNN](./snippets/reactknn.md)
+
 
 <br><br><br>
 

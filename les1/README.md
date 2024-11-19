@@ -171,4 +171,7 @@ canvasCtx.fill()
 - [Codepen Body](https://codepen.io/eerk/pen/QWPEYxj?editors=0011)
 - [Hand as computer interface](https://medium.spatialpixel.com/turning-your-hand-into-a-keyboard-6b21d092cfd0)
 - [Charlie Gerard pose experiments](https://charliegerard.dev/projects)
+
+## React
+
 - [MediaPipe in React](../snippets/react.md)
