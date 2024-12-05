@@ -97,7 +97,7 @@ fetchGreeting('Action Henk');
 
 ## Browser spraak
 
-- TODO
+- [Spraak en spraakherkenning](https://github.com/HR-CMGT/PRG08-2024-2025/blob/main/snippets/speech.md)
 
 <br><br><br>
 
