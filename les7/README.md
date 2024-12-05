@@ -12,4 +12,6 @@ In de vorige les heb je een omgeving opgezet waarin je een een taalmodel kan aan
 
 <br><br><br>
 
+## Voorbereiding inleveropdracht
+
 - [Bekijk alvast opdracht 2 voor inspiratie voor een taalmodel toepassing!](https://github.com/HR-CMGT/PRG08-2024-2025/blob/main/opdracht2.md)
