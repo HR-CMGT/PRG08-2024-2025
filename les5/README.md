@@ -2,8 +2,11 @@
 
 - Accuracy berekenen
 - Accuracy verbeteren
-- Confusion matrix
-- Data bronnen
+- Expert level
+  - Confusion Matrix
+  - Data bronnen
+  - Hidden Layers
+  - React
 - Troubleshooting
 
 <br><br><br>
@@ -52,17 +55,6 @@ Maak een variabele aan waarin je bijhoudt *hoe vaak* de voorspelling overeenkomt
 let accuracy = correctpredictions / totaltestposes
 ```
 
-<br><br><br>
-
-### Expert level: Confusion matrix
-
-Als je nóg preciezer wil kunnen bepalen hoe accuraat je voorspelling is kan je werken met een confusion matrix. Hierbij ga je kijken hoe goed elk van je classes voorspeld wordt. *In dit voorbeeld van `rock, paper, scissors` zie je dat rock 2 keer als paper werd voorspeld en 0 keer als scissors. Dat is goed! Maar scissors werd 10 keer als paper gezien, dus wellicht heb je meer `scissors` voorbeelden in je data nodig.*
-
-| real ➡️ <br> predict ⬇️  | Rock | Paper | Scissors |
-| --- | ---  |  --- |  ---- |
-| Rock | 20 | 3 | 3 |
-| Paper | 2 | 18 | 10 |
-| Scissors | 0 | 1 | 19 |
 
 <br><br><br>
 
@@ -97,24 +89,32 @@ const trainingOptions = {
 }
 nn.train(trainingOptions, finishedTraining);
 ```
-### Expert level: Hidden layers
-
-Via het `layers` argument kan je zelf meer hidden layers aan het neural network toevoegen!
-De vorm van deze `hidden layers` bepaalt hoe complex de patronen in de data kunnen zijn, om toch nog herkend te worden door het neural network.
-
-[Zie deze tutorial](../snippets/layers.md)
 
 <br><br><br>
 
-### Expert level: React
+# Expert level
 
-- [Werken met MediaPipe in React](../snippets/react.md)
+- Confusion Matrix
+- Data bronnen
+- Hidden Layers
+- React
 
-<br>
-<br>
-<br>
+<Br>
 
-# Expert level: Data bronnen
+## Confusion matrix
+
+Als je nóg preciezer wil kunnen bepalen hoe accuraat je voorspelling is kan je werken met een confusion matrix. Hierbij ga je kijken hoe goed elk van je classes voorspeld wordt. *In dit voorbeeld van `rock, paper, scissors` zie je dat rock 2 keer als paper werd voorspeld en 0 keer als scissors. Dat is goed! Maar scissors werd 10 keer als paper gezien, dus wellicht heb je meer `scissors` voorbeelden in je data nodig.*
+
+| real ➡️ <br> predict ⬇️  | Rock | Paper | Scissors |
+| --- | ---  |  --- |  ---- |
+| Rock | 20 | 3 | 3 |
+| Paper | 2 | 18 | 10 |
+| Scissors | 0 | 1 | 19 |
+
+
+<br><br><br>
+
+## Data bronnen
 
 We hebben tot nu toe ons algoritme (`K-Nearest-Neighbour` en `Neural Network`) getraind met posedata uit de webcam. De data bestaat uit een array van getallen, zoals `[4,3,5,2,1]`, vergezeld van een label, zoals `rock`. Voor het algoritme maakt het niets uit dat dit *poses* zijn, want elk soort data kan je weergeven als een array met een label. Hieronder een aantal voorbeelden.
 
@@ -127,6 +127,27 @@ We hebben tot nu toe ons algoritme (`K-Nearest-Neighbour` en `Neural Network`) g
 #### Oefening
 
 Zoek een [dataset voor classification](https://www.kaggle.com/datasets?tags=13302-Classification), en maak hier een model en voorspelling mee.
+
+<br>
+<br>
+<br>
+
+
+## Hidden layers
+
+Via het `layers` argument kan je zelf meer hidden layers aan het neural network toevoegen!
+De vorm van deze `hidden layers` bepaalt hoe complex de patronen in de data kunnen zijn, om toch nog herkend te worden door het neural network.
+
+[Zie deze tutorial](../snippets/layers.md)
+
+<br>
+<br>
+<br>
+
+
+## React
+
+- [Werken met MediaPipe in React](../snippets/react.md)
 
 <br>
 <br>
@@ -152,3 +173,4 @@ Als je merkt dat de accuracy laag blijft, dan heeft dit waarschijnlijk met de kw
 - [ML5 Neural Networks in Javascript](https://learn.ml5js.org/#/reference/neural-network)
 - [Werken met hidden layers in ML5](./snippets/layers.md)
 - [Datasets voor classification](https://www.kaggle.com/datasets?tags=13302-Classification)
+- [MediaPipe in React](../snippets/react.md)
