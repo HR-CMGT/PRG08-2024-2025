@@ -19,7 +19,7 @@ In deze repository vind je oefeningen en startcode voor het vak PRG08. De presen
 |      | 6 | [Prompt engineering](./les6) | Chatbot bouwen | 
 |      | 7 | [Documenten lezen](./les7) | Document assistant bouwen | 
 | 3.10 | 8 | [Verbeteren chatbot](./les8) | Online zetten. Verschillende LLMs | 
-|      | 9 | [AI in de praktijk](./les9) | Werken met bestaande data |
+|      | 9 | [AI in de praktijk](./les9) | Werken met lokale LLMs |
 |      |   | DEADLINE OPDRACHT 2 |
 
 <br>
