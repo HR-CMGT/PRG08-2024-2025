@@ -104,7 +104,11 @@ De vorm van deze `hidden layers` bepaalt hoe complex de patronen in de data kunn
 
 [Zie deze tutorial](../snippets/layers.md)
 
+<br><br><br>
 
+### Expert level: React
+
+- [Werken met MediaPipe in React](../snippets/react.md)
 
 <br>
 <br>
