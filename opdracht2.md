@@ -66,8 +66,9 @@ Je kan MediaPipe en KNN toepassen in een React project
 - Doe onderzoek naar image en speech generation voor je applicatie. Je kunt de [browser speech API](./snippets/speech.md) gebruiken om de resultaten terug te spreken naar de gebruiker.
 - Experimenteer met de persoonlijkheid van de AI, het hoeft niet altijd een vriendelijke behulpzame assistent te zijn!
 - Bekijk [OpenGPT](https://www.opengpt.com) om inspiratie op te doen voor AI assistants.
-- Expert level: gebruik [tools, functions of agents](https://platform.openai.com/docs/guides/function-calling) om het taalmodel *code in jouw eigen programma* te laten uitvoeren, zoals het besturen van een game karakter 🤯.
-- Expert level: gebruik de [javascript machine learning](https://github.com/HR-CMGT/Javascript-Machine-Learning) readinglist om meer ideeën en inspiratie op te doen.
+- Kan je een taalmodel een bordpsel mee laten spelen? Begrijpt het model de staat van het bord van een eenvoudig bordspel? Kan een taalmodel een dobbelsteen rollen? Dit is interessant om te onderzoeken!
+- Expert level: gebruik [tools, functions of agents](https://platform.openai.com/docs/guides/function-calling) en [LangChain Function calling](https://js.langchain.com/docs/how_to/tool_calling/) om het taalmodel *code in jouw eigen programma* te laten uitvoeren, zoals het besturen van een game karakter 🤯.
+- Vraag je LLM om een goed idee!
 
 <br><br><br>
 
