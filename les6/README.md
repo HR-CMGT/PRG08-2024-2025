@@ -1,4 +1,6 @@
-# Les 1
+# Les 6
+
+## Werken met taalmodellen
 
 In deze les gaan we het `node` project opzetten dat je nodig hebt voor de inleveropdracht. We beginnen met een herhaling van PRG06. We gaan vanuit de HTML frontend een `POST` request doen naar onze server. Als dat werkt gaan we `langchain` toevoegen waarmee we de Azure OpenAI API kunnen aanroepen. 
 
