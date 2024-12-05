@@ -68,6 +68,7 @@ Je kan MediaPipe en KNN toepassen in een React project
 - Bekijk [OpenGPT](https://www.opengpt.com) om inspiratie op te doen voor AI assistants.
 - Kan je een taalmodel een bordpsel mee laten spelen? Begrijpt het model de staat van het bord van een eenvoudig bordspel? Kan een taalmodel een dobbelsteen rollen? Dit is interessant om te onderzoeken!
 - Expert level: gebruik [tools, functions of agents](https://platform.openai.com/docs/guides/function-calling) en [LangChain Function calling](https://js.langchain.com/docs/how_to/tool_calling/) om het taalmodel *code in jouw eigen programma* te laten uitvoeren, zoals het besturen van een game karakter 🤯.
+- Als dat werkt zou je taalmodel ook een robot (circuit playground express) moeten kunnen besturen!
 - Vraag je LLM om een goed idee!
 
 <br><br><br>
