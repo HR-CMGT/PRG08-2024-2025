@@ -6,9 +6,9 @@ Je gaat zelf een originele toepassing bedenken en bouwen waarin een taalmodel is
 
 <br><br><br>
 
-### Expert level: live zetten
+### Live zetten
 
-Voor de lessen en inleveropdrachten kan je jouw frontend en backend lokaal draaien op je eigen computer. Voor het expert level kan je je project live online zetten. Dit doe je door node te installeren op je HR studenthosting. Er zijn ook online ***node hosting*** providers te vinden zoals `vercel.com`, `netlify.com`, `codesandbox.com`, `github codespaces`, `huggingface spaces`, `stackblitz.com`, `deno.com`, `amazon serverless webservices`, etc.
+Voor de lessen en inleveropdrachten kan je jouw frontend en backend lokaal draaien op je eigen computer. Voor het expert level kan je je project live online zetten. Zie [Les 9](/les9/).
 
 <br><br><br>
 
