@@ -4,13 +4,31 @@
 
 Deze les bevat onderwerpen voor het expert level van de opdracht.
 
+- Opmaak en code antwoorden van een LLM correct tonen
 - Externe API's toevoegen zoals het weerbericht. Het LLM gebruiken om daar iets over te zeggen.
 - Serverless functies voor live hosting op sites zoals Vercel.com.
 - Spraak en spraakherkenning van de browser
 - Spraak van OpenAI
 - Een LLM gebruiken als OS, bv. om een robot te besturen.
 
-<br>
+<br><br><br>
+
+## Opmaak en code tonen
+
+Een LLM kan tekst met kopjes, vette tekst en lijstjes terug geven. Daarnaast kan ook correct opgemaakte code terugkomen waarin de spaties belangrijk zijn. Om dit correct te tonen moet je een markdown converter gebruiken die het antwoord van een LLM kan tonen als markdown, in plaats van plain text.
+
+#### Voorbeeld ShowdownJS
+
+```js
+let promptresult = fetch("Can you write a simple `hello world` react component?")
+let converter = new showdown.Converter()
+document.querySelector("#div").innerHTML = converter.makeHtml(promptresult);
+```
+
+- [ShowDown](https://showdownjs.com)
+- [Marked](https://marked.js.org)
+
+<br><Br><br>
 
 ## Externe API's toevoegen
 
