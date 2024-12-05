@@ -24,6 +24,8 @@ Je kan detecteren of een gebruiker vraagt om bepaalde informatie, waarna je het 
 
 - [Tool / Function calling with Langchain](https://js.langchain.com/docs/how_to/tool_calling/)
 
+<br><br><br>
+
 ## Serverless functies
 
 Je kan je project live zetten op een webserver, als die webserver `node` ondersteunt en ook continu de `node server` kan draaien. Dit kan je doen op je HR studentenhosting. Het nadeel is dat je zelf moet monitoren wanneer de server is uitgevallen.
@@ -34,9 +36,13 @@ Er zijn ook online ***node hosting*** providers te vinden zoals `vercel.com`, `n
 
 - TODO
 
+<br><br><br>
+
 ## Browser spraak
 
 - TODO
+
+<br><br><br>
 
 ## OpenAI spraak
 
