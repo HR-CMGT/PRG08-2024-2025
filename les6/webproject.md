@@ -1,4 +1,4 @@
-# Les 1 deel 1
+# Les 6 (deel 1)
 
 ## Webproject opzetten
 
