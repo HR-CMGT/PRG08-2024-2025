@@ -9,7 +9,6 @@ Deze les bevat onderwerpen voor het expert level van de opdracht.
 - Serverless functies voor live hosting op sites zoals Vercel.com.
 - Spraak en spraakherkenning van de browser
 - Spraak van OpenAI
-- Een LLM gebruiken als OS, bv. om een robot te besturen.
 
 <br><br><br>
 
