@@ -32,9 +32,49 @@ Je kan je project live zetten op een webserver, als die webserver `node` onderst
 
 Er zijn ook online ***node hosting*** providers te vinden zoals `vercel.com`, `netlify.com`, `codesandbox.com`, `github codespaces`, `huggingface spaces`, `stackblitz.com`, `deno.com`, `amazon serverless webservices`. Deze maken vaak gebruik van ***serverless functions*** zodat er geen live node server hoeft te draaien. 
 
-### Voorbeeld
+#### Voorbeeld
 
-- TODO
+Maak een vercel project als volgt aan:
+
+```
+PROJECT FOLDER
+├── index.html
+├── index.js
+└── API
+      └── hello.js
+```
+In `api/hello.js` plaats je de serverless code:
+
+```js
+import type { VercelRequest, VercelResponse } from '@vercel/node'
+
+export default function handler(req, res) {
+  const { name = 'World' } = req.query
+  return res.json({
+    message: `Hello ${name}!`,
+  })
+}
+```
+Vanuit `index.js` kan je de serverless function aanroepen:
+
+```js
+async function fetchGreeting(name) {
+  try {
+    const response = await fetch(`/api/hello?name=${name}`);
+    const data = await response.json();
+    console.log(data.message); // Logs "Hello [name]!" from your API
+  } catch (error) {
+    console.error('Error fetching the API:', error);
+  }
+}
+
+fetchGreeting('Action Henk');
+```
+
+#### Links
+
+- [Hello World Serverless](https://vercel.com/templates/other/nodejs-serverless-function-express)
+- [Vercel Serverless documentation](https://vercel.com/docs/functions)
 
 <br><br><br>
 
