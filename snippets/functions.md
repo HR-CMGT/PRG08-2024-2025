@@ -67,7 +67,11 @@ console.log(resultB.content)
 const resultC = await modelWithTools.invoke("What is 13 multiplied by 34? You dont have to explain any code, just give the result directly.");
 console.log(resultC.content);
 ```
+<br><br><br>
 
+## Todo
+
+Je kan function calling gebruiken om weerdata of sportdata op te halen, of wellicht ook om muziek af te spelen of een game te besturen.
 
 <br><br><br>
 
@@ -75,4 +79,4 @@ console.log(resultC.content);
 
 - [Building Langchain tools](https://js.langchain.com/docs/concepts/tools/)
 - [Calling Langchain tools](https://js.langchain.com/docs/concepts/tool_calling/)
-- [How to...](https://js.langchain.com/docs/how_to/tool_calling/)
+- [OpenAI detailed info on function calling](https://platform.openai.com/docs/guides/function-calling?lang=node.js)
