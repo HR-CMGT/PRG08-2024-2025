@@ -52,8 +52,15 @@ const chat2 = await model.invoke(messages)
 console.log(chat2.content)
 ```
 
+
 <br><br><br>
 
 ## Toepassing bedenken
 
 - [Bekijk alvast opdracht 2 voor inspiratie voor een taalmodel toepassing!](https://github.com/HR-CMGT/PRG08-2024-2025/blob/main/opdracht2.md)
+
+<br><br><br>
+
+## Links
+
+- [Langchain basics](https://js.langchain.com/docs/tutorials/llm_chain)
