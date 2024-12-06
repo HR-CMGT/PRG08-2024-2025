@@ -67,6 +67,8 @@ console.log(resultB.content)
 const resultC = await modelWithTools.invoke("What is 13 multiplied by 34? You dont have to explain any code, just give the result directly.");
 console.log(resultC.content);
 ```
+
+
 <br><br><br>
 
 ## Links
