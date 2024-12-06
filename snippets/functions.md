@@ -69,9 +69,28 @@ console.log(resultC.content);
 ```
 <br><br><br>
 
-## Todo
+## Tips
 
-Je kan function calling gebruiken om weerdata of sportdata op te halen, of wellicht ook om muziek af te spelen of een game te besturen.
+Als je functies uitgebreider worden snapt het taalmodel niet altijd welke functie gebruikt moet worden. Het kan helpen om heel specifiek in de instructies mee te geven welke tools er zijn.
+
+```js
+const messages = [
+        ["system", "You are a weather assistant who also likes small talk. You can use the fetchWeather tool to get the current weather data for a specific location. You never explain code."],
+        ["human", "How are you doing today?"],
+        ["ai", "I'm doing well, thank you for asking. How can I assist you today?"],
+        ["human", "Can you tell me the current weather at latitude 35.6895 and longitude 139.6917?"],
+        ["ai", "The temperature is 12 degrees, the windspeed is 3, I got this from the fetchWeather tool you supplied for me."],
+        ["human", "And now you tell me the current weather at latitude 51.926517 and longitude 4.462456? Also give me some clothing advice for this weather."],
+]
+const resultH = await modelWithTools.invoke(messages);
+```
+
+## Ideeen
+
+- weerdata ophalen, kledingadvies geven (mag ik een afritsbroek aan?)
+- sportdata ophalen
+- muziek afspelen
+- game besturen
 
 <br><br><br>
 
