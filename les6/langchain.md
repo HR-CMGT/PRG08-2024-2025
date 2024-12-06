@@ -47,7 +47,7 @@ console.log(process.env.AZURE_OPENAI_API_KEY)
 [Langchain](https://js.langchain.com/docs/get_started/introduction) is de API die we in `server.js` gaan gebruiken om te werken met Azure OpenAI (ChatGPT). 
 
 ```sh
-npm install langchain
+npm install langchain @langchain/core
 npm install @langchain/openai
 ```
 Om de OpenAI API's te kunnen aanroepen moet de `.env` file zijn ingelezen. Vervolgens kan je een vraag stellen aan het chat model. 
