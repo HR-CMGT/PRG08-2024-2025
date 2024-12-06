@@ -69,9 +69,9 @@ Een taalmodel kan *herkennen* of je in je prompt een specifieke opdracht geeft, 
 
 Het taalmodel kan die opdrachten ook daadwerkelijk uitvoeren als je daar functies voor klaarzet. Dit heet ***tool calling / function calling***.
 
+- [Voorbeeld: laat het taalmodel een berekening maken](../snippets/functions.md)
 - [Een tool definiëren](https://js.langchain.com/docs/concepts/tools/)
 - [Een tool automatisch laten uitvoeren door het taalmodel](https://js.langchain.com/docs/concepts/tool_calling/)
-- [Voorbeeld: vraag aan het taalmodel wat voor weer het is](../snippets/functions.md)
 
 <br><br><br>
 
