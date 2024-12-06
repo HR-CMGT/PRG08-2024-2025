@@ -69,44 +69,6 @@ console.log(resultC.content);
 ```
 <br><br><br>
 
-## Pokemon API aanroepen
-
-Je kan nu het taalmodel om een data over een hele specifieke pokemon vragen, het taalmodel zal dan zelf in de pokemon api gaan zoeken:
-
-```js
-import { tool } from "@langchain/core/tools";
-import fetch from "node-fetch"; // Ensure you have node-fetch installed
-
-// Define the function to call the Pokémon API
-const fetchPokemon = async ({ name }) => {
-  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
-  if (!response.ok) {
-    throw new Error(`Error fetching data for Pokémon: ${name}`);
-  }
-  const data = await response.json();
-  return data;
-};
-
-// Create the tool
-const fetchPokemonTool = tool(fetchPokemon, {
-  name: "fetchPokemon",
-  description: "Fetch information about a specific Pokémon by name",
-  schema: {
-    type: "object",
-    properties: {
-      name: { type: "string" },
-    },
-    required: ["name"],
-  },
-});
-
-const modelWithTools = model.bindTools([fetchPokemonTool]);
-const result = await modelWithTools.invoke("Tell me about Pikachu.");
-console.log(result.content);
-```
-<br><br><br>
-
-
 ## Links
 
 - [Building Langchain tools](https://js.langchain.com/docs/concepts/tools/)
