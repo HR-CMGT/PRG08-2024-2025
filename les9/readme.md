@@ -33,9 +33,7 @@ document.querySelector("#div").innerHTML = converter.makeHtml(promptresult);
 
 ## Externe API's toevoegen
 
-Een LLM bevat geen live informatie over bijvoorbeeld het *recente nieuws, het weer, sportuitslagen, etc.* Als je dus aan je taalmodel vraagt of je een paraplu mee moet nemen naar buiten, dan krijg je geen goed antwoord.
-
-Dit kan je oplossen door zelf een API call te doen en het resultaat daarvan door het LLM te laten uitleggen. Voorbeeld:
+Een LLM bevat geen live informatie over bijvoorbeeld het *recente nieuws, het weer, sportuitslagen, etc.* Dit kan je oplossen door zelf een API call te doen en het resultaat daarvan door het LLM te laten uitleggen. In dit voorbeeld van een `weather app` krijg je advies over kleding die past bij het huidige weer:
 
 ```js
 const weatherApiKey = 'YOUR_WEATHER_API_KEY';
