@@ -1,111 +1,114 @@
 # Function calling
 
-Je kan een LLM gebruiken om functies in je code aan te roepen. Het resultaat van de LLM call is de naam van de functie die je moet aanroepen, zie dit voorbeeld:
+Een taalmodel heeft geen kennis van recent nieuws, sportuitslagen, het weer, of andere hele specifieke recente informatie. Ook is een taalmodel niet altijd goed in berekeningen en kan een taalmodel niet uit zichzelf een game of een smarthome besturen.
 
-```js
-let result = model.invoke("wat is het weer in tokyo")
-```
-Het resultaat van de LLM call is nu een JSON object:
-```js
-function:{name:"getWeather", arguments:["tokyo"]}
-```
-Je gebruikt dit resultaat om functies in je eigen code uit te voeren, op basis van de taalopdracht van de eindgebruiker.
-
-#### 🚫 Azure
-
-> *Function calling (a.k.a. "tools") werkt in ChatGPT 3.5 met de laatste update. Omdat Azure een versie achter loopt werkt het nog niet met de Azure OpenAI keys.*
+Dit kan je toevoegen door je eigen `functions` te schrijven en die functies toe te voegen aan het taalmodel. Het taalmodel kan nu aan de hand van het user prompt zelf bedenken of een van de functies aangeroepen moet worden! In onderstaande voorbeeld schrijven we een functie (tool) die twee nummers vermenigvuldigt. Dit kan je in een prompt aanroepen.
 
 <br><br><br>
 
-## Demo weerbericht
+## Tool 
 
-Dit is een zelfgeschreven functie in jouw javascript app.
-
-```js
-global.getCurrentWeather = (location) => {
-    if (location.toLowerCase().includes("tokyo")) {
-        return { location, temperature: "10 c" };
-    } else if (location.toLowerCase().includes("san francisco")) {
-        return { location, temperature: "72 f" };
-    } else {
-        return { location, temperature: "22 c" };
-    }
-}
-```
-Vervolgens geef je de *function signature* mee aan je `model.invoke()` call. Het LLM gaat nu proberen om met het prompt deze functie in te vullen.
+Het verschil tussen een gewone `javascript function` en een `tool function` is dat je een *schema* moet meegeven waar precies in staat welke variabelen verwacht worden in de functie. 
 
 ```js
-import { ChatOpenAI } from "@langchain/openai";
+import { ChatOpenAI } from "@langchain/openai"
+import { tool } from "@langchain/core/tools";
 
-const chat = new ChatOpenAI({
-    modelName: "gpt-3.5-turbo-1106",
-    maxTokens: 128,
-    openAIApiKey: process.env.OPENAI_API_KEY,
-    response_format: { type: "json_object" },
-}).bind({
-    tools: [
-        {
-            type: "function",
-            function: {
-                name: "getCurrentWeather",
-                description: "Get the current weather in a given location",
-                parameters: {
-                    type: "object",
-                    properties: {
-                        location: {
-                            type: "string",
-                            description: "The city and state, e.g. San Francisco, CA",
-                        },
-                    },
-                    required: ["location"],
-                },
-            },
+// schrijf hier je javascript functie
+const multiplyFunction = ({ a, b }) => {
+    return a * b;
+};
+
+// Maak een tool van de functie, inclusief het schema
+const multiply = tool(multiplyFunction, {
+    name: "multiply",
+    description: "Multiply two numbers",
+    schema: {
+        type: "object",
+        properties: {
+            a: { type: "number" },
+            b: { type: "number" },
         },
-    ],
-    tool_choice: "auto", 
+        required: ["a", "b"],
+    },
 });
+
+// Roep de tool zelf aan om te testen of het werkt
+let resultA = await multiply.invoke({ a: 3, b: 4 });
+console.log(resultA)
 ```
-Als je nu een vraag stelt krijg je als antwoord alleen nog functienamen en functie parameters. Deze vind je in de `additional_kwargs` van het antwoord.
-```js
-const res = await chat.invoke([
-    ["human", "What's the weather like in San Francisco, Tokyo, and Paris?"]
-])
-console.log(res.additional_kwargs.tool_calls)
-```
-<br><br>
+<br>
 
-## Functies aanroepen
+## Functie aan model koppelen
 
-Het chatmodel geeft alleen aan welke functies je met welke parameters moet aanroepen. Je haalt dit uit de `additional_kwargs.tool_calls` van het response.
-
-Omdat het enigszins tricky is om een functie op basis van een *string response* uit te voeren moet je dubbel checken of dit wel echt een functie in jouw code is.
+Via `bindTools` kan je aan het model duidelijk maken welke tools je geschreven hebt, je kan meerdere tools tegelijk doorgeven.
 
 ```js
-for(let tool of res.additional_kwargs.tool_calls) {
-    
-    const fn = tool.function.name                          // de functie
-    const args = JSON.parse(tool.function.arguments)       // de parameters
-
-    if (fn in global && typeof global[fn] === "function" && args) {
-        let res_weather = global[fn](args.location);
-        console.log(`The weather in ${res_weather.location} is ${res_weather.temperature}`)
-    } else {
-        console.log("could not find " + fn);
-    }
-}
+const model = new ChatOpenAI({
+    azureOpenAIApiKey: process.env.AZURE_OPENAI_API_KEY,
+    azureOpenAIApiVersion: process.env.OPENAI_API_VERSION,
+    azureOpenAIApiInstanceName: process.env.INSTANCE_NAME,
+    azureOpenAIApiDeploymentName: process.env.ENGINE_NAME,
+})
+const modelWithTools = model.bindTools([multiply]);
 ```
+<br>
 
-<br><Br>
+## Taalmodel roept functie aan
 
-## Agents
+Het model bepaalt zelf wanneer de tool aangeroepen moet worden, dit kan je als volgt testen:
 
-Een ***Agent*** is een LLM die een zelf bedachte function ook daadwerkelijk kan uitvoeren en zelf kan evalueren wat het resultaat is. 
+```js
+// test if the model works normally
+const resultB = await modelWithTools.invoke("How do I say goodbye in Japanese?");
+console.log(resultB.content)
 
-- [OpenAI Agents in Langchain](https://js.langchain.com/docs/modules/agents/)
+// Invoke the model with the tool
+const resultC = await modelWithTools.invoke("What is 13 multiplied by 34? You dont have to explain any code, just give the result directly.");
+console.log(resultC.content);
+```
+<br><br><br>
 
-<br><br>
+## Pokemon API aanroepen
+
+Je kan nu het taalmodel om een data over een hele specifieke pokemon vragen, het taalmodel zal dan zelf in de pokemon api gaan zoeken:
+
+```js
+import { tool } from "@langchain/core/tools";
+import fetch from "node-fetch"; // Ensure you have node-fetch installed
+
+// Define the function to call the Pokémon API
+const fetchPokemon = async ({ name }) => {
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+  if (!response.ok) {
+    throw new Error(`Error fetching data for Pokémon: ${name}`);
+  }
+  const data = await response.json();
+  return data;
+};
+
+// Create the tool
+const fetchPokemonTool = tool(fetchPokemon, {
+  name: "fetchPokemon",
+  description: "Fetch information about a specific Pokémon by name",
+  schema: {
+    type: "object",
+    properties: {
+      name: { type: "string" },
+    },
+    required: ["name"],
+  },
+});
+
+const modelWithTools = model.bindTools([fetchPokemonTool]);
+const result = await modelWithTools.invoke("Tell me about Pikachu.");
+console.log(result.content);
+```
+<br><br><br>
+
 
 ## Links
 
-- [OpenAI Tools and function calling](https://platform.openai.com/docs/guides/function-calling)
-- [OpenAI LangChain Function Calling](https://js.langchain.com/docs/integrations/chat/openai)
+- [Building Langchain tools](https://js.langchain.com/docs/concepts/tools/)
+- [Calling Langchain tools](https://js.langchain.com/docs/concepts/tool_calling/)
+- [How to...](https://js.langchain.com/docs/how_to/tool_calling/)
