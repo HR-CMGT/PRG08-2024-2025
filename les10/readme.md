@@ -1,7 +1,12 @@
 # Les 10
 
-## Werken met lokale LLMs
+## Privacy en werken met lokale LLMs
 
 - Datalab
 - Ollama, LM Studio
+- AnythingLLM
 - Gemini Nano
+
+## Afbeeldingen
+
+- TODO
