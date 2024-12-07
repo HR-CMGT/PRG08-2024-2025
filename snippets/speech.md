@@ -26,18 +26,18 @@ function speak(text) {
 
 speak("Hello world")
 ```
-<Br>
+<br><br><br>
 
 ## User interaction
 
 ⚠️ Speech werkt alleen als er een gebruikers interactie is geweest, bv. via een button:
 
-```typescript
+```js
 btn.addEventListener("click", () => {
   speak(`I think it's a hamster!`)
 })
 ```
-<br>
+<br><br><br>
 
 ## Voices
 
@@ -45,7 +45,7 @@ Je kan verschillende voices gebruiken. Zie de [getvoices documentatie](https://d
 
 In dit voorbeeld tonen we alle beschikbare stemmen. De beschikbare stemmen verschillen per OS (Mac,Windows,Linux) en per browser (Safari, Edge, Chrome).
 
-```typescript
+```js
 let voices = window.speechSynthesis.getVoices()
 for(let voice of voices) {
     console.log(`${voice.name} (${voice.lang})`)
@@ -91,7 +91,7 @@ playButton.addEventListener("click", () => {
 
 ## Spraakherkenning
 
-Je kan de gebruiker een tekst laten inspreken, de tekst wordt dan herkend. Let op, het effect verschilt enorm per browser. 
+Je kan de gebruiker een tekst laten inspreken, de tekst wordt dan herkend. Let op, het effect verschilt enorm per browser. Je spraak kan naar de servers van Google of Apple gestuurd worden.
 
 ```js
 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
@@ -131,7 +131,25 @@ function checkResult(event) {
 }
 ```
 
-<br><br>
+<br><br><br>
+
+# OpenAI Whisper
+
+Je kan je mp3 file naar *OpenAI Whisper* sturen om spraak om te zetten naar tekst. Helaas werkt dit nog niet via Azure, dus je moet een eigen `OPENAI_API_KEY` in je `.env` plaatsen. Dit voorbeeld is in ***Langchain***:
+
+```js
+import { OpenAIWhisperAudio } from "@langchain/community/document_loaders/fs/openai_whisper_audio";
+
+const options = {
+    apiKey: process.env.OPENAI_API_KEY
+}
+const loader = new OpenAIWhisperAudio("hello.mp3", options);
+const docs = await loader.load();
+console.log(docs[0].pageContent);
+```
+- [Bekijk hier het voorbeeld in de OpenAI docs](https://platform.openai.com/docs/guides/speech-to-text)
+
+<br><br><br>
 
 ## Links
 
