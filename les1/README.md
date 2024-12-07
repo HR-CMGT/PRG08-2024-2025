@@ -22,7 +22,8 @@
 
 ## MediaPipe project
 
-Je kan deze [boilerplate](./boilerplate/) code gebruiken om handposes te tekenen met de webcam.
+- Je kan deze [boilerplate](./boilerplate/) downloaden als startproject. Open `index.html` met een `live server`.
+- Of start je eigen [Vite project](./vite.md)
 
 
 <br><br><br>
