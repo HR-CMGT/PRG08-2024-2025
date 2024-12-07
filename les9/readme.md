@@ -127,15 +127,34 @@ fetchGreeting('Action Henk');
 
 <br><br><br>
 
-## Browser spraak
+## Spraak
 
-- [Spraak en spraakherkenning](https://github.com/HR-CMGT/PRG08-2024-2025/blob/main/snippets/speech.md)
+De browser heeft spraak én spraakherkenning ingebouwd:
+
+- [Spraak en spraakherkenning in de browser](https://github.com/HR-CMGT/PRG08-2024-2025/blob/main/snippets/speech.md)
+
+### OpenAI Whisper
+
+Je kan je mp3 file naar *OpenAI Whisper* sturen om spraak om te zetten naar tekst. Helaas werkt dit nog niet via Azure, dus je moet een eigen `OPENAI_API_KEY` in je `.env` plaatsen. Dit voorbeeld is in ***Langchain***:
+
+```bash
+npm install langchain @langchain/community openai
+````
+
+```js
+import { OpenAIWhisperAudio } from "@langchain/community/document_loaders/fs/openai_whisper_audio";
+
+const options = {
+    apiKey: process.env.OPENAI_API_KEY
+}
+const loader = new OpenAIWhisperAudio("hello.mp3", options);
+const docs = await loader.load();
+console.log(docs[0].pageContent);
+```
+- [Bekijk hier het voorbeeld in de OpenAI docs](https://platform.openai.com/docs/guides/speech-to-text)
 
 <br><br><br>
 
-## OpenAI spraak
-
-- TODO
 
 ## Expert links
 
