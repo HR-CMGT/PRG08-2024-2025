@@ -21,4 +21,28 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 }
 ```
 
-Met de functie `getUserMedia()` wordt er aan de bezoeker toestemming gevraagd om de media input te gebruiken. Hier kunnen verschillende [opties](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia#parameters) aan meegegeven worden.
+<br><br><br>
+
+### Opties
+Met de functie `getUserMedia(...)` wordt er aan de bezoeker toestemming gevraagd om de media input te gebruiken. Hier kunnen verschillende [opties](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia#parameters) aan meegegeven worden.
+
+
+```js
+getUserMedia({
+  audio: true,
+  video: { width: 1280, height: 720 },
+});
+```
+
+```js
+getUserMedia({
+    audio: false, 
+    video: {
+      facingMode: "user",               // User-facing camera
+      width: { ideal: 640 },            // Ideal width for small landscape format
+      height: { ideal: 360 },           // Ideal height for small landscape format
+      aspectRatio: { ideal: 16 / 9 },   // Landscape aspect ratio
+    }
+});
+```
+
