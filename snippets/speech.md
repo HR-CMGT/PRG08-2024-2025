@@ -2,6 +2,7 @@
 
 - Spreken
 - Spraakherkenning
+- OpenAI Whisper
 
 <br><br><bR>
 
@@ -136,6 +137,10 @@ function checkResult(event) {
 # OpenAI Whisper
 
 Je kan je mp3 file naar *OpenAI Whisper* sturen om spraak om te zetten naar tekst. Helaas werkt dit nog niet via Azure, dus je moet een eigen `OPENAI_API_KEY` in je `.env` plaatsen. Dit voorbeeld is in ***Langchain***:
+
+```bash
+npm install langchain @langchain/community openai
+````
 
 ```js
 import { OpenAIWhisperAudio } from "@langchain/community/document_loaders/fs/openai_whisper_audio";
