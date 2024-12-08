@@ -163,30 +163,35 @@ const capture = async() => {
 
 <br><br><br>
 
-# Posedata tonen
+# Posedata getallen tonen
 
-Omdat `poseData` nu een `state` is kan je de objecten tonen in je component:
+Omdat `poseData` nu een `state` is kan je dit doorgeven aan een component die alle getallen toont:
 
 ```jsx
-<section>
-    <h1>Handen</h1>
-    <div>
-        {poseData.map((hand, i) => (
-            <div key={i}>
-                <h2>Hand {i + 1}</h2>
-                <ul>
-                    {hand.map((landmark, j) => (
-                        <li key={j}>
-                            {landmark.x}, {landmark.y}, {landmark.z}
-                        </li>
-                    ))}
-                </ul>
+function Coordinates({ poseData }) {
+    return (
+        <section>
+            <h1>Handen</h1>
+            <div>
+                {poseData.map((hand, i) => (
+                    <div key={i}>
+                        <h2>Hand {i + 1}</h2>
+                        <ul>
+                            {hand.map((landmark, j) => (
+                                <li key={j}>
+                                    {landmark.x}, {landmark.y}, {landmark.z}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
             </div>
-        ))}
-    </div>
-</section>
+        </section>
+    )
+}
+export default Coordinates
 ```
-Je kan deze hele code ook in een eigen component plaatsen:
+Geef de posedata door aan het component vanuit `App`:
 ```html
 <Coordinates poseData={poseData}/>
 ```
