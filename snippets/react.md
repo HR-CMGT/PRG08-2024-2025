@@ -242,11 +242,12 @@ export default CanvasDrawing
 
 ## RequestAnimationFrame en React state
 
-Bovenstaande code gebruikt een `state` om een grote hoeveelheid data heel vaak te verversen. Dit kan React langzaam maken omdat `state` hier niet persé voor bedoeld is. De oplossing hiervoor kan zijn om `useState` helemaal weg te laten. De `poseData` moet je dan via `useRef` gaan doorgeven van het ene component naar het andere. Ook kan je `useMemo` of `useCallback` gebruiken om te zorgen dat re-renders minder vaak gebeuren.
+Bovenstaande code gebruikt een `state` om een grote hoeveelheid poseData heel vaak te verversen. Dit kan React langzaam maken omdat `state` hier niet persé voor bedoeld is. De oplossing hiervoor kan zijn om `useState` helemaal weg te laten. De `poseData` moet je dan aanmaken als `useRef` in het `App` component. Deze `ref` geef je dan weer door als een `prop` naar je child components.
+
+De componenten kunnen de data dan aanroepen via `poseData.current`. Let op dat je nu zelf een update loop moet schrijven in je `CanvasDrawing` en `Coordinates` componenten met `requestAnimationFrame` (Dit gaat automatisch als je `state` gebruikt.
 
 
-
-
+<br><br><br>
  
 ## Documentatie (face, hand, body): 
 
