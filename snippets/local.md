@@ -74,6 +74,15 @@ Nu je een lokaal taalmodel hebt draaien kan je ook RAG (documenten bevragen) gaa
 
 <br><br><br>
 
+## Code assistent
+
+Als je een lokaal model hebt gedownload dat goed is in code, dan kan je dit model integereren in je code editor. Je hebt dan geen copilot of andere code AI subscription meer nodig! Download de [Continue](https://www.continue.dev) plugin voor jouw editor:
+
+- [Continue Plugin in VS Code](https://marketplace.visualstudio.com/items?itemName=Continue.continue)
+- [Continue Plugin in PHPStorm](https://plugins.jetbrains.com/plugin/22707-continue)
+
+<br><br><br>
+
 ## Links
 
 - [OLLama](https://ollama.ai)
