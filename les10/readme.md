@@ -18,7 +18,9 @@ Met [OLLama](https://ollama.ai) of [LM Studio](https://lmstudio.ai) kan je LLMs 
 
 > *🚨 Voor het draaien van een lokaal LLM heb je een recente (4 jaar oud of nieuwer) laptop nodig met minimaal 8GB RAM. Zelfs dan moet je opletten dat je alleen kleine modellen download :***1B of 7B versies***.*
 
-#### Code voorbeeld Ollama
+<br><br><br>
+
+## Code voorbeeld Ollama
 
 In dit codevoorbeeld roepen we [Ollama aan met langchain](https://js.langchain.com/docs/integrations/chat/ollama/)
 
@@ -36,6 +38,7 @@ const aiMsg = await llm.invoke([
   ["human", "I love cheesecake."],
 ]);
 ```
+<br>
 
 In dit codevoorbeeld roepen we Ollama aan met de [openai library](https://platform.openai.com/docs/quickstart). Ondanks dat je deze library gebruikt wordt er geen data naar openai verstuurd.
 
