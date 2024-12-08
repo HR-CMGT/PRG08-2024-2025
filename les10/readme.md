@@ -16,7 +16,7 @@ Met [OLLama](https://ollama.ai) of [LM Studio](https://lmstudio.ai) kan je LLMs 
 - [Tolkien](https://huggingface.co/JeremyArancio/llm-tolkien) (goed in fantasy stories)
 - [CodeLLama](https://huggingface.co/docs/transformers/en/model_doc/code_llama) (goed in programmeren)
 
-> *🚨 Voor het draaien van een lokaal LLM heb je een recente (4 jaar oud of nieuwer) laptop nodig met minimaal 8GB RAM. Zelfs dan moet je opletten dat je alleen kleine modellen download :***1B of 7B versies***.*
+> *🚨 Voor het draaien van een lokaal LLM heb je een recente (4 jaar oud of nieuwer) laptop nodig met minimaal 8GB RAM. Voor macbooks heb je een M1 of hoger nodig. Zelfs dan moet je opletten dat je alleen kleine modellen download :***1B of 7B versies***.*
 
 <br><br><br>
 
