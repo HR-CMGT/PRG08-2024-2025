@@ -10,13 +10,13 @@ Om die reden kan je kiezen om met een lokaal taalmodel te gaan werken.
 
 ## Lokaal LLM
 
-Met [OLLama](https://ollama.ai) of [LM Studio](https://lmstudio.ai) kan je LLMs installeren en krijg je meteen een ingebouwde webserver om je prompts naartoe te sturen.
- Je kan een model downloaden dat specifiek gemaakt is voor een doel:
+Met [OLLama](https://ollama.ai) of [LM Studio](https://lmstudio.ai) kan je LLMs installeren en krijg je meteen een ingebouwde webserver om je prompts naartoe te sturen. Je kan vervolgens [een model kiezen](https://ollama.com/library) om te downloaden. Bijvoorbeeld:
+
 - [Geitje](https://goingdutch.ai/en/posts/introducing-geitje/) (goed in Nederlands)
 - [Tolkien](https://huggingface.co/JeremyArancio/llm-tolkien) (goed in fantasy stories)
 - [CodeLLama](https://huggingface.co/docs/transformers/en/model_doc/code_llama) (goed in programmeren)
 
-> *🚨 Voor het draaien van een lokaal LLM heb je een krachtige laptop nodig. Zelfs dan moet je opletten dat je alleen kleine modellen download :***1B of 7B versies***.*
+> *🚨 Voor het draaien van een lokaal LLM heb je een recente (4 jaar oud of nieuwer) laptop nodig met minimaal 8GB RAM. Zelfs dan moet je opletten dat je alleen kleine modellen download :***1B of 7B versies***.*
 
 #### Code voorbeeld Ollama
 
@@ -83,6 +83,7 @@ Nu je een lokaal taalmodel hebt draaien kan je ook RAG (documenten bevragen) gaa
 
 ## Advanced
 
+- [Ollama models](https://ollama.com/library)
 - [Calling Ollama with OpenAI library](https://platform.openai.com/docs/quickstart))
 - [HuggingFace models](https://huggingface.co/models?other=text-generation)
 - [Langchain embedding met OLLama](https://js.langchain.com/docs/use_cases/question_answering/local_retrieval_qa).
