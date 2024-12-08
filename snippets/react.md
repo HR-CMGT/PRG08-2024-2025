@@ -13,37 +13,43 @@ npm install
 npm install react-webcam
 npm install @mediapipe/tasks-vision
 ```
+<br><br><br>
 
-## Webcam component
 
-```js
-const videoConstraints = {
-    width: 480,
-    height: 270,
-    facingMode: "user"
-};
+## App component
 
-export default function App() {
-    const webcamRef = useRef(null)
-    const canvasRef = useRef(null)
+We gaan de `poseData` in een `state` bijhouden in `App`, zodat alle componenten de `poseData` kunnen gebruiken. Het `Posedetector` component krijgt een verwijzing naar de `handlePoseDataUpdate` functie. 
 
-    return (
-        <section className="videosection">
-            <Webcam
-                width="480"
-                height="270"
-                mirrored
-                id="webcam"
-                audio={false}
-                videoConstraints={videoConstraints}
-                ref={webcamRef}
-            />
-            <canvas ref={canvasRef} width="480" height="270"></canvas>
-        </section>
-    )
+De app krijgt drie child components: een voor de webcam en het posemodel, een component voor canvas drawing, en een component voor tonen van `x,y,z` waarden. 
+
+```jsx
+import './App.css'
+import Posedetector from './Posedetector'
+import CanvasDrawing from './CanvasDrawing'
+import Coordinates from './Coordinates'
+import { useEffect, useState } from "react";
+
+function App() {
+  const [poseData, setPoseData] = useState([]);
+
+  const handlePoseDataUpdate = (newPoseData) => {
+    setPoseData(newPoseData);
+  };
+
+  return (
+    <>
+      <section className="videosection">
+        <Posedetector onPoseDataUpdate={handlePoseDataUpdate}/>
+        <CanvasDrawing poseData={poseData}/>
+      </section>
+      <Coordinates poseData={poseData}/>
+    </>
+  )
 }
+
+export default App
 ```
-Plaats de webcam en het canvas element boven elkaar. Omdat de webcam is gespiegeld moet je het x coordinaat ook spiegelen in de CSS.
+De webcam en canvas drawing staan samen in 1 section, omdat ze over elkaar heen getekend moeten worden. Voeg de CSS toe aan `App.css`:
 
 ```css
 .videosection {
@@ -60,28 +66,22 @@ Plaats de webcam en het canvas element boven elkaar. Omdat de webcam is gespiege
     transform: rotateY(180deg);
 }
 ```
-## Documentatie (face, hand, body): 
-
-- https://developers.google.com/mediapipe/solutions/setup_web
-- https://www.npmjs.com/package/@mediapipe/tasks-vision
-
 <br><br><br>
 
-## Opzet app
+## Posedetector component
 
-De app bestaat uit een `ref` voor de webcam, posemodel, en canvas. Er is een `state` voor de posedata.
+In dit component gebruiken we de `react-webcam` en laden we het `tasks-vision` model voor detectie van handen.
 
 ```js
+import Webcam from 'react-webcam'
 import { useEffect, useRef, useState } from "react";
 import { PoseLandmarker, HandLandmarker, FilesetResolver, DrawingUtils } from "@mediapipe/tasks-vision";
-import Webcam from "react-webcam";
 
-const videoConstraints = {...};
+const videoConstraints = { width: 480, height: 270, facingMode: "user" }
 
-export default function App() {
+function Posedetector({ onPoseDataUpdate }) {
     const [poseData, setPoseData] = useState([])
     const webcamRef = useRef(null)
-    const canvasRef = useRef(null)
     const landmarkerRef = useRef(null)
 
     // capture de webcam stream en ontvang posedata
@@ -94,29 +94,31 @@ export default function App() {
         //...
     }, [])
 
-    // als de pose state is veranderd wordt deze code aangeroepen
-    useEffect(() => {
-        //...
-    }, [poseData]);
 
-    return (
-        <section className="videosection">
-        ...
-        </section>
-    )
+  return (
+    <Webcam
+      width="480"
+      height="270"
+      mirrored
+      id="webcam"
+      audio={false}
+      videoConstraints={videoConstraints}
+      ref={webcamRef}
+    />
+  )
 }
-
-
-
-
+export default Posedetector
 ```
+Plaats de webcam en het canvas element boven elkaar. Omdat de webcam is gespiegeld moet je het x coordinaat ook spiegelen in de CSS.
+
+
 
 
 <br><br><br>
 
 ## Landmarker laden
 
-Start de landmarker in `useEffect`. Sla een referentie naar het model op met `useRef`. 
+In het `PoseDetection` component laden we de landmarker in `useEffect`. Sla een referentie naar het model op met `useRef`. 
 
 ```js
  useEffect(() => {
@@ -132,8 +134,7 @@ Start de landmarker in `useEffect`. Sla een referentie naar het model op met `us
         });
         landmarkerRef.current = handLandmarker
         console.log("handlandmarker is created!")
-        // start capturing - zie hieronder
-        // capture()
+        capture()
     };
     createHandLandmarker()
 }, []);
@@ -152,7 +153,8 @@ const capture = async() => {
         if (video.currentTime > 0) {
             const result = await landmarkerRef.current.detectForVideo(video, performance.now())
             if(result.landmarks) {
-                setPoseData(result.landmarks)
+                // stuur de posedata naar het App component:
+                onPoseDataUpdate(result.landmarks)
             }
         }
     }
@@ -163,9 +165,9 @@ const capture = async() => {
 
 <br><br><br>
 
-# Posedata getallen tonen
+# Posedata testen
 
-Omdat `poseData` nu een `state` is kan je dit doorgeven aan een component die alle getallen toont:
+Het `App` component krijgt 60 keer per seconde data van 2 handen, dit zijn per hand 21 punten met elk een `x,y,z` coordinaat. Om te testen of dit goed binnenkomt maken we een `Coordinates` component die de getallen laat zien. Vanuit `App` geven we de `poseData` aan de child components.
 
 ```jsx
 function Coordinates({ poseData }) {
@@ -197,111 +199,40 @@ Geef de posedata door aan het component vanuit `App`:
 ```
 <br><br><br>
 
-# Posedata
+# Posedata tekenen
 
-## Posedata in console
+Als het `Coonrdinates` component werkt weten we zeker dat we data van MediaPipe binnen krijgen. Dit gaan we tekenen in het `CanvasDrawing` component: Je hebt een `useRef` nodig om een referentie naar het canvas te krijgen. 
 
-Deze `useEffect` luistert naar state changes. Dit kan je gebruiken als je de coordinaten in de console wil loggen of als je de pose in het canvas wil tekenen.
-
-```js
-// Posedata: array van handen. Hand: array van landmarks. Landmark: object met x,y,z
-useEffect(() => {
-    if(poseData.length > 0) {
-        const hand = poseData[0]
-        console.log(hand)
-    }
-}, [poseData]);
-```
-
-
-<br><br><br>
-
-## Posedata in canvas element
-
-Je hebt een `useRef` nodig om een referentie naar het canvas te krijgen. 
-
-```js
-const canvasRef = useRef(null)
-```
-```html
-<canvas ref={canvasRef} width="480" height="270"></canvas>
-```
-Zodra `poseData` verandert, wordt deze `useEffect` aangeroepen. Je kan nu de `landmarks` gebruiken om te tekenen. Omdat `x,y,z` getallen zijn van 0 tot 1 moet je het vermenigvuldigen met de afmeting van je canvas. 
-
-```js
-useEffect(() => {
-    const ctx = canvasRef.current.getContext('2d')
-    ctx.fillStyle = 'red';
-    for (const hand of poseData) {
-        ctx.fillRect(hand[8].x * 480, hand[8].y * 270, 10, 10);
-    }
-}, [poseData]);
-```
-### Eigen component
-
-Het is mooier om de canvas en drawing code in een eigen component te zetten. De posedata geef je dan door als props:
-
-```js
-<Painting poseData={poseData}/>
-```
-
-<br><br><br>
-
-# PoseData met DrawingUtils
-
-Je kan de MediaPipe `DrawingUtils` gebruiken om poses te tekenen. Je moet een `new DrawingUtils()` aanmaken bij de eerste `useEffect` call. 
-
-```js
-const canvasRef = useRef(null)
-useEffect(() => {
-    const ctx = canvasRef.current.getContext('2d')
-    drawingUtilsRef.current = new DrawingUtils(ctx)
-}, [])
-```
-Daarna kan je de drawing utils aanroepen elke keer dat `poseData` is veranderd. 
-```js
-useEffect(() => {
-    const ctx = canvasRef.current.getContext('2d')
-    if(drawingUtilsRef.current) {
-        ctx.clearRect(0, 0, 480, 270)
-        for (const hand of poseData) {
-            drawingUtilsRef.current.drawConnectors(hand, HandLandmarker.HAND_CONNECTIONS, {color: "#00FF00",lineWidth: 5});
-            drawingUtilsRef.current.drawLandmarks(hand, { radius: 4, color: "#FF0000", lineWidth: 2 });
-        }
-    }
-}, [poseData]);
-```
-### Eigen component
-
-Ook hier is het mooier om de drawingutils code in een eigen component te zetten. De posedata geef je dan door als props:
-
-```js
-<Hands poseData={poseData}/>
-```
-Alle code die met de DrawingUtils te maken heeft verplaats je naar het component:
-
-```js
-import { useEffect, useRef } from 'react';
+```jsx
+import { useEffect, useRef, useState } from "react";
 import { PoseLandmarker, HandLandmarker, FilesetResolver, DrawingUtils } from "@mediapipe/tasks-vision";
 
-export default function Hands({ poseData }) {
+function CanvasDrawing({ poseData }) {
     const canvasRef = useRef(null)
     const drawingUtilsRef = useRef(null)
-
-    useEffect(() => {
-        ...
-    }, [poseData]);
 
     useEffect(() => {
         const ctx = canvasRef.current.getContext('2d')
         drawingUtilsRef.current = new DrawingUtils(ctx)
     }, [])
 
+    useEffect(() => {
+        const ctx = canvasRef.current.getContext('2d')
+        if(drawingUtilsRef.current) {
+            ctx.clearRect(0, 0, 480, 270)
+            for (const hand of poseData) {
+                drawingUtilsRef.current.drawConnectors(hand, HandLandmarker.HAND_CONNECTIONS, {color: "#00FF00",lineWidth: 5});
+                drawingUtilsRef.current.drawLandmarks(hand, { radius: 4, color: "#FF0000", lineWidth: 2 });
+            }
+        }
+    }, [poseData]);
+
     return (
         <canvas ref={canvasRef} width="480" height="270"></canvas>
     )
 }
 
+export default CanvasDrawing
 ```
 
 
@@ -309,37 +240,15 @@ export default function Hands({ poseData }) {
 
 <br><br><br>
 
-## RequestAnimationFrame
+## RequestAnimationFrame en React state
 
-In React moet je er rekening mee houden dat een `state` niet altijd bevat wat je verwacht. In onderstaande code gebruiken we `useRef` om via `requestAnimationframe` de juiste state uit te lezen.
+Bovenstaande code gebruikt een `state` om een grote hoeveelheid data heel vaak te verversen. Dit kan React langzaam maken omdat `state` hier niet persé voor bedoeld is. De oplossing hiervoor kan zijn om `useState` helemaal weg te laten. De `poseData` moet je dan via `useRef` gaan doorgeven van het ene component naar het andere. Ook kan je `useMemo` of `useCallback` gebruiken om te zorgen dat re-renders minder vaak gebeuren.
 
 
-```js
-const App = () => {
-  const [title, setTitle] = useState("Testing");
-  const titleRef = useRef(title)
- 
-  const onClickHandler = (tag) => {
-     setTitle(tag)
-  }
-
-  useEffect(() => {
-    titleRef.current = title
-  }, [title]); 
-
-  useEffect(() => {
-    const logState = () => {
-      console.log(titleRef.current)
-      window.requestAnimationFrame(logState)
-    }
-    logState()
-  }, [])
-
-  return (
-    <button onClick={onClickHandler}>Click me</button>
-  )
-}
-```
 
 
  
+## Documentatie (face, hand, body): 
+
+- https://developers.google.com/mediapipe/solutions/setup_web
+- https://www.npmjs.com/package/@mediapipe/tasks-vision
