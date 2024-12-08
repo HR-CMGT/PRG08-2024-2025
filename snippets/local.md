@@ -1,23 +1,24 @@
-# Models
+# Lokale taalmodellen
 
-In de [online community](https://huggingface.co/models?other=text-generation) verschijnen dagelijks nieuwe models. Om hiermee te werken zal je een LLM moeten downloaden, of hosten. Een model kan een specifiek doel hebben, bv:
-- [Geitje](https://goingdutch.ai/en/posts/introducing-geitje/) (goed in Nederlands)
-- [Tolkien](https://huggingface.co/JeremyArancio/llm-tolkien) (goed in fantasy stories)
-- [CodeLLama](https://huggingface.co/docs/transformers/en/model_doc/code_llama) (goed in programmeren)
+Het grote nadeel van werken met online API's is dat het vaak niet gratis is. Je betaalt per token bij de meeste API's. Een ander nadeel is dat je privacy niet is gegarandeerd. Het wordt afgeraden om privé documenten zoals je belastingaangiftes of je afstudeerscriptie te delen met OpenAI of Google Gemini.
 
-<br>
+Om die reden kan je kiezen om met een lokaal taalmodel te gaan werken.
+
+<br><br><br>
 
 ## Lokaal LLM
 
-Als je zeker wil weten dat je data privé blijft, op je eigen machine, dan kan je een open source taalmodel installeren. Je betaalt nu ook geen tokens om taaldata te genereren. 
-
 Met [OLLama](https://ollama.ai) of [LM Studio](https://lmstudio.ai) kan je LLMs installeren en krijg je meteen een ingebouwde webserver om je prompts naartoe te sturen.
+ Je kan een model downloaden dat specifiek gemaakt is voor een doel:
+- [Geitje](https://goingdutch.ai/en/posts/introducing-geitje/) (goed in Nederlands)
+- [Tolkien](https://huggingface.co/JeremyArancio/llm-tolkien) (goed in fantasy stories)
+- [CodeLLama](https://huggingface.co/docs/transformers/en/model_doc/code_llama) (goed in programmeren)
 
 > *🚨 Voor het draaien van een lokaal LLM heb je een krachtige laptop nodig. Zelfs dan moet je opletten dat je alleen kleine modellen download :***1B of 7B versies***.*
 
 #### Code voorbeeld LM Studio / Ollama
 
-In dit codevoorbeeld wordt het lokale LLM aangeroepen met de standaard `openai` api.
+In dit codevoorbeeld wordt het lokale LLM aangeroepen met de `openai` library. Ondanks dat je deze library gebruikt wordt er geen data naar openai verstuurd.
 
 ```js
 import { OpenAI } from "openai";
@@ -42,23 +43,31 @@ async function main() {
 main();
 ```
 
-<br>
+<br><br><br>
 
-## HuggingFace Spaces
+## Documenten bevragen
 
-- *HuggingFace Spaces* biedt hosting met automatische javascript endpoints voor [LLM models](https://huggingface.co/blog/inference-endpoints-llm) 💰.
-- Spaces van andere users bieden soms een gratis endpoint aan. Zie dit voorbeeld voor een [Geitje endpoint](./huggingface.md).
+Nu je een lokaal taalmodel hebt draaien kan je ook RAG (documenten bevragen) gaan uitvoeren. Het grote voordeel is dat je geen privé documenten naar een server hoeft te sturen. Daarnaast verbrand je geen API tokens. Je kan RAG op twee manieren doen:
 
-<br>
+- Gebruik dezelfde javascript code als bij het bouwen van embeddings [in les 8 over documenten](https://github.com/HR-CMGT/PRG08-2024-2025/tree/main/les8). Echter nu roep je een lokaal `embedding` model aan dat in OLLama is gedownload. Je moet de embeddings zelf opslaan.
+- Download een interface tool die dit voor je kan doen: Je kan kiezen uit [AnythingLLM](https://anythingllm.com) en [OpenWebUI](https://openwebui.com). Het voordeel van deze tools is dat je een drag&drop interface krijgt. Ook slaan ze automatisch je embeddings op. Deze tools hebben ook een API endpoint zodat je vanuit je eigen javascript app vragen kan stellen.
+
+<br><br><br>
 
 ## Links
 
 - [OLLama](https://ollama.ai) 
 - [LM Studio](https://lmstudio.ai)
+- [Open Web UI](https://openwebui.com)
+- [Anything LLM](https://anythingllm.com)
+
+## Advanced
+
 - [HuggingFace models](https://huggingface.co/models?other=text-generation)
-- [HuggingFace hosting and creating javascript endpoints](https://ui.endpoints.huggingface.co/welcome)
 - [Langchain embedding met OLLama](https://js.langchain.com/docs/use_cases/question_answering/local_retrieval_qa).
 - [Download LLMs met python en OpenLLM](https://github.com/bentoml/OpenLLM), inclusief webserver en [Langchain integratie](https://python.langchain.com/docs/integrations/llms/openllm)
 - [HuggingFace tutorial](https://www.markhneedham.com/blog/2023/06/23/hugging-face-run-llm-model-locally-laptop/) en [6 ways to run a local LLM on your laptop](https://semaphoreci.com/blog/local-llm).
 - [Huggingface models in Langchain](https://python.langchain.com/docs/integrations/llms/huggingface_pipelines)
 - [Running your own private Copilot](https://www.youtube.com/watch?v=F1bXfnrzAxM)
+- [Huggingface endpoints](https://huggingface.co/blog/inference-endpoints-llm) 💰.
+- [Geitje endpoint](./huggingface.md).
