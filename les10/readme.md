@@ -18,9 +18,26 @@ Met [OLLama](https://ollama.ai) of [LM Studio](https://lmstudio.ai) kan je LLMs 
 
 > *🚨 Voor het draaien van een lokaal LLM heb je een krachtige laptop nodig. Zelfs dan moet je opletten dat je alleen kleine modellen download :***1B of 7B versies***.*
 
-#### Code voorbeeld LM Studio / Ollama
+#### Code voorbeeld Ollama
 
-In dit codevoorbeeld wordt het lokale LLM aangeroepen met de `openai` library. Ondanks dat je deze library gebruikt wordt er geen data naar openai verstuurd.
+In dit codevoorbeeld roepen we [Ollama aan met langchain](https://js.langchain.com/docs/integrations/chat/ollama/)
+
+```js
+import { ChatOllama } from "@langchain/ollama";
+
+const llm = new ChatOllama({
+  model: "llama3",
+  temperature: 0,
+  maxRetries: 2,
+});
+
+const aiMsg = await llm.invoke([
+  ["system",  "You are a helpful assistant that translates English to Japanese. Translate the user sentence.",],
+  ["human", "I love cheesecake."],
+]);
+```
+
+In dit codevoorbeeld roepen we Ollama aan met de [openai library](https://platform.openai.com/docs/quickstart). Ondanks dat je deze library gebruikt wordt er geen data naar openai verstuurd.
 
 ```js
 import { OpenAI } from "openai";
@@ -58,13 +75,15 @@ Nu je een lokaal taalmodel hebt draaien kan je ook RAG (documenten bevragen) gaa
 
 ## Links
 
-- [OLLama](https://ollama.ai) 
+- [OLLama](https://ollama.ai)
+- [Calling OLLama from langchain](https://js.langchain.com/docs/integrations/chat/ollama/)
 - [LM Studio](https://lmstudio.ai)
 - [Open Web UI](https://openwebui.com)
 - [Anything LLM](https://anythingllm.com)
 
 ## Advanced
 
+- [Calling Ollama with OpenAI library](https://platform.openai.com/docs/quickstart))
 - [HuggingFace models](https://huggingface.co/models?other=text-generation)
 - [Langchain embedding met OLLama](https://js.langchain.com/docs/use_cases/question_answering/local_retrieval_qa).
 - [Download LLMs met python en OpenLLM](https://github.com/bentoml/OpenLLM), inclusief webserver en [Langchain integratie](https://python.langchain.com/docs/integrations/llms/openllm)
