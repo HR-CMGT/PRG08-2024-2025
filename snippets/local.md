@@ -1,6 +1,6 @@
 # Lokale taalmodellen
 
-Het grote nadeel van werken met online API's is dat het vaak niet gratis is. Je betaalt per token bij de meeste API's. Een ander nadeel is dat je privacy niet is gegarandeerd. Het wordt afgeraden om privé documenten zoals je belastingaangiftes of je afstudeerscriptie te delen met OpenAI of Google Gemini.
+Het grote nadeel van werken met online API's is dat het vaak niet gratis is. Je betaalt per token bij de meeste API's. Een ander nadeel is dat je privacy niet is gegarandeerd. Het wordt afgeraden om privé documenten zoals je belastingaangiftes of je afstudeerscriptie te delen met OpenAI, Google Gemini of AliBaba Qwen.
 
 Om die reden kan je kiezen om met een lokaal taalmodel te gaan werken.
 
@@ -8,17 +8,37 @@ Om die reden kan je kiezen om met een lokaal taalmodel te gaan werken.
 
 ## Lokaal LLM
 
-Met [OLLama](https://ollama.ai) of [LM Studio](https://lmstudio.ai) kan je LLMs installeren en krijg je meteen een ingebouwde webserver om je prompts naartoe te sturen.
- Je kan een model downloaden dat specifiek gemaakt is voor een doel:
+Met [OLLama](https://ollama.ai) of [LM Studio](https://lmstudio.ai) kan je LLMs installeren en krijg je meteen een ingebouwde webserver om je prompts naartoe te sturen. Je kan vervolgens [een model kiezen](https://ollama.com/library) om te downloaden. Bijvoorbeeld:
+
 - [Geitje](https://goingdutch.ai/en/posts/introducing-geitje/) (goed in Nederlands)
 - [Tolkien](https://huggingface.co/JeremyArancio/llm-tolkien) (goed in fantasy stories)
 - [CodeLLama](https://huggingface.co/docs/transformers/en/model_doc/code_llama) (goed in programmeren)
 
-> *🚨 Voor het draaien van een lokaal LLM heb je een krachtige laptop nodig. Zelfs dan moet je opletten dat je alleen kleine modellen download :***1B of 7B versies***.*
+> *🚨 Voor het draaien van een lokaal LLM heb je een recente (4 jaar oud of nieuwer) laptop nodig met minimaal 8GB RAM. Voor macbooks heb je een M1 of hoger nodig. Zelfs dan moet je opletten dat je alleen kleine modellen download :***1B of 7B versies***.*
 
-#### Code voorbeeld LM Studio / Ollama
+<br><br><br>
 
-In dit codevoorbeeld wordt het lokale LLM aangeroepen met de `openai` library. Ondanks dat je deze library gebruikt wordt er geen data naar openai verstuurd.
+## Code voorbeeld Ollama
+
+In dit codevoorbeeld roepen we [Ollama aan met langchain](https://js.langchain.com/docs/integrations/chat/ollama/)
+
+```js
+import { ChatOllama } from "@langchain/ollama";
+
+const llm = new ChatOllama({
+  model: "llama3",
+  temperature: 0,
+  maxRetries: 2,
+});
+
+const aiMsg = await llm.invoke([
+  ["system",  "You are a helpful assistant that translates English to Japanese. Translate the user sentence.",],
+  ["human", "I love cheesecake."],
+]);
+```
+<br>
+
+In dit codevoorbeeld roepen we Ollama aan met de [openai library](https://platform.openai.com/docs/quickstart). Ondanks dat je deze library gebruikt wordt er geen data naar openai verstuurd.
 
 ```js
 import { OpenAI } from "openai";
@@ -56,13 +76,16 @@ Nu je een lokaal taalmodel hebt draaien kan je ook RAG (documenten bevragen) gaa
 
 ## Links
 
-- [OLLama](https://ollama.ai) 
+- [OLLama](https://ollama.ai)
+- [Calling OLLama from langchain](https://js.langchain.com/docs/integrations/chat/ollama/)
 - [LM Studio](https://lmstudio.ai)
 - [Open Web UI](https://openwebui.com)
 - [Anything LLM](https://anythingllm.com)
 
 ## Advanced
 
+- [Ollama models](https://ollama.com/library)
+- [Calling Ollama with OpenAI library](https://platform.openai.com/docs/quickstart))
 - [HuggingFace models](https://huggingface.co/models?other=text-generation)
 - [Langchain embedding met OLLama](https://js.langchain.com/docs/use_cases/question_answering/local_retrieval_qa).
 - [Download LLMs met python en OpenLLM](https://github.com/bentoml/OpenLLM), inclusief webserver en [Langchain integratie](https://python.langchain.com/docs/integrations/llms/openllm)
