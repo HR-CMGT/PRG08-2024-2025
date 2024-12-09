@@ -136,7 +136,7 @@ function checkResult(event) {
 
 # OpenAI Whisper
 
-Je kan je mp3 file naar *OpenAI Whisper* sturen om spraak om te zetten naar tekst. Helaas werkt dit nog niet via Azure, dus je moet een eigen `OPENAI_API_KEY` in je `.env` plaatsen. Dit voorbeeld is in ***Langchain***:
+Je kan je mp3 file naar *OpenAI Whisper* sturen om spraak om te zetten naar tekst. Helaas werkt dit nog niet via Azure in Javascript, dus je moet een eigen `OPENAI_API_KEY` in je `.env` plaatsen. Dit voorbeeld is in ***Langchain***:
 
 ```bash
 npm install langchain @langchain/community openai
@@ -152,7 +152,8 @@ const loader = new OpenAIWhisperAudio("hello.mp3", options);
 const docs = await loader.load();
 console.log(docs[0].pageContent);
 ```
-- [Bekijk hier het voorbeeld in de OpenAI docs](https://platform.openai.com/docs/guides/speech-to-text)
+- [Langchain Whisper](https://js.langchain.com/docs/integrations/document_loaders/file_loaders/openai_whisper_audio/)
+- [OpenAI Whisper docs](https://platform.openai.com/docs/guides/speech-to-text)
 
 <br><br><br>
 
