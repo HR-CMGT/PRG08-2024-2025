@@ -1,8 +1,8 @@
 # Speech
 
-- Spreken
-- Spraakherkenning
-- OpenAI Whisper
+- Spreken en spraak herkenning in de Browser
+- OpenAI whisper
+- Elevenlabs Conversational AI
 
 <br><br><bR>
 
@@ -90,7 +90,7 @@ playButton.addEventListener("click", () => {
 <br>
 <br>
 
-## Spraakherkenning
+## Spraakherkenning in de browser
 
 Je kan de gebruiker een tekst laten inspreken, de tekst wordt dan herkend. Let op, het effect verschilt enorm per browser. Je spraak kan naar de servers van Google of Apple gestuurd worden.
 
@@ -153,6 +153,28 @@ const docs = await loader.load();
 console.log(docs[0].pageContent);
 ```
 - [Bekijk hier het voorbeeld in de OpenAI docs](https://platform.openai.com/docs/guides/speech-to-text)
+
+<br><br><br>
+
+## Elevenlabs
+
+Elevenlabs heeft een gratis tier waarmee je conversational speech kan genereren vanuit tekst.
+
+```js
+import { ElevenLabsClient } from "elevenlabs";
+
+const client = new ElevenLabsClient({ apiKey: "YOUR_API_KEY" });
+const voiceID = "21m00Tcm4TlvDq8ikWAM"
+await client.textToSpeech.convert(voiceID, {
+    model_id: "eleven_multilingual_v2",
+    text: "Time for tea and crumpets!"
+});
+
+```
+
+- https://elevenlabs.io/conversational-ai
+- [Javascript API reference](https://elevenlabs.io/docs/api-reference/overview)
+- [Github](https://github.com/elevenlabs/elevenlabs-js)
 
 <br><br><br>
 
