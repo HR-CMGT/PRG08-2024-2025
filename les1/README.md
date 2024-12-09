@@ -163,7 +163,7 @@ canvasCtx.fill()
 ## Links
 
 - [Hand Landmark Detection](https://mediapipe-studio.webapps.google.com/studio/demo/hand_landmarker)
-- [DrawingUtils](https://developers.google.com/mediapipe/api/solutions/js/tasks-vision.drawingutils)
+- [Javascript Reference](https://ai.google.dev/edge/api/mediapipe/js/tasks-vision#tasks_vision_package)
 - [Canvas Drawing Tutorial](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial)
 - [MediaPipe Guide](https://developers.google.com/mediapipe/solutions/guide)
 - [MediaPipe Javascript Documentation](https://developers.google.com/mediapipe/api/solutions/js/tasks-vision)
