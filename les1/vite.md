@@ -27,3 +27,8 @@ Let op dat de WASM file en het AI Model nog steeds via een CDN worden geladen. S
 npm run dev
 ```
 
+<Br><br><br>
+
+## Expert level
+
+Je kan ook een [React MediaPipe](https://github.com/HR-CMGT/PRG08-2024-2025/blob/main/snippets/react.md) project bouwen.
