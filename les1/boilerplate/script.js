@@ -1,11 +1,13 @@
-import { HandLandmarker, FilesetResolver } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0";
+import { HandLandmarker, FilesetResolver, DrawingUtils } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.18";
+
+const enableWebcamButton = document.getElementById("webcamButton")
+const logButton = document.getElementById("logButton")
 
 const video = document.getElementById("webcam")
 const canvasElement = document.getElementById("output_canvas")
 const canvasCtx = canvasElement.getContext("2d")
-const enableWebcamButton = document.getElementById("webcamButton")
-const logButton = document.getElementById("logButton")
 
+const drawUtils = new DrawingUtils(canvasCtx)
 let handLandmarker = undefined;
 let webcamRunning = false;
 let results = undefined;
@@ -24,12 +26,10 @@ const createHandLandmarker = async () => {
         numHands: 2
     });
     console.log("model loaded, you can start webcam")
-    if (hasGetUserMedia()) {
-        enableWebcamButton.addEventListener("click", (e) => enableCam(e))
-        logButton.addEventListener("click", (e) => logAllHands(e))
-    } 
+    
+    enableWebcamButton.addEventListener("click", (e) => enableCam(e))
+    logButton.addEventListener("click", (e) => logAllHands(e)) 
 }
-const hasGetUserMedia = () => !!navigator.mediaDevices?.getUserMedia;
 
 /********************************************************************
 // START THE WEBCAM
@@ -57,23 +57,13 @@ async function predictWebcam() {
     results = await handLandmarker.detectForVideo(video, performance.now())
 
     canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-    if (results.landmarks) {
-        drawAllHands(results)
+    for(let hand of results.landmarks){
+        drawUtils.drawConnectors(hand, HandLandmarker.HAND_CONNECTIONS, { color: "#00FF00", lineWidth: 5 });
+        drawUtils.drawLandmarks(hand, { radius: 4, color: "#FF0000", lineWidth: 2 });
     }
 
     if (webcamRunning) {
        window.requestAnimationFrame(predictWebcam)
-    }
-}
-
-/********************************************************************
-// DRAW HANDS
-********************************************************************/
-function drawAllHands(results) {
-    for (let i = 0; i < results.landmarks.length; i++) {
-        let handmarks = results.landmarks[i]
-        drawConnectors(canvasCtx, handmarks, HAND_CONNECTIONS, { color: "#03F600", lineWidth: 4 });
-        drawLandmarks(canvasCtx, handmarks, { color: "#F40000", lineWidth: 3 })
     }
 }
 
@@ -86,4 +76,9 @@ function logAllHands(){
     }
 }
 
-createHandLandmarker()
+/********************************************************************
+// START THE APP
+********************************************************************/
+if (navigator.mediaDevices?.getUserMedia) {
+    createHandLandmarker()
+}
