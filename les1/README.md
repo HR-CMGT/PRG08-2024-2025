@@ -22,8 +22,9 @@
 
 ## MediaPipe project
 
+- Bekijk de [Codepen demo](https://codepen.io/eerk/pen/oNKVWvY?editors=0011).
 - Je kan deze [boilerplate](./boilerplate/) downloaden als startproject. Open `index.html` met een `live server`.
-- Of start je eigen [Vite project](./vite.md)
+- 🔥 Of start je eigen [Vite project](./vite.md)
 
 
 <br><br><br>
@@ -59,21 +60,35 @@ if(result.landmarks) {
 
 <br><br><br>
 
-## Posedata tekenen
+## Handen tekenen met DrawingUtils
 
-In het code voorbeeld wordt de data uit [Hand Landmark Detection](https://mediapipe-studio.webapps.google.com/studio/demo/hand_landmarker) meteen in een canvas getekend, met behulp van [DrawingUtils](https://developers.google.com/mediapipe/api/solutions/js/tasks-vision.drawingutils). ⚠️ Dit kan je ook uitzetten.
+Om de handen over de video heen te tekenen is er een `canvas` element boven op de video geplaatst. De `video` en het `canvas` element hebben `position:absolute` en `top:0, left:0`. Dit zorgt dat ze precies over elkaar heen vallen.
 
-*code voor tekenen*
+De [DrawingUtils]([https://developers.google.com/mediapipe/api/solutions/js/tasks-vision.drawingutils](https://ai.google.dev/edge/api/mediapipe/js/tasks-vision#tasks_vision_package) class geeft je twee functies waarmee je de punten van de hand, en de lijnen daartussen meteen in het canvas kan tekenen:
+
+
+*code voor drawingUtils*
 ```js
-for (let i = 0; i < results.landmarks.length; i++) {
-    let handmarks = results.landmarks[i]
-    drawConnectors(canvasCtx, handmarks, HAND_CONNECTIONS, { color: "#03F600", lineWidth: 4 });
-    drawLandmarks(canvasCtx, handmarks, { color: "#F40000", lineWidth: 3 })
+const canvasElement = document.getElementById("output_canvas")
+const canvasCtx = canvasElement.getContext("2d")
+const drawUtils = new DrawingUtils(canvasCtx)
+
+function drawResults() {
+    canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+    for(let hand of results.landmarks){
+        drawUtils.drawConnectors(hand, HandLandmarker.HAND_CONNECTIONS, { color: "#00FF00", lineWidth: 5 });
+        drawUtils.drawLandmarks(hand, { radius: 4, color: "#FF0000", lineWidth: 2 });
+    }
 }
 ```
+*⚠️ Het tekenen van de handen is niet persé nodig om de coördinaten uit de webcam te lezen.*
+
+- [Javascript reference DrawingUtils](https://ai.google.dev/edge/api/mediapipe/js/tasks-vision#tasks_vision_package) 
+- [Hand Landmark Detection](https://mediapipe-studio.webapps.google.com/studio/demo/hand_landmarker)
+
 <br><br><br>
 
-# Coordinaten gebruiken
+# x,y,z coordinaten uitlezen
 
 Je kan de landmarks data gebruiken voor je eigen creatieve toepassingen. We gaan oefenen met het plaasen van een element op de plek van de duim. 
 
