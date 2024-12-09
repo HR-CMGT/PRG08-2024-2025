@@ -14,7 +14,7 @@ import knn from 'knear'
 
 export default function App() {
     const [prediction, setPrediction] = useState(undefined)
-    const machine = useRef(new knn.kNear(3)) // of new kNear(3)    
+    const machine = useRef(null) 
 
     const makePrediction = () => {
         const result = machine.current.classify([3,5,4])
@@ -22,6 +22,7 @@ export default function App() {
     }
 
     useEffect(() => {
+        machine.current = new knn.kNear(3); 
         machine.current.learn([1, 2, 3], 'cat')
         machine.current.learn([0, 0, 0], 'cat')
         machine.current.learn([14, 10, 9], 'dog')
