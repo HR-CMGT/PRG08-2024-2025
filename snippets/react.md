@@ -242,14 +242,13 @@ export default CanvasDrawing
 
 ## RequestAnimationFrame en React state
 
-Bovenstaande code gebruikt een `state` om een grote hoeveelheid poseData heel vaak te verversen. Dit kan React langzaam maken omdat `state` hier niet persé voor bedoeld is. De oplossing hiervoor kan zijn om `useState` helemaal weg te laten. De `poseData` moet je dan aanmaken als `useRef` in het `App` component. Deze `ref` geef je dan weer door als een `prop` naar je child components.
-
-De componenten kunnen de data dan aanroepen via `poseData.current`. Let op dat je nu zelf een update loop moet schrijven in je `CanvasDrawing` en `Coordinates` componenten met `requestAnimationFrame` (Dit gaat automatisch als je `state` gebruikt.
+Bovenstaande code gebruikt een `state` om een grote hoeveelheid poseData heel vaak te verversen. Dit kan React langzaam maken omdat `state` hier niet persé voor bedoeld is. Een oplossing kan zijn om `useState` te vervangen door `useRef`. Je moet dan handmatig het canvas telkens verversen met nieuwe data uit `useRef`.
 
 
 <br><br><br>
  
-## Documentatie (face, hand, body): 
+## Documentatie: 
 
 - https://developers.google.com/mediapipe/solutions/setup_web
 - https://www.npmjs.com/package/@mediapipe/tasks-vision
+- https://ai.google.dev/edge/api/mediapipe/js/tasks-vision#tasks_vision_package
