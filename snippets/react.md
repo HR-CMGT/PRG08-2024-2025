@@ -242,7 +242,23 @@ export default CanvasDrawing
 
 ## RequestAnimationFrame en React state
 
-Bovenstaande code gebruikt een `state` om een grote hoeveelheid poseData heel vaak te verversen. Dit kan React langzaam maken omdat `state` hier niet persé voor bedoeld is. Een oplossing kan zijn om `useState` te vervangen door `useRef`. Je moet dan handmatig het canvas telkens verversen met nieuwe data uit `useRef`.
+Bovenstaande code gebruikt een `state` om een grote hoeveelheid poseData heel vaak te verversen. Dit kan React langzaam maken omdat `state` niet persé voor animatie bedoeld is. Je kan ervoor kiezen om de regel `requestAnimationFrame(capture)` in `PoseDetector` minder vaak uit te voeren, bv. 10 keer per seconde:
+
+```js
+const targetFPS = 10; // Desired frames per second
+const interval = 1000 / targetFPS; // Interval in milliseconds
+let lastTime = 0;
+
+function capture(time) {
+    if (time - lastTime >= interval) {
+        lastTime = time;
+        // Hier de posedetection task
+    }
+    requestAnimationFrame(capture);
+}
+```
+
+Een andere oplossing kan zijn om `useState` te vervangen door `useRef`. Je moet dan wel handmatig het canvas telkens verversen met nieuwe data uit `useRef`.
 
 
 <br><br><br>
