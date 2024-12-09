@@ -15,7 +15,7 @@ In deze les blikken we terug op les 1 en 2, die gegeven zijn voor het TLE projec
 
 # Mediapipe Posedata in de console
 
-Zet het mediapipe project op volgens de [boilerplate code uit les 1](../les1/boilerplate/).
+Zet het mediapipe project op volgens de [boilerplate code uit les 1](../les1/boilerplate/) of start je eigen [MediaPipe project met Vite](https://github.com/HR-CMGT/PRG08-2024-2025/blob/main/les1/vite.md) (recommended).
 
 In MediaPipe ga je Posedata verzamelen. Maak een HTML button die de huidige webcam pose in de console laat zien als je er op klikt: `console.log(results)`. Een enkele pose van één hand heeft 20 punten:
 
