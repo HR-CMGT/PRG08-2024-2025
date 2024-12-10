@@ -44,8 +44,6 @@ btn.addEventListener("click", () => {
 
 Je kan verschillende voices gebruiken. Zie de [getvoices documentatie](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis/getVoices). In dit voorbeeld tonen we alle beschikbare stemmen. De beschikbare stemmen verschillen per OS (Mac,Windows,Linux) en per browser (Safari, Edge, Chrome).
 
-*⚠️ onder "system settings" in windows / mac kan je verbeterde natuurlijk klinkende stemmen downloaden*
-
 ```js
 let voices = window.speechSynthesis.getVoices()
 for(let voice of voices) {
@@ -62,6 +60,7 @@ synth.speak(utterThis)
 
 - [Op MacOS kan je je eigen stem toevoegen aan de beschikbare voices!](https://support.apple.com/en-gb/guide/mac-help/mchldfd72333/mac)
 - Het duurt even voordat de voices beschikbaar zijn. Je kan dit checken met `synth.addEventListener("voiceschanged", () => {})`
+- Onder "system settings" in windows / mac kan je verbeterde natuurlijk klinkende stemmen downloaden
 
 <br>
 <Br>
