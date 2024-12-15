@@ -63,13 +63,16 @@ talkAboutWeather();
 
 <br><br><br>
 
-## Function calling
+## Function calling (tools, agents)
 
-Een taalmodel kan *herkennen* of je in je prompt een specifieke opdracht geeft, zoals het uitrekenen van een berekening, het aanzetten van het licht, of het versturen van een tweet.
+In het bovenstaande voorbeeld roepen we zelf een `weather api` aan en geven het resultaat aan het taalmodel. Het zou natuurlijk veel handiger zijn als het taalmodel zelf kan bepalen wanneer het weerbericht opgehaald moet worden, waarna het taalmodel vervolgens zelf de weather api aanroept. Een taalmodel is immers heel goed in begrijpen wat je vraagt!
 
-Het taalmodel kan die opdrachten ook daadwerkelijk uitvoeren als je daar functies voor klaarzet. Dit heet ***tool calling / function calling***.
+Dit concept heet `function calling / tool calling / agents`. Het taalmodel krijgt nu toegang tot javascript functies in jouw project en gaat zelf bedenken wanneer deze functies aangeroepen moeten worden. Dit kan je gebruiken voor functies die een taalmodel niet uit zichzelf kan doen, zoals het maken van een precieze berekening, het aanzetten van het licht (via een smarthome functie), het lezen en schrijven naar een database (CRUD), of het versturen van een tweet.
 
-- [Voorbeeld: laat het taalmodel een berekening maken](../snippets/functions.md)
+- [Code Voorbeeld: laat het taalmodel een berekening maken](../snippets/functions.md)
+
+### Documentatie
+
 - [Een tool definiëren](https://js.langchain.com/docs/concepts/tools/)
 - [Een tool automatisch laten uitvoeren door het taalmodel](https://js.langchain.com/docs/concepts/tool_calling/)
 
