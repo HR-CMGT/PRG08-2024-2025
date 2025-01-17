@@ -1,8 +1,13 @@
-# Les 1 deel 2
+# Les 6 - deel 1
 
-## Werken met Langchain
+- Zorg dat je [NodeJS 22](https://nodejs.org/en) hebt geïnstalleerd.
+- Installeer [JSONFormatter](https://chromewebstore.google.com/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa) of een andere browser extensie waarmee je JSON kan bekijken.
 
-Voeg een `.env` file toe aan je server project. Voeg de API keys uit de les toe.
+<br><br><br>
+
+## Opzetten server.js
+
+Maak een `SERVER` map aan, hierin plaats je `server.js`, `.env` en `.gitignore`: 
 
 ```
 SERVER
@@ -10,7 +15,14 @@ SERVER
 ├── .gitignore
 └── server.js
 ```
+De `.gitignore` file:
 
+```sh
+node_modules
+.env
+```
+
+De `.env` file:
 
 ```sh
 OPENAI_API_TYPE=___
@@ -22,27 +34,34 @@ ENGINE_NAME=___
 INSTANCE_NAME=___
 ```
 
-> *🚨 Deel de API keys en de ENV file niet met anderen. Plaats de API keys niet online.*
+> *🚨 Deze waarden haal je uit de presentatie. Deel de API keys en de ENV file niet met anderen. Plaats de API keys niet online.*
 
+<br><br><br>
 
+## Hello World
 
-#### API keys lezen
+Maak server.js aan:
 
-Met *Node 22* kan je via `--env-file` de .env variabelen doorgeven aan je server. Gebruik `--watch` zodat je niet telkens de server hoeft te herstarten als je iets aanpast.
+```js
+console.log("hello world")
+console.log(process.env.AZURE_OPENAI_API_KEY)
+```
+
+Start de file met `node`, zorg dat de `.env` file ook wordt meegenomen:
 
 ```sh
 node --env-file=.env --watch server.js
 ```
-Test of het inlezen van je `.env` is gelukt:
-```js
-console.log(process.env.AZURE_OPENAI_API_KEY)
-```
+Test of het inlezen van je `.env` is gelukt!
+
 > ⚠️ *TIP: plaats je volledige node commando `node --env-file=.env --watch server.js` in de `scripts` van je `package.json` zodat je niet telkens dit hele commando hoeft te typen.*
+
+> ⚠️ *Als `--env-file=` niet werkt, moet je je versie van `node` updaten.*
 
 
 <br><br><br>
 
-## Langchain
+## OpenAI aanroepen
 
 [Langchain](https://js.langchain.com/docs/get_started/introduction) is de API die we in `server.js` gaan gebruiken om te werken met Azure OpenAI (ChatGPT). 
 
@@ -50,9 +69,7 @@ console.log(process.env.AZURE_OPENAI_API_KEY)
 npm install langchain @langchain/core
 npm install @langchain/openai
 ```
-Om de OpenAI API's te kunnen aanroepen moet de `.env` file zijn ingelezen. Vervolgens kan je een vraag stellen aan het chat model. 
-
-Je kan dit testen door een apart `test.js` bestand te maken waarin je alleen `langchain` uitprobeert. Als dit werkt kan je het integreren in je `server.js` file.
+Om de OpenAI API's te kunnen aanroepen moet de `.env` file zijn ingelezen. Vervolgens kan je een vraag stellen aan het chat model!
 
 ```js
 import { ChatOpenAI } from "@langchain/openai"
@@ -75,17 +92,7 @@ tellJoke()
 <br><br><br>
 
 
-## Express
 
-- Voeg de langchain code toe aan je `server.js`
-- Je kan eventueel een nieuw endpoint `/chat` aanmaken in `server.js`
-- Je kan nu de `prompt` die binnenkomt uit het formulier versturen naar `OpenAI`
-- Het resultaat geef je weer terug aan je client als JSON in de `response`.
-- In de client toon je het resultaat in de HTML pagina.
-
-<img src="../images/form-example.png" width="900">
-
-<br><br><br>
 
 
 ### Troubleshooting

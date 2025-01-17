@@ -1,48 +1,25 @@
-# Les 6 (deel 1)
+# Les 6 - deel 2
 
 ## Webproject opzetten
 
-- Zorg dat je [NodeJS 22](https://nodejs.org/en) hebt geïnstalleerd.
-- Installeer [JSONFormatter](https://chromewebstore.google.com/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa) of een andere browser extensie waarmee je JSON kan bekijken.
-- Maak een nieuw project aan met de volgende structuur:
+- We gaan de OpenAI aanroep in een `express` server plaatsen.
+- We gaan een frontend toevoegen waarin de eindgebruiker een vraag kan stellen.
 
-```
-SERVER
-├── .gitignore
-├── server.js
-CLIENT
-├── index.html
-├── script.js
-└── style.css
-```
+<img src="../images/form-example.png" width="900">
+
 
 <br><br><br>
 
-## Server
+## Express toevoegen
 
-Maak je `.gitignore` file als volgt aan:
-
-```sh
-.vscode
-.idea
-.env
-node_modules
-```
-
-<br><br><br>
-
-## Express
-
-In PRG06 heb je geleerd te werken met node express. Als herhalingsoefening gaan we een server maken die je vanuit je HTML pagina kan aanroepen. Start het `npm` project in je `server` folder:
+In PRG06 heb je geleerd te werken met node express. Installeer het als volgt:
 
 ```sh
-cd server
-npm init
 npm install express
 npm install cors
 npm install body-parser
 ```
-Je kan nu een `server.js` file aanmaken waarin we de `express` server kunnen opstarten.
+Om te oefenen maken we een `get` request die `hello world` terug geeft in JSON formaat:
 
 ```js
 import express from 'express'
@@ -58,36 +35,96 @@ app.get('/', (req, res) => {
 app.listen(3000, () => console.log(`Server running on http://localhost:3000`))
 ```
 
-<br><br><br>
-
-## Server testen
-
 Start de server!
 
 ```sh
-node server.js
+node --env-file=.env --watch server.js
 ```
-> ⚠️ *TIP Om te voorkomen dat je de server telkens opnieuw moet opstarten als je iets aanpast kan je ook `node --watch server.js` gebruiken*
 
-Roep de server aan in je adresbalk van je browser of via [Postman](https://www.postman.com), [Hoppscotch](https://hoppscotch.io) of [Thunder Client](https://www.thunderclient.com)
-
-http://localhost:3000
+Roep de server aan in je adresbalk van je browser (http://localhost:3000) of via [Postman](https://www.postman.com), [Hoppscotch](https://hoppscotch.io) of [Thunder Client](https://www.thunderclient.com). Als het goed is krijg je `hello world` terug als JSON.
 
 <br><br><br>
 
-## Client
+## OpenAI aanroep integreren
+
+In plaats van `hello world` gaan we nu een javascript joke terug sturen, die is gegenereerd door OpenAI. Je kan dit doen door je eigen `tellJoke()` functie vanuit express aan te roepen:
+
+```js
+import express from 'express'
+import cors from 'cors'
+import { ChatOpenAI } from "@langchain/openai"
+
+const model = new ChatOpenAI({...})
+const app = express()
+app.use(cors())
+
+app.get('/', async (req, res) => {
+  const result = await tellJoke()
+  res.json({ message: result })
+})
+
+app.listen(3000, () => console.log(`Server running on http://localhost:3000`))
+
+async function tellJoke() {
+    const joke = await model.invoke("Tell me a Javascript joke!")
+    return joke.content
+}
+```
+Test of je nu via http://localhost:3000 een javascript joke terug krijgt!
+
+<br><br><br>
+
+## POST request
+
+Omdat we straks vanuit de frontend een formulier gaan versturen moeten we een `post` request toevoegen aan `server.js`. Het `get` request laten we staan omdat het handig is om mee te testen.
+
+```js
+const app = express()
+app.use(cors())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+
+app.get(...)
+
+app.post('/', async (req, res) => {
+    let prompt = req.body.prompt
+    console.log("the user asked for " + prompt)
+    res.json({ message: 'Hello, world!' })
+})
+
+app.listen(3000, () => console.log(`app luistert naar port 3000!`))
+```
+Dit kan je testen via [Postman](https://www.postman.com), [Hoppscotch](https://hoppscotch.io) of [Thunder Client](https://www.thunderclient.com). 
+
+<br><br><br>
+
+# Frontend
+
+Voeg een `Client` map toe waarin je je frontend gaat bouwen:
+
+```
+SERVER
+├── .gitignore
+├── .env
+├── server.js
+CLIENT
+├── index.html
+├── script.js
+└── style.css
+```
 
 - Maak je `index.html`, `style.css` en `app.js` files aan in de `client` map.
 - Je hoeft hier geen `npm install` te doen omdat we niet met libraries werken.
-- Open dit als apart project in je code editor. Je kan een `live server` starten voor `index.html`.
+- Open dit als apart project in je code editor. Je kan een [live server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) starten voor `index.html`.
 
-### Testen met Fetch
+<br><br><br>
 
-Om te oefenen gaan we de server aanroepen met `fetch` vanuit `app.js`. Kijk of het bericht `hello world` verschijnt in de console (in de client).
+## Werken met Fetch
+
+Om te oefenen gaan we het `get` request op de server aanroepen met `fetch` vanuit `app.js`. Het `get` request stuurt `hello world` of een javascript joke terug. 
 
 ```js
-async function askQuestion(e) {
-    e.preventDefault()
+async function askQuestion() {
     const response = await fetch("http://localhost:3000/") 
     if(response.ok){
         const data = await response.json()
@@ -96,6 +133,7 @@ async function askQuestion(e) {
         console.error(response.status)
     }
 }
+askQuestion()
 ```
 #### Oefening
 
@@ -125,9 +163,7 @@ function askQuestion(e){
 }
 ```
 
-<br><br><br>
-
-### POST request sturen
+#### POST request sturen
 
 We gaan de `fetch` functie uitbreiden met een `POST` request waarmee de waarde uit het invulveld wordt verstuurd.
 
@@ -156,33 +192,17 @@ async function askQuestion(e) {
 
 <br><br><br>
 
-### POST request lezen
 
-Deze data komt nu binnen in de server, dit kan je ook weer testen. In dit voorbeeld geven we de vraag gewoon weer terug als resultaat.
 
-```js
-const app = express()
-app.use(cors())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+# Applicatie af maken
 
-app.post('/', async (req, res) => {
-    let prompt = req.body.prompt
-    res.json({ message: 'Hello, world!', originalquestion: prompt })
-})
+Als het goed is kan je nu formulierdata naar je `node` server sturen. De node server genereert vervolgens een response via OpenAI en stuurt dit weer terug naar je client. Je kan nog de volgende stappen doorlopen om de applicatie helemaal af te maken:
 
-app.listen(3000, () => console.log(`app luistert naar port 3000!`))
-```
-<br><br><br>
+- Zorg dat de vraag die de gebruiker in het invoerveld stelt, ook echt naar OpenAI wordt gestuurd. Dit is dus in plaats van de prompt `tell me a javascript joke`.
+- Zorg dat je submit button disabled is zo lang er nog geen antwoord terug is gekomen. 
+- Het resultaat toon je vervolgens weer aan de gebruiker in de user interface. Enable de submit button.
 
-### Formulier af maken
-
-Je hebt nu de basics van een node server weer up and running! Je kan het formulier nog verbeteren:
-
-- Zorg dat je submit button disabled is zo lang er nog geen antwoord terug is gekomen. Toon via een `loading spinner` dat de app bezig is.
-- Het resultaat toon je vervolgens weer aan de gebruiker in de user interface. Enable de submit button en verwijder de loading spinner.
-
-Hierna gaan we verder met het toevoegen van [langchain](langchain.md)
+<img src="../images/form-example.png" width="900">
 
 <br><Br><br>
 
