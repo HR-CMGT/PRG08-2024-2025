@@ -1,13 +1,6 @@
 # MediaPipe Vite project
 
-Bouw de hand detection app met Vite. Door mediapipe te installeren in `node_modules` krijg je betere type checking in je code editor.
-
-- [Javascript Reference](https://ai.google.dev/edge/api/mediapipe/js/tasks-vision#tasks_vision_package)
-- [Documentatie](https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker/web_js)
-
-## Project setup
-
-Maak een vite project
+Bouw de hand detection app met Vite. Door mediapipe te installeren in `node_modules` krijg je betere type checking in je code editor. Maak een vite project aan:
 
 ```sh
 npm create vite@latest
@@ -37,3 +30,11 @@ npm run dev
 ## Expert level
 
 Je kan ook een [React MediaPipe](https://github.com/HR-CMGT/PRG08-2024-2025/blob/main/snippets/react.md) project bouwen.
+
+<Br><br><br>
+
+## Links
+
+- [Javascript Reference](https://ai.google.dev/edge/api/mediapipe/js/tasks-vision#tasks_vision_package)
+- [Documentatie](https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker/web_js)
+
