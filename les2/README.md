@@ -102,7 +102,7 @@ De volgende stap is om dit console bericht te versimpelen. Kijk of je de `x,y,z`
 ```js
 [0.3.0.1.0.13.0.41.0.24.0.24,0.3...] // 60 getallen
 ```
-> *Je kan de data omzetten met een `for` loop, of je kan de `map()` en `flat()` functie gebruiken.*
+> *Je kan de data omzetten met een `for` loop. [Bekijk ook de `map()` functie](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map), en [de `flat()` functie](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat).*
 
 <br><br><br>
 
