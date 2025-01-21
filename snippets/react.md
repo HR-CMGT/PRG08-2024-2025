@@ -11,8 +11,10 @@ npm create vite@latest my-cool-project
 cd my-cool-project
 npm install
 npm install react-webcam
-npm install @mediapipe/tasks-vision
+npm install @mediapipe/tasks-vision@0.10.18
 ```
+> De voorbeeldcode uit de les gebruikt versie 0.10.18
+
 <br><br><br>
 
 
