@@ -13,8 +13,13 @@ Maak een vite project
 npm create vite@latest
 cd mycoolproject
 npm install
-npm install @mediapipe/tasks-vision
+npm install @mediapipe/tasks-vision@0.10.18
 ```
+
+> De voorbeeldcode uit de lessen gebruikt versie 0.10.18.
+
+<br>
+
 Import de mediapipe modules
 
 ```js
