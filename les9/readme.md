@@ -61,11 +61,45 @@ talkAboutWeather();
 
 <br><br><br>
 
-## Function calling (tools, agents)
+## Function calling (tools)
 
 In het bovenstaande voorbeeld roepen we zelf een `weather api` aan en geven het resultaat aan het taalmodel. Het zou natuurlijk veel handiger zijn als het taalmodel zelf kan bepalen wanneer het weerbericht opgehaald moet worden, waarna het taalmodel vervolgens zelf de weather api aanroept. Een taalmodel is immers heel goed in begrijpen wat je vraagt!
 
 Dit concept heet `function calling / tool calling / agents`. Het taalmodel krijgt nu toegang tot javascript functies in jouw project en gaat zelf bedenken wanneer deze functies aangeroepen moeten worden. Dit kan je gebruiken voor functies die een taalmodel niet uit zichzelf kan doen, zoals het maken van een precieze berekening, het aanzetten van het licht (via een smarthome functie), het lezen en schrijven naar een database (CRUD), of het versturen van een tweet.
+
+Om tools te gebruiken moet je twee dingen doen:
+
+- Schrijf de functie die door het LLM aangeroepen kan worden.
+- Plak de functie in een `tool()` aanroep. 
+- Hierbij moet je een `schema` meegeven waarin staat hoe de functie werkt. Geef deze tool aan het taalmodel.
+
+```js
+import { tool } from "@langchain/core/tools";
+
+// functie die twee getallen vermenigvuldigt
+const multiplyFunction = ({ a, b }) => a * b;
+
+// maak een tool voor deze functie
+const multiply = tool(multiplyFunction, {
+    name: "multiply",
+    description: "Multiply two numbers",
+    schema: {
+        type: "object",
+        properties: {
+            a: { type: "number" },
+            b: { type: "number" },
+        },
+        required: ["a", "b"],
+    },
+});
+// geef de tool aan het model
+const model = new ChatOpenAI({...}).bindTools([multiply]);
+```
+> *Een issue van het werken met tools is dat het erg afhangt van hoe geschikt je model is voor tool calling. ChatGPT3.5 is hier niet zo goed in.*
+
+<br>
+
+### Code voorbeelden
 
 - [Code Voorbeeld: laat het taalmodel een berekening maken](../snippets/functions.md)
 - [Een tool definiëren](https://js.langchain.com/docs/concepts/tools/)
