@@ -112,8 +112,24 @@ messages.push(
 const chat2 = await model.invoke(messages)
 console.log(chat2.content)
 ```
+### Classes voor roles
 
-#### Optioneel: chat history per client
+Langchain biedt classes aan om de roles wat duidelijker te maken in je code:
+
+```js
+import { HumanMessage, SystemMessage, AIMessage } from "langchain/chat_models/messages"
+
+const messages = [
+  new SystemMessage("You're a helpful assistant"),
+  new HumanMessage("What is the purpose of studying AI?"),
+  new AIMessage("It will help you create smarter apps"),
+  new HumanMessage("Does that mean I can let AI do all the work?"),
+]
+```
+
+<br><br><br>
+
+## Chat history per client
 
 In bovenstaand voorbeeld is de chat history een variabele binnen de node applicatie. Maar als je tegelijk met meerdere web clients bent verbonden, krijgt niet elke user een eigen chat history. Hier zijn verschillende oplossingen voor:
 
@@ -151,6 +167,17 @@ for await (const chunk of stream) {
 
 <br><br><br>
 
+## Experimenteren met andere providers
+
+- [Mistral](https://js.langchain.com/docs/integrations/chat/mistral/)
+- [Anthropic Claude](https://js.langchain.com/docs/integrations/chat/anthropic/)
+- [AliBaba Qwen](https://js.langchain.com/docs/integrations/chat/alibaba_tongyi/)
+- [All Langchain models](https://js.langchain.com/docs/integrations/chat/)
+- [Lokaal LLM](../snippets/local.md)
+
+
+<br><br><br>
+
 ## Links
 
 - [Langchain basics](https://js.langchain.com/docs/tutorials/llm_chain)
@@ -158,6 +185,9 @@ for await (const chunk of stream) {
 - [Langchain Azure OpenAI](https://js.langchain.com/docs/integrations/chat/azure)
 - [Prompt Engineering](https://platform.openai.com/docs/guides/prompt-engineering)
 - [Prompt Engineering for Developers - korte cursus](https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/) 
+- [Annuleren van een OpenAI call](https://js.langchain.com/docs/modules/model_io/llms/cancelling_requests)
+- [Tokens bijhouden](https://js.langchain.com/docs/modules/model_io/llms/token_usage_tracking)
+- [Omgaan met errors](https://js.langchain.com/docs/modules/model_io/llms/dealing_with_api_errors)
 
 
 
