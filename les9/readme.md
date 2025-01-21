@@ -2,8 +2,6 @@
 
 ## Verbeteren chatbot
 
-Deze les bevat onderwerpen voor het expert level van de opdracht.
-
 - Opmaak en code antwoorden van een LLM correct tonen
 - Externe API's toevoegen zoals het weerbericht. Het LLM gebruiken om daar iets over te zeggen.
 - Function calling
@@ -70,16 +68,8 @@ In het bovenstaande voorbeeld roepen we zelf een `weather api` aan en geven het 
 Dit concept heet `function calling / tool calling / agents`. Het taalmodel krijgt nu toegang tot javascript functies in jouw project en gaat zelf bedenken wanneer deze functies aangeroepen moeten worden. Dit kan je gebruiken voor functies die een taalmodel niet uit zichzelf kan doen, zoals het maken van een precieze berekening, het aanzetten van het licht (via een smarthome functie), het lezen en schrijven naar een database (CRUD), of het versturen van een tweet.
 
 - [Code Voorbeeld: laat het taalmodel een berekening maken](../snippets/functions.md)
-
-### Documentatie
-
 - [Een tool definiëren](https://js.langchain.com/docs/concepts/tools/)
 - [Een tool automatisch laten uitvoeren door het taalmodel](https://js.langchain.com/docs/concepts/tool_calling/)
-
-## Expert level: function calling
-
-Een ***tool (of function)*** zorgt dat een LLM input kan leveren voor function calls. Een ***Agent*** is een LLM die de function dan ook daadwerkelijk uitvoert en zelf kijkt wat het resultaat is. 
-
 - [Bekijk hier een compleet voorbeeld voor Langchain weerbericht function](../snippets/functions.md)
 - [OpenAI LangChain Function Calling](https://js.langchain.com/docs/integrations/chat/openai)
 - [OpenAI Agents in Langchain](https://js.langchain.com/docs/modules/agents/)

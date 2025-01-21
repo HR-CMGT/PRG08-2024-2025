@@ -10,11 +10,7 @@ Om die reden kan je kiezen om met een lokaal taalmodel te gaan werken.
 
 ## Lokaal LLM
 
-Met [OLLama](https://ollama.ai) of [LM Studio](https://lmstudio.ai) kan je LLMs installeren en krijg je meteen een ingebouwde webserver om je prompts naartoe te sturen. Je kan vervolgens [een model kiezen](https://ollama.com/library) om te downloaden. Bijvoorbeeld:
-
-- [Geitje](https://goingdutch.ai/en/posts/introducing-geitje/) (goed in Nederlands)
-- [Tolkien](https://huggingface.co/JeremyArancio/llm-tolkien) (goed in fantasy stories)
-- [CodeLLama](https://huggingface.co/docs/transformers/en/model_doc/code_llama) (goed in programmeren)
+Met [OLLama](https://ollama.ai) of [LM Studio](https://lmstudio.ai) kan je LLMs installeren en krijg je meteen een ingebouwde webserver om je prompts naartoe te sturen. Je kan vervolgens [een model kiezen](https://ollama.com/library) om te downloaden. 
 
 > *🚨 Voor het draaien van een lokaal LLM heb je een recente (4 jaar oud of nieuwer) laptop nodig met minimaal 8GB RAM. Voor macbooks heb je een M1 of hoger nodig. Zelfs dan moet je opletten dat je alleen kleine modellen download :***1B of 7B versies***.*
 
@@ -47,18 +43,16 @@ import { OpenAI } from "openai";
 
 const openai = new OpenAI({
     temperature: 0.3,
-    apiKey: "not-needed",
     baseURL: "http://localhost:1234/v1",
 });
 
 async function main() {
     const completion = await openai.chat.completions.create({
         messages: [
-            { role: "system", content: "You are a helpful assistant." },
-            { role : "user",  content: "Hello, can you tell me a joke."}
+            { role: "system", content: "You are a grumpy code assistant." },
+            { role : "user",  content: "Can you tell me how to install node?"}
         ],
     });
-
     console.log(completion.choices[0]);
 }
 
