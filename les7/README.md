@@ -113,12 +113,13 @@ const chat2 = await model.invoke(messages)
 console.log(chat2.content)
 ```
 
-#### Optioneel: chat history in client
+#### Optioneel: chat history per client
 
-In bovenstaand voorbeeld is de chat history een variabele binnen de node applicatie. Maar als je tegelijk met meerdere web clients bent verbonden, krijgt niet elke user een eigen chat history.
+In bovenstaand voorbeeld is de chat history een variabele binnen de node applicatie. Maar als je tegelijk met meerdere web clients bent verbonden, krijgt niet elke user een eigen chat history. Hier zijn verschillende oplossingen voor:
 
-- Hou de chat history bij *in de browser* in plaats van op de server, en geef die telkens mee. 
-- Je hebt nu ook de optie om de chat history in `localStorage` op te slaan. Dan blijft de history zelfs bewaard nadat je de browser afsluit.
+- Geef elke verbonden client een unieke ID, en hou per ID een eigen chat history bij.
+- Of hou de chat history bij *in de browser* in plaats van op de server, en geef die telkens mee. 
+- Je hebt dan ook de optie om de chat history in `localStorage` op te slaan. Dan blijft de history zelfs bewaard nadat je de browser afsluit.
 
 ```js
 messages.push(["human", "what do you mean by that?"])
