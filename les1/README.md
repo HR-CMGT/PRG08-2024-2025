@@ -26,6 +26,8 @@
 - Je kan deze [boilerplate](./boilerplate/) downloaden als startproject. Open `index.html` met een `live server`.
 - 🔥 Of start je eigen [Vite project](./vite.md)
 
+- Inspiratie kunt je vinden op [MediaPipe portfolio](http://sandbox.cmgt.hr.nl:8080)
+
 
 <br><br><br>
 
