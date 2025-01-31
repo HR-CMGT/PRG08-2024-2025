@@ -119,6 +119,7 @@ const model = new ChatOpenAI({...}).bindTools([multiply]);
 -	Je logt in op een beveiligde website (dit kan je eigen CRUD applicatie zijn)
 -	Je stuurt een externe applicatie aan (bv. een app van https://ifttt.com, je [raspberry pi smarthome](https://www.home-assistant.io/installation/raspberrypi/), of je eigen javascript game)
 -	Je doet een zoekopdracht op de LLM search engine https://tavily.com
+-	Zeg tegen je [fotolijstje](https://www.youtube.com/watch?v=L5PvQj1vfC4) dat je vandaag een foto van een kat met een piratenhoedje wil zien.
 
 <br>
 
