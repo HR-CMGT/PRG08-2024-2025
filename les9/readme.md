@@ -73,6 +73,7 @@ Je zal bij het gebruiken van taalmodellen gemerkt hebben dat deze niet óveral g
 -	Het licht aan doen (smarthome)
 -	Dobbelstenen gooien
 -	Een robot besturen
+-	CRUD functies (lezen en schrijven naar een database)
 -	Een grafiek tekenen die echt klopt
 -	Inloggen op een beveiligde website
 
