@@ -113,6 +113,15 @@ const model = new ChatOpenAI({...}).bindTools([multiply]);
 
 <br>
 
+## Ideëen voor applicaties
+
+-	Je haalt data op van een externe API (inspiratie: https://apilist.fun)
+-	Je logt in op een beveiligde website (dit kan je eigen CRUD applicatie zijn)
+-	Je stuurt een externe applicatie aan (bv. een app van https://ifttt.com, je [raspberry pi smarthome](https://www.home-assistant.io/installation/raspberrypi/), of je eigen javascript game)
+-	Je doet een zoekopdracht op de LLM search engine https://tavily.com
+
+<br>
+
 ### Code voorbeelden
 
 - [Code Voorbeeld: laat het taalmodel een berekening maken](../snippets/functions.md)
