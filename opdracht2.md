@@ -46,6 +46,7 @@ Je kan MediaPipe en KNN toepassen in een React project
 
 ![poemclock](./images/poemclock.png)
 
+- Vraag je LLM om een goed idee!
 - Maak een online chatbot die vragen kan beantwoorden over een bepaald onderwerp. Voed de chatbot met veel data over dat onderwerp. 
 - Geef je chatbot een persoonlijkheid die bij het onderwerp past, bijvoorbeeld door alle gesproken lines van een filmkarakter uit een filmscript te halen. [Harry Potter dataset](https://www.kaggle.com/datasets/gulsahdemiryurek/harry-potter-dataset).
 - Plaats je chatbot op discord, [tutorial hier](https://dev.to/rtagliavia/how-to-create-a-discord-bot-with-discordjs-and-nodejs-plb) en [hier](https://www.freecodecamp.org/news/discord-ai-chatbot/)
@@ -70,8 +71,8 @@ Je kan MediaPipe en KNN toepassen in een React project
 - Bekijk [OpenGPT](https://www.opengpt.com) om inspiratie op te doen voor AI assistants.
 - Kan je een taalmodel een bordpsel mee laten spelen? Begrijpt het model de staat van het bord van een eenvoudig bordspel? Kan een taalmodel een dobbelsteen rollen? Dit is interessant om te onderzoeken!
 - Expert level: gebruik [tools, functions of agents](https://platform.openai.com/docs/guides/function-calling) en [LangChain Function calling](https://js.langchain.com/docs/how_to/tool_calling/) om het taalmodel *code in jouw eigen programma* te laten uitvoeren, zoals het besturen van een game karakter 🤯.
-- Als dat werkt zou je taalmodel ook een robot (circuit playground express) moeten kunnen besturen!
-- Vraag je LLM om een goed idee!
+- Maak dit [Raspberry Pi Fotolijstje](https://github.com/fatihak/InkyPi) aanstuurbaar met een taalmodel. Vraag om een foto van een kat met een piratenhoedje!
+- Als dat werkt zou je taalmodel ook een robot (circuit playground express, raspberry pi, arduino of esp32) moeten kunnen besturen!
 
 <br><br><br>
 
