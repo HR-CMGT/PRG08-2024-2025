@@ -34,20 +34,22 @@ const createHandLandmarker = async () => {
 /********************************************************************
 // START THE WEBCAM
 ********************************************************************/
-
-function enableCam() {
-    webcamRunning = true
-    navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then((stream) => {
-        video.srcObject = stream
+async function enableCam() {
+    webcamRunning = true;
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+        video.srcObject = stream;
         video.addEventListener("loadeddata", () => {
-            canvasElement.style.width = video.videoWidth
-            canvasElement.style.height = video.videoHeight
-            canvasElement.width = video.videoWidth
-            canvasElement.height = video.videoHeight
-            document.querySelector(".videoView").style.height = video.videoHeight + "px"
-            predictWebcam()
-        })
-    })
+            canvasElement.style.width = video.videoWidth;
+            canvasElement.style.height = video.videoHeight;
+            canvasElement.width = video.videoWidth;
+            canvasElement.height = video.videoHeight;
+            document.querySelector(".videoView").style.height = video.videoHeight + "px";
+            predictWebcam();
+        });
+    } catch (error) {
+        console.error("Error accessing webcam:", error);
+    }
 }
 
 /********************************************************************
