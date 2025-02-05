@@ -128,7 +128,7 @@ image.style.transform = `translate(${thumb.x * videoWidth}px, ${thumb.y * videoH
 
 # Opdracht
 
-Bedenk een toepassing waarbij de positie van de hand(en) gebruikt wordt. Bekijk Bob's [MediaPipe Paleis](https://bpikaar.github.io/prg8-2023-2024/mediapipe/) als inspiratie.
+Bedenk een toepassing waarbij de positie van de hand(en) gebruikt wordt. Bekijk [Bob's MediaPipe Paleis](https://bpikaar.github.io/prg8-2023-2024/mediapipe/) als inspiratie.
 
 - Tekenprogramma
 - Fruit Ninja (elementen weg slaan)
@@ -144,7 +144,7 @@ Bedenk een toepassing waarbij de positie van de hand(en) gebruikt wordt. Bekijk 
 
 |  |  |
 |--|--|
-|Bob's MediaPipe Paleis|https://bpikaar.github.io/prg8-2023-2024/mediapipe/|
+|Bob's MediaPipe Paleis<br>https://bpikaar.github.io/prg8-2023-2024/mediapipe/|--|
 | <img src="../images/posepong.png" width="400"><br>Handpositie gebruiken om pong paddles te besturen | <img src="../images/pose-squid.png" width="400"><br>Afstand en beweging gebruiken om squid-game na te bouwen |
 | <img src="../images/paint.png" width="400"><br>Wijsvinger gebruiken als verfkwast, duim als gum |<img src="../images/drumgesture.png" width="400"><br>[Gestures gebruiken om drumcomputer te besturen](https://youtube.com/shorts/zQ8Il7xyVQk) | 
 
