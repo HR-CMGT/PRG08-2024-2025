@@ -118,7 +118,7 @@ Plaats een DOM element met id `myimage` in je HTML file, bovenop het canvas. Geb
 ```
 ```js
 let image = document.querySelector("#myimage")
-let thumb = result.landmarks[0][4]
+let thumb = results.landmarks[0][4]
 image.style.transform = `translate(${thumb.x * videoWidth}px, ${thumb.y * videoHeight}px)`
 ```
 
