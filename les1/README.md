@@ -108,7 +108,7 @@ In de afbeelding zie je hoe de landmarks arrays zijn opgedeeld. De duim van hand
 
 ## Oefening
 
-Plaats een DOM element met id `myimage` in je HTML file, bovenop het canvas. Gebruik nu de positie van de duim om het html element mee te laten bewegen. 
+Plaats een DOM element met id `myimage` in je HTML file, onder het `<video>` en `<canvas>` element. Je gaat nu de positie van de duim gebruiken om het html element mee te laten bewegen. 
 
 *voorbeeld*
 ```css
@@ -119,9 +119,9 @@ Plaats een DOM element met id `myimage` in je HTML file, bovenop het canvas. Geb
 ```js
 let image = document.querySelector("#myimage")
 let thumb = results.landmarks[0][4]
-image.style.transform = `translate(${thumb.x * videoWidth}px, ${thumb.y * videoHeight}px)`
+image.style.transform = `translate(${thumb.x * video.videoWidth}px, ${thumb.y * video.videoHeight}px)`
 ```
-
+> *Bedenk zelf waar deze drie regels code moeten staan. Bedenk of je een `if` statement nodig hebt voor situaties waarin helemaal geen hand zichtbaar is. Bedenk of en hoe je de X positie van de afbeelding kan spiegelen*
 
 
 <br><br><br>
