@@ -9,7 +9,7 @@ npm install
 npm install @mediapipe/tasks-vision@0.10.18
 ```
 
-> **Let op** De voorbeeldcode uit de lessen gebruikt versie 0.10.18, omdat in versie 0.10.20 een [issue](https://github.com/google-ai-edge/mediapipe/issues/5828) heeft met de DrawingUtils.
+> ⚠️ De voorbeeldcode uit de lessen gebruikt versie 0.10.18, omdat in versie 0.10.20 een [issue](https://github.com/google-ai-edge/mediapipe/issues/5828) heeft met de DrawingUtils.
 
 <br>
 
