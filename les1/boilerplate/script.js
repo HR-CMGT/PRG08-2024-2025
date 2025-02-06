@@ -12,6 +12,9 @@ let handLandmarker = undefined;
 let webcamRunning = false;
 let results = undefined;
 
+let image = document.querySelector("#myimage")
+
+
 /********************************************************************
 // CREATE THE POSE DETECTOR
 ********************************************************************/
@@ -56,6 +59,12 @@ function enableCam() {
 async function predictWebcam() {
     results = await handLandmarker.detectForVideo(video, performance.now())
 
+    let hand = results.landmarks[0]
+    if(hand) {
+        let thumb = hand[4]
+        image.style.transform = `translate(${video.videoWidth - thumb.x * video.videoWidth}px, ${thumb.y * video.videoHeight}px)`
+    }
+
     canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
     for(let hand of results.landmarks){
         drawUtils.drawConnectors(hand, HandLandmarker.HAND_CONNECTIONS, { color: "#00FF00", lineWidth: 5 });
@@ -72,7 +81,8 @@ async function predictWebcam() {
 ********************************************************************/
 function logAllHands(){
     for (let hand of results.landmarks) {
-        console.log(hand)
+        // console.log(hand)
+        console.log(hand[4])
     }
 }
 
