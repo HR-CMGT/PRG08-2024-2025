@@ -153,6 +153,12 @@ function train(poses) {
 }
 ```
 
+### LocalStorage
+
+Je kan de JSON ook in `localStorage` opslaan, dat maakt het makkelijker om snel in te laden en te testen. Let op dat het dan alleen op jouw eigen machine werkt.
+
+<br><br><br>
+
 ## Poses herkennen
 
 Als het trainen gelukt is kunnen we eindelijk testen of het hele proces goed is gegaan. 
@@ -173,10 +179,13 @@ classifyPose([2,3,4,5,6,7,...]) // een array uit je json file, zonder label
 
 Als al het bovenstaande werkt kan je de `console.log()` code van je button aanpassen. De button gaat de array van getallen nu ook naar de `classifyPose()` functie sturen.
 
-
-
-
 <br><br><br>
+
+# Gebarentaal
+
+Je kan deze afbeelding als referentie gebruiken voor gebarentaal.
+
+![gebarentaal](../images/gebarentaal.png)
 
 # Troubleshooting
 
