@@ -13,7 +13,7 @@ In deze les gaan we leren hoe je specifieke handposes, zoals bijvoorbeeld ðŸ‘Š ð
 
 Dit algoritme kan sets van getallen met elkaar vergelijken om te zien welke het meest overeenkomen. We gaan dit gebruiken om handposes te vergelijken.
 
-Een handpose heeft 20 punten, maar het werkt ook met kleinere getallenreeksen.
+Een handpose heeft 63 punten (21 keer x, y, en z), maar het werkt ook met kleinere getallenreeksen.
 
 In deze afbeelding zie je hoe KNN werkt. Door de getallenreeks `weight, ear length` als een `x,y` grafiek te tekenen kan je goed zien dat katten en honden in een eigen groepje zitten qua afstand.
 
