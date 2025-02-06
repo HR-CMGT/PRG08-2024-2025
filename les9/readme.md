@@ -63,9 +63,23 @@ talkAboutWeather();
 
 ## Function calling (tools)
 
-In het bovenstaande voorbeeld roepen we zelf een `weather api` aan en geven het resultaat aan het taalmodel. Het zou natuurlijk veel handiger zijn als het taalmodel zelf kan bepalen wanneer het weerbericht opgehaald moet worden, waarna het taalmodel vervolgens zelf de weather api aanroept. Een taalmodel is immers heel goed in begrijpen wat je vraagt!
+Je zal bij het gebruiken van taalmodellen gemerkt hebben dat deze niet óveral goed in zijn, bv:
 
-Dit concept heet `function calling / tool calling / agents`. Het taalmodel krijgt nu toegang tot javascript functies in jouw project en gaat zelf bedenken wanneer deze functies aangeroepen moeten worden. Dit kan je gebruiken voor functies die een taalmodel niet uit zichzelf kan doen, zoals het maken van een precieze berekening, het aanzetten van het licht (via een smarthome functie), het lezen en schrijven naar een database (CRUD), of het versturen van een tweet.
+-	Berekeningen maken
+-	Belasting aangifte doen
+-	Het weerbericht tonen
+-	Sportuitslagen tonen
+-	Op google zoeken
+-	Het licht aan doen (smarthome)
+-	Dobbelstenen gooien
+-	Een robot besturen
+-	CRUD functies (lezen en schrijven naar een database)
+-	Een grafiek tekenen die echt klopt
+-	Inloggen op een beveiligde website
+
+Het zou natuurlijk heel handig zijn als een taalmodel begrijpt wanneer een van deze situaties van toepassing is, en dat het model dan zelf een javascript functie kan aanroepen waarin deze functionaliteit correct uitgevoerd kan worden.
+
+Dit concept heet `function calling / tool calling / agents`. Het taalmodel krijgt nu toegang tot javascript functies in jouw project en gaat zelf bedenken wanneer deze functies aangeroepen moeten worden. 
 
 Om tools te gebruiken moet je twee dingen doen:
 
@@ -96,6 +110,16 @@ const multiply = tool(multiplyFunction, {
 const model = new ChatOpenAI({...}).bindTools([multiply]);
 ```
 > *Een issue van het werken met tools is dat het erg afhangt van hoe geschikt je model is voor tool calling. ChatGPT3.5 is hier niet zo goed in.*
+
+<br>
+
+## Ideëen voor applicaties
+
+-	Je haalt data op van een externe API (inspiratie: https://apilist.fun)
+-	Je logt in op een beveiligde website (dit kan je eigen CRUD applicatie zijn)
+-	Je stuurt een externe applicatie aan (bv. een app van https://ifttt.com, je [raspberry pi smarthome](https://www.home-assistant.io/installation/raspberrypi/), of je eigen javascript game)
+-	Je doet een zoekopdracht op de LLM search engine https://tavily.com
+-	Zeg tegen je [fotolijstje](https://www.youtube.com/watch?v=L5PvQj1vfC4) dat je vandaag een foto van een kat met een piratenhoedje wil zien.
 
 <br>
 

@@ -1,6 +1,18 @@
 # Function calling
 
-Een taalmodel heeft geen kennis van recent nieuws, sportuitslagen, het weer, of andere hele specifieke recente informatie. Ook is een taalmodel niet altijd goed in berekeningen en kan een taalmodel niet uit zichzelf een game of een smarthome besturen.
+Een taalmodel heeft geen kennis van recent nieuws, sportuitslagen, het weer, of andere hele specifieke recente informatie. Ook is een taalmodel niet altijd goed in berekeningen en kan een taalmodel niet uit zichzelf een game of een smarthome besturen. Zaken waar een taalmodel niet goed in is:
+
+- Berekeningen maken
+- Belasting aangifte doen
+- Het weerbericht tonen
+- Sportuitslagen tonen
+- Op google zoeken
+- Het licht aan doen (smarthome)
+- Dobbelstenen gooien
+- Een robot besturen
+- CRUD functies (lezen en schrijven naar een database)
+- Een grafiek tekenen die echt klopt
+- Inloggen op een beveiligde website
 
 Dit kan je toevoegen door je eigen `functions` te schrijven en die functies toe te voegen aan het taalmodel. Het taalmodel kan nu aan de hand van het user prompt zelf bedenken of een van de functies aangeroepen moet worden! In onderstaande voorbeeld schrijven we een functie (tool) die twee nummers vermenigvuldigt. Dit kan je in een prompt aanroepen.
 
@@ -84,13 +96,17 @@ const messages = [
 ]
 const resultH = await modelWithTools.invoke(messages);
 ```
+<br><br><br>
 
-## Ideeen
+## Ideëen voor applicaties
 
+- Je haalt data op van een externe API (inspiratie: https://apilist.fun)
+- Je logt in op een beveiligde website (dit kan je eigen CRUD applicatie zijn)
+- Je stuurt een externe applicatie aan (bv. een app van https://ifttt.com, je raspberry pi smarthome, of je eigen javascript game)
+- Je doet een zoekopdracht op de LLM search engine https://tavily.com
 - weerdata ophalen, kledingadvies geven (mag ik een afritsbroek aan?)
-- sportdata ophalen
-- muziek afspelen
-- game besturen
+- zeg tegen je [fotolijstje](https://www.youtube.com/watch?v=L5PvQj1vfC4) dat je vandaag een foto van een kat met een piratenhoedje wil zien.
+
 
 <br><br><br>
 

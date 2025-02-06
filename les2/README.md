@@ -13,7 +13,7 @@ In deze les gaan we leren hoe je specifieke handposes, zoals bijvoorbeeld 👊 �
 
 Dit algoritme kan sets van getallen met elkaar vergelijken om te zien welke het meest overeenkomen. We gaan dit gebruiken om handposes te vergelijken.
 
-Een handpose heeft 20 punten, maar het werkt ook met kleinere getallenreeksen.
+Een handpose heeft 63 punten (21 keer x, y, en z), maar het werkt ook met kleinere getallenreeksen.
 
 In deze afbeelding zie je hoe KNN werkt. Door de getallenreeks `weight, ear length` als een `x,y` grafiek te tekenen kan je goed zien dat katten en honden in een eigen groepje zitten qua afstand.
 
@@ -89,18 +89,18 @@ Maak een button die `console.log(results.landmarks[0])` uitvoert zodra je er op 
 
 > *Let op dat er twee handen kunnen zijn, dit  zijn `results.landmarks[0]` en `results.landmarks[1]`.*
 
-Een enkele pose bestaat uit een array van 20 punten, een `console.log` moet er als volgt uit gaan zien:
+Een enkele pose bestaat uit een array van 21 punten, een `console.log` moet er als volgt uit gaan zien:
 ```js
 [
      {x: 0.1, y: 0.3, z: 0.6},
      {x: 0.2, y: 0.7, z: 0.9},
-     // ...in totaal 20 punten
+     // ...in totaal 21 punten
 ]
 ```
-De volgende stap is om dit console bericht te versimpelen. Kijk of je de `x,y,z` waarden van alle 20 punten achter elkaan in de console kan tonen. *Dit zijn dus 60 getallen.*. 
+De volgende stap is om dit console bericht te versimpelen. Kijk of je de `x,y,z` waarden van alle 21 punten achter elkaan in de console kan tonen. *Dit zijn dus 63 getallen.*. 
 
 ```js
-[0.3.0.1.0.13.0.41.0.24.0.24,0.3...] // 60 getallen
+[0.3.0.1.0.13.0.41.0.24.0.24,0.3...] // 63 getallen
 ```
 > *Je kan de data omzetten met een `for` loop. [Bekijk ook de `map()` functie](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map), en [de `flat()` functie](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat).*
 
@@ -181,9 +181,9 @@ Als al het bovenstaande werkt kan je de `console.log()` code van je button aanpa
 # Troubleshooting
 
 - De labels kloppen niet of je bent labels vergeten.
-- Niet elke handpose heeft 60 getallen, of je hebt getallen opgeslagen als strings. (bv. `pose="5,2,5,2"`)
+- Niet elke handpose heeft 63 getallen, of je hebt getallen opgeslagen als strings. (bv. `pose="5,2,5,2"`)
 - De data in je `machine.learn()` aanroep moet een array zijn, gevolgd door een label. Dit mag dus geen object zijn.
-- De array in je `machine.classify()` aanroep moet óók precies 60 getallen bevatten.
+- De array in je `machine.classify()` aanroep moet óók precies 63 getallen bevatten.
 
 #### Veel voorkomende fouten
 
