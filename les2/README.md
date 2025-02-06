@@ -89,18 +89,18 @@ Maak een button die `console.log(results.landmarks[0])` uitvoert zodra je er op 
 
 > *Let op dat er twee handen kunnen zijn, dit  zijn `results.landmarks[0]` en `results.landmarks[1]`.*
 
-Een enkele pose bestaat uit een array van 20 punten, een `console.log` moet er als volgt uit gaan zien:
+Een enkele pose bestaat uit een array van 21 punten, een `console.log` moet er als volgt uit gaan zien:
 ```js
 [
      {x: 0.1, y: 0.3, z: 0.6},
      {x: 0.2, y: 0.7, z: 0.9},
-     // ...in totaal 20 punten
+     // ...in totaal 21 punten
 ]
 ```
-De volgende stap is om dit console bericht te versimpelen. Kijk of je de `x,y,z` waarden van alle 20 punten achter elkaan in de console kan tonen. *Dit zijn dus 60 getallen.*. 
+De volgende stap is om dit console bericht te versimpelen. Kijk of je de `x,y,z` waarden van alle 21 punten achter elkaan in de console kan tonen. *Dit zijn dus 63 getallen.*. 
 
 ```js
-[0.3.0.1.0.13.0.41.0.24.0.24,0.3...] // 60 getallen
+[0.3.0.1.0.13.0.41.0.24.0.24,0.3...] // 63 getallen
 ```
 > *Je kan de data omzetten met een `for` loop. [Bekijk ook de `map()` functie](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map), en [de `flat()` functie](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat).*
 
