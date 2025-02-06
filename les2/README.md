@@ -181,9 +181,9 @@ Als al het bovenstaande werkt kan je de `console.log()` code van je button aanpa
 # Troubleshooting
 
 - De labels kloppen niet of je bent labels vergeten.
-- Niet elke handpose heeft 60 getallen, of je hebt getallen opgeslagen als strings. (bv. `pose="5,2,5,2"`)
+- Niet elke handpose heeft 63 getallen, of je hebt getallen opgeslagen als strings. (bv. `pose="5,2,5,2"`)
 - De data in je `machine.learn()` aanroep moet een array zijn, gevolgd door een label. Dit mag dus geen object zijn.
-- De array in je `machine.classify()` aanroep moet óók precies 60 getallen bevatten.
+- De array in je `machine.classify()` aanroep moet óók precies 63 getallen bevatten.
 
 #### Veel voorkomende fouten
 
