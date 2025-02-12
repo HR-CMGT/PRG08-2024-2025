@@ -14,7 +14,7 @@
 
 <br>
 
-In week 6 hebben we pose data leren herkennen met het "K-Nearest-Neighbour" algoritme. We gaan nu het "Neural Network" algoritme gebruiken. Een aantal voordelen:
+Eerder hebben we pose data leren herkennen met het "K-Nearest-Neighbour" algoritme. We gaan nu het "Neural Network" algoritme gebruiken. Een aantal voordelen:
 
 - Het KNN model moet altijd alle data onthouden. 
 - Een KNN model kan erg groot zijn als er veel data is.
