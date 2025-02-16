@@ -260,10 +260,9 @@ let result = await nn.classify([2,3,4,5,6,7])
 
 ## Documentatie
 
-- [ML5 AI library voor Javascript](https://learn.ml5js.org/#/)
-- [ML5 Neural Networks](https://learn.ml5js.org/#/reference/neural-network)
-- [Callbacks en asynchrone functies](https://learn.ml5js.org/#/tutorials/promises-and-callbacks)
-- [ML5 Neural Networks Hidden Layers](./snippets/layers.md)
+- [ML5 AI library voor Javascript](https://docs.ml5js.org/#/)
+- [ML5 Neural Networks](https://docs.ml5js.org/#/reference/neural-network)
+- [ML5 Neural Networks Hidden Layers](../snippets/layers.md)
 - [MediaPipe in React](../snippets/react.md) 
 - [ML5 Neural Network in React](../snippets/reactml5.md) 
 - [📺 Crash Course Neural Networks](https://www.youtube.com/watch?v=JBlm4wnjNMY)
