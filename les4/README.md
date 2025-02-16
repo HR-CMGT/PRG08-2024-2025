@@ -49,7 +49,7 @@ We maken een neural network aan voor classification, en voegen de cat/dog data t
 ```js
 const nn = ml5.neuralNetwork({ task: 'classification', debug: true })
 nn.addData([18,9.2,8.1,2], {label:"cat"})
-nn.addData([20.1,17,15.5.5], {label:"dog"})
+nn.addData([20.1,17,15.5,5], {label:"dog"})
 // vul hier zelf de rest van de data in
 // ...
 nn.normalizeData()
