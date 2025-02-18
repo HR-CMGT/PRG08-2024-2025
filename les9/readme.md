@@ -81,35 +81,7 @@ Het zou natuurlijk heel handig zijn als een taalmodel begrijpt wanneer een van d
 
 Dit concept heet `function calling / tool calling / agents`. Het taalmodel krijgt nu toegang tot javascript functies in jouw project en gaat zelf bedenken wanneer deze functies aangeroepen moeten worden. 
 
-Om tools te gebruiken moet je twee dingen doen:
-
-- Schrijf de functie die door het LLM aangeroepen kan worden.
-- Plak de functie in een `tool()` aanroep. 
-- Hierbij moet je een `schema` meegeven waarin staat hoe de functie werkt. Geef deze tool aan het taalmodel.
-
-```js
-import { tool } from "@langchain/core/tools";
-
-// functie die twee getallen vermenigvuldigt
-const multiplyFunction = ({ a, b }) => a * b;
-
-// maak een tool voor deze functie
-const multiply = tool(multiplyFunction, {
-    name: "multiply",
-    description: "Multiply two numbers",
-    schema: {
-        type: "object",
-        properties: {
-            a: { type: "number" },
-            b: { type: "number" },
-        },
-        required: ["a", "b"],
-    },
-});
-// geef de tool aan het model
-const model = new ChatOpenAI({...}).bindTools([multiply]);
-```
-> *Een issue van het werken met tools is dat het erg afhangt van hoe geschikt je model is voor tool calling. ChatGPT3.5 is hier niet zo goed in.*
+[Bekijk hier een compleet code voorbeeld voor het werken met tools in een taalmodel](../snippets/functions.md)
 
 <br>
 
@@ -128,7 +100,6 @@ const model = new ChatOpenAI({...}).bindTools([multiply]);
 - [Code Voorbeeld: laat het taalmodel een berekening maken](../snippets/functions.md)
 - [Een tool definiëren](https://js.langchain.com/docs/concepts/tools/)
 - [Een tool automatisch laten uitvoeren door het taalmodel](https://js.langchain.com/docs/concepts/tool_calling/)
-- [Bekijk hier een compleet voorbeeld voor Langchain weerbericht function](../snippets/functions.md)
 - [OpenAI LangChain Function Calling](https://js.langchain.com/docs/integrations/chat/openai)
 - [OpenAI Agents in Langchain](https://js.langchain.com/docs/modules/agents/)
 

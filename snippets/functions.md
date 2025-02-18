@@ -1,4 +1,4 @@
-# Function calling
+# Tool calling
 
 Een taalmodel heeft geen kennis van recent nieuws, sportuitslagen, het weer, of andere hele specifieke recente informatie. Ook is een taalmodel niet altijd goed in berekeningen en kan een taalmodel niet uit zichzelf een game of een smarthome besturen. Zaken waar een taalmodel niet goed in is:
 
@@ -14,7 +14,7 @@ Een taalmodel heeft geen kennis van recent nieuws, sportuitslagen, het weer, of 
 - Een grafiek tekenen die echt klopt
 - Inloggen op een beveiligde website
 
-Dit kan je toevoegen door je eigen `functions` te schrijven en die functies toe te voegen aan het taalmodel. Het taalmodel kan nu aan de hand van het user prompt zelf bedenken of een van de functies aangeroepen moet worden! In onderstaande voorbeeld schrijven we een functie (tool) die twee nummers vermenigvuldigt. Dit kan je in een prompt aanroepen.
+Dit kan je toevoegen door je eigen `tools` te schrijven en die toe te voegen aan het taalmodel. Het taalmodel kan nu aan de hand van de prompt zelf bedenken of een van de tools aangeroepen moet worden. In onderstaande voorbeeld schrijven we een functie (tool) die twee nummers vermenigvuldigt. 
 
 <br><br><br>
 
@@ -24,14 +24,11 @@ Het verschil tussen een gewone `javascript function` en een `tool function` is d
 
 ```js
 import { ChatOpenAI } from "@langchain/openai"
+import { HumanMessage, AIMessage, ToolMessage } from "@langchain/core/messages";
 import { tool } from "@langchain/core/tools";
 
-// schrijf hier je javascript functie
-const multiplyFunction = ({ a, b }) => {
-    return a * b;
-};
+const multiplyFunction = ({ a, b }) => a * b;
 
-// Maak een tool van de functie, inclusief het schema
 const multiply = tool(multiplyFunction, {
     name: "multiply",
     description: "Multiply two numbers",
@@ -45,10 +42,12 @@ const multiply = tool(multiplyFunction, {
     },
 });
 
-// Roep de tool zelf aan om te testen of het werkt
+// test of de functie werkt met "invoke"
 let resultA = await multiply.invoke({ a: 3, b: 4 });
 console.log(resultA)
 ```
+<br>
+<br>
 <br>
 
 ## Functie aan model koppelen
@@ -57,6 +56,7 @@ Via `bindTools` kan je aan het model duidelijk maken welke tools je geschreven h
 
 ```js
 const model = new ChatOpenAI({
+    temperature:0.5,
     azureOpenAIApiKey: process.env.AZURE_OPENAI_API_KEY,
     azureOpenAIApiVersion: process.env.OPENAI_API_VERSION,
     azureOpenAIApiInstanceName: process.env.INSTANCE_NAME,
@@ -65,20 +65,50 @@ const model = new ChatOpenAI({
 const modelWithTools = model.bindTools([multiply]);
 ```
 <br>
+<br>
+<br>
 
-## Taalmodel roept functie aan
+## Taalmodel aanroepen
 
 Het model bepaalt zelf wanneer de tool aangeroepen moet worden, dit kan je als volgt testen:
 
 ```js
-// test if the model works normally
-const resultB = await modelWithTools.invoke("How do I say goodbye in Japanese?");
-console.log(resultB.content)
-
-// Invoke the model with the tool
-const resultC = await modelWithTools.invoke("What is 13 multiplied by 34? You dont have to explain any code, just give the result directly.");
-console.log(resultC.content);
+const messages = [new HumanMessage("What is 3 * 12??")]
+const result = await modelWithTools.invoke(messages)
+messages.push(result)
 ```
+<br><br><br>
+
+## Tool calls uitvoeren
+
+Als het model vindt dat er tool calls uitgevoerd moeten worden dan zal de `content` leeg zijn, en de `tool_calls` array gevuld zijn. Dit kan je checken in de console. Als dit het geval is moet je via `invoke` zelf de tools uitvoeren:
+
+```js
+console.log("I want to call the following tools")
+console.log(result.tool_calls)
+
+const toolsByName = {multiply: multiply};
+for (const toolCall of result.tool_calls) {
+    const selectedTool = toolsByName[toolCall.name];
+    console.log("now trying to call " + toolCall.name);
+    const toolMessage = await selectedTool.invoke(toolCall);
+    messages.push(toolMessage);
+}
+```
+
+<br><br><br>
+
+
+## Eindresultaat
+
+Het resultaat van de tool calls zit nu ook in de `messages` array. Dit kan je zien met `console.log(messages)`. Om hier weer een *human readable* bericht van te maken geven we de hele array nog een keer aan langchain:
+
+```js
+const endresult = await llmWithTools.invoke(messages);
+console.log(endresult.content);
+```
+
+
 <br><br><br>
 
 ## Tips
