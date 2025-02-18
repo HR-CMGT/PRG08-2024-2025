@@ -14,7 +14,7 @@
 
 <br>
 
-In week 6 hebben we pose data leren herkennen met het "K-Nearest-Neighbour" algoritme. We gaan nu het "Neural Network" algoritme gebruiken. Een aantal voordelen:
+Eerder hebben we pose data leren herkennen met het "K-Nearest-Neighbour" algoritme. We gaan nu het "Neural Network" algoritme gebruiken. Een aantal voordelen:
 
 - Het KNN model moet altijd alle data onthouden. 
 - Een KNN model kan erg groot zijn als er veel data is.
@@ -49,7 +49,7 @@ We maken een neural network aan voor classification, en voegen de cat/dog data t
 ```js
 const nn = ml5.neuralNetwork({ task: 'classification', debug: true })
 nn.addData([18,9.2,8.1,2], {label:"cat"})
-nn.addData([20.1,17,15.5.5], {label:"dog"})
+nn.addData([20.1,17,15.5,5], {label:"dog"})
 // vul hier zelf de rest van de data in
 // ...
 nn.normalizeData()
@@ -260,10 +260,9 @@ let result = await nn.classify([2,3,4,5,6,7])
 
 ## Documentatie
 
-- [ML5 AI library voor Javascript](https://learn.ml5js.org/#/)
-- [ML5 Neural Networks](https://learn.ml5js.org/#/reference/neural-network)
-- [Callbacks en asynchrone functies](https://learn.ml5js.org/#/tutorials/promises-and-callbacks)
-- [ML5 Neural Networks Hidden Layers](./snippets/layers.md)
+- [ML5 AI library voor Javascript](https://docs.ml5js.org/#/)
+- [ML5 Neural Networks](https://docs.ml5js.org/#/reference/neural-network)
+- [ML5 Neural Networks Hidden Layers](../snippets/layers.md)
 - [MediaPipe in React](../snippets/react.md) 
 - [ML5 Neural Network in React](../snippets/reactml5.md) 
 - [📺 Crash Course Neural Networks](https://www.youtube.com/watch?v=JBlm4wnjNMY)
