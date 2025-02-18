@@ -24,7 +24,7 @@ Het verschil tussen een gewone `javascript function` en een `tool function` is d
 
 ```js
 import { ChatOpenAI } from "@langchain/openai"
-import { HumanMessage, AIMessage, ToolMessage } from "@langchain/core/messages";
+import { HumanMessage, AIMessage, ToolMessage, SystemMessage } from "@langchain/core/messages";
 import { tool } from "@langchain/core/tools";
 
 const multiplyFunction = ({ a, b }) => a * b;
@@ -113,18 +113,16 @@ console.log(endresult.content);
 
 ## Tips
 
-Als je functies uitgebreider worden snapt het taalmodel niet altijd welke functie gebruikt moet worden. Het kan helpen om heel specifiek in de instructies mee te geven welke tools er zijn.
+Let op dat je alle resultaten steeds in de `messages` array pushed. Dit zorgt ervoor dat langchain je prompts en tool results automatisch in het juiste formaat zet voor het taalmodel.
+
+Je kan ook beginnen met system instructions om nog duidelijker aan het taalmodel uit te leggen dat er functies gebruikt kunnen worden.
 
 ```js
 const messages = [
-        ["system", "You are a weather assistant who also likes small talk. You can use the fetchWeather tool to get the current weather data for a specific location. You never explain code."],
-        ["human", "How are you doing today?"],
-        ["ai", "I'm doing well, thank you for asking. How can I assist you today?"],
-        ["human", "Can you tell me the current weather at latitude 35.6895 and longitude 139.6917?"],
-        ["ai", "The temperature is 12 degrees, the windspeed is 3, I got this from the fetchWeather tool you supplied for me."],
-        ["human", "And now you tell me the current weather at latitude 51.926517 and longitude 4.462456? Also give me some clothing advice for this weather."],
+    new SystemMessage("You are a happy little weather assistant. You can use the fetchWeather tool to get the current weather data for a specific location."),
+    new HumanMessage("What is the weather in Tokyo?")
 ]
-const resultH = await modelWithTools.invoke(messages);
+const result = await modelWithTools.invoke(messages);
 ```
 <br><br><br>
 
