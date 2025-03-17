@@ -86,8 +86,10 @@ const chain = RetrievalQAChain.fromLLM(chatmodel, vectorStore.asRetriever())
 const response = await chain.call({ query: "who is the text about?" })
 console.log(response.text)
 ```
-- Let op dat in dit voorbeeld nog geen chat history wordt bijgehouden. Dit is ook niet altijd nodig, als je alleen vragen over het document wil stellen.
-- De `MemoryVectorStore` verdwijnt uit het geheugen zodra je de node app afsluit.
+We hebben nu kunnen testen of we kunnen werken met het opslaan van vectordata en het stellen van vragen. Om deze app af te maken gaan we nog twee dingen toevoegen:
+
+- Automatisch bijhouden van ***chat history***. Dit is optioneel, het zorgt ervoor dat je een conversatie kan voeren waarbij eerdere antwoorden ook meegenomen worden.
+- Opslaan van de ***VectorStore*** zodat je niet telkens opnieuw vectordata hoeft aan te maken voordat de chat begint.
 
 <br><br><br>
 
@@ -104,7 +106,7 @@ const answer = await chain.call({ question: "Waar gaat deze tekst over?" })
 console.log(answer)
 ```
 
-### De volledige conversatie-ketting
+### Achtergrond informatie: de conversatie-ketting
 
 Je hebt nu met relatief weinig code een chatbot waarmee je kunt praten over je document. Dit is wat LangChain voor je doet nadat je een `call` met een `question` doet: 
 * De `question` wordt samen met de `chat_history` naar het chatmodel gestuurd met als prompt:  
@@ -127,15 +129,67 @@ Het doen van prompts (genereren van tokens) kost geld. Een simpele prompt kost b
 - *Vector database*. Dit is een "echte" database op je systeem, zoals ChromaDB, MongoDB.
 - *Cloud database*. Je vectordata staat in de cloud, waardoor het vanuit meerdere projecten online toegankelijk is. Sommige cloud services, zoals [pinecone](https://www.pinecone.io) bieden 1 gratis online vectorstore.
 
-### FAISS
-
-Voor deze les werken we met [FAISS - Facebook Vector Store](https://js.langchain.com/docs/integrations/vectorstores/faiss). Hiermee sla je de vector embeddings lokaal op in een een folder van je project. Let op dat de documentatie van FAISS recent is aangepast.
-
-#### Opdracht
-
-- Maak een embedding van een tekstbestand en sla deze op met [FAISS](https://js.langchain.com/docs/integrations/vectorstores/faiss)
-- Maak een nieuwe `.js` file waarin de [FAISS](https://js.langchain.com/docs/integrations/vectorstores/faiss) data wordt ingeladen. Gebruik deze file om vragen over het document te stellen met het `chatgpt` model.
 <br><br><br>
+
+
+## FAISS
+
+Voor deze les werken we met [FAISS - Facebook Vector Store](https://js.langchain.com/docs/integrations/vectorstores/faiss). 
+
+#### Aanmaken en opslaan vectordata
+
+Plaats je code voor het aanmaken van vectordata in een eigen `.js` file.
+
+```js
+import { FaissStore } from "langchain/vectorstores/faiss"
+
+const loader = new TextLoader("public/lord-of-the-rings.txt")
+const data = await loader.load()
+const textSplitter = new RecursiveCharacterTextSplitter({ chunkSize: 1000, chunkOverlap: 2 })
+const splitDocs = await textSplitter.splitDocuments(data)
+
+// hier maken we de FAISS vectorstore en slaan de data daarin op
+const vectorStore = await FaissStore.fromDocuments(splitDocs, embeddings)
+const directory = "database"
+await vectorStore.save(directory)
+console.log("store is saved!")
+```
+
+#### Vragen stellen aan vectordata
+
+Plaats je code voor het stellen van vragen in een eigen `.js` file. Hierin kan je nu dezelfde `faiss` store inladen die je in het vorige proces had opgeslagen.
+
+```js
+import { FaissStore } from "langchain/vectorstores/faiss"
+import { ChatOpenAI } from "@langchain/openai"
+import { OpenAIEmbeddings } from "@langchain/openai"
+import { ConversationalRetrievalQAChain } from "langchain/chains"
+import { BufferMemory } from "langchain/memory"
+
+const KEY = process.env.OPENAI_API_KEY
+const embeddings = new OpenAIEmbeddings({ openAIApiKey: KEY })
+const directory = "database"
+const vectorStore = await FaissStore.load(directory,embeddings)
+
+const model = new ChatOpenAI({ temperature: 0.1, modelName: "gpt-3.5-turbo",  openAIApiKey: KEY })
+const memory = new BufferMemory({ memoryKey: "chat_history", returnMessages: true })
+const chain = ConversationalRetrievalQAChain.fromLLM(model,vectorStore.asRetriever(),{ memory })
+
+async function answerQuestion(prompt) {
+    const result = await chain.call({ question: prompt })
+    return result.text
+}
+```
+
+<br><br><br>
+
+
+## Server
+
+Op je `express` server *(zie [les 6](../les6/README.md))* voeg je nu de FAISS data toe. Het bestand waarmee je vectordata aanmaakt wordt niet gebruikt op de server. Dit bestand roep je handmatig aan op het moment dat je andere teksten wil kunnen bevragen.
+
+<br><br><br>
+
 
 ## Troubleshooting
 
@@ -165,7 +219,7 @@ Bij het maken van embeddings verstuur je een document naar OpenAI en/of Microsof
 
 ## Voorbeeld
 
-Stel vragen over dit vak aan de [PRG8 assistent](https://ai-assistent-mu.vercel.app)
+Bovenstaande code is gebruikt voor de [PRG4 assistent van jaar 1](https://ai-assistent-mu.vercel.app)
 
 <br><br><br>
 
@@ -174,10 +228,3 @@ Stel vragen over dit vak aan de [PRG8 assistent](https://ai-assistent-mu.vercel.
 - [Langchain Azure OpenAI Text Embedding](https://js.langchain.com/docs/integrations/text_embedding/azure_openai)
 - [Langchain document loaders](https://js.langchain.com/docs/modules/data_connection/document_loaders/)
 - [FAISS - Facebook Vector Store](https://js.langchain.com/docs/integrations/vectorstores/faiss)
-
-
-
-
-### Live zetten
-
-Voor de lessen en inleveropdrachten kan je jouw frontend en backend lokaal draaien op je eigen computer. Voor het expert level kan je jouw project live zetten op je HR studenthosting. Er zijn ook online node hosting providers te vinden zoals `vercel.com`, `netlify.com`, `codesandbox.com`, `github codespaces`, `huggingface spaces`, `stackblitz.com`, `deno.com`, `amazon serverless webservices`, etc.
