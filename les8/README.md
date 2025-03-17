@@ -1,5 +1,7 @@
 # Les 8
 
+> ⚠️ Deprecation warning - deze code wordt binnenkort bijgewerkt naar de nieuwste langchain versie.
+
 ## Eigen documenten lezen met een taalmodel
 
 In deze oefening gaan we vragen over een document beantwoorden met een taalmodel. Je werkt in drie losse projecten:
