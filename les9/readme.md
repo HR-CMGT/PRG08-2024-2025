@@ -111,7 +111,9 @@ Dit concept heet `function calling / tool calling / agents`. Het taalmodel krijg
 
 Je kan je project live zetten op een webserver, als die webserver `node` ondersteunt en ook continu de `node server` kan draaien. Dit kan je doen op je HR studentenhosting. Het nadeel is dat je zelf moet monitoren wanneer de server is uitgevallen.
 
-Er zijn ook online ***node hosting*** providers te vinden zoals *`vercel.com`, `netlify.com`, `render.com`, `codesandbox.com`, `github codespaces`, `huggingface spaces`, `stackblitz.com`, `deno.com`, `amazon serverless webservices`, etc...*. Deze maken vaak gebruik van ***serverless functions*** zodat er geen live node server hoeft te draaien. 
+Er zijn ook online ***node hosting*** providers te vinden zoals *`vercel.com`, `netlify.com`, `render.com`, `codesandbox.com`, `github codespaces`, `huggingface spaces`, `stackblitz.com`, `deno.com`, `amazon serverless webservices`, etc...*. Deze maken gebruik van ***serverless functions*** zodat er geen live node server hoeft te draaien. 
+
+Om hiermee te werken moet je je node code omzetten naar `pure functions`: functies die een waarde verwachten en een waarde teruggeven. Er zijn geen global variables of state beschikbaar in je serverless app.
 
 #### Voorbeeld
 
@@ -159,33 +161,23 @@ fetchGreeting('Action Henk');
 
 <br><br><br>
 
-## Spraak
+## Audio
 
-De browser heeft spraak én spraakherkenning ingebouwd:
+[De browser heeft spraak én spraakherkenning ingebouwd](https://github.com/HR-CMGT/PRG08-2024-2025/blob/main/snippets/speech.md). Voor client apps is dit de handigste manier om met spraak te werken, omdat de audio verwerking nu helemaal aan de client-side is. Het nadeel is dat de stemmen erg wisselen per browser.
 
-- [Spraak en spraakherkenning in de browser](https://github.com/HR-CMGT/PRG08-2024-2025/blob/main/snippets/speech.md)
+### AI Audio
 
-### OpenAI Whisper
-
-Je kan je mp3 file naar *OpenAI Whisper* sturen om spraak om te zetten naar tekst. Helaas werkt dit nog niet via Azure, dus je moet een eigen `OPENAI_API_KEY` in je `.env` plaatsen. Dit voorbeeld is in ***Langchain***:
-
-```bash
-npm install langchain @langchain/community openai
-````
-
-```js
-import { OpenAIWhisperAudio } from "@langchain/community/document_loaders/fs/openai_whisper_audio";
-
-const options = {
-    apiKey: process.env.OPENAI_API_KEY
-}
-const loader = new OpenAIWhisperAudio("hello.mp3", options);
-const docs = await loader.load();
-console.log(docs[0].pageContent);
-```
-- [Bekijk hier het voorbeeld in de OpenAI docs](https://platform.openai.com/docs/guides/speech-to-text)
+- [Voorbeeldcode "whisper" (spraakherkenning) en "tts" (text-to-speech)](./audio.md)
+- [Elevenlabs API](https://elevenlabs.io/docs/api-reference/text-to-speech/convert)
 
 <br><br><br>
+
+
+
+
+
+
+
 
 
 ## Expert links

@@ -63,11 +63,11 @@ Werkt een prompt niet zoals je gehoopt had, lees hem dan nog eens goed en bedenk
 
 Als je aan het debuggen bent is het handig om voorspelbare resultaten te krijgen zodat je kunt zien of je prompt beter wordt. De onvoorspelbaarheid van een model regelen we met de `temperature`. Zet deze op 0.0 voor erg voorspelbare resultaten. 
 
-Je kan dit juist een hoge waarde geven als je creatieve en onvoorspelbare resultaten wil krijgen. Een waarde van 1 is heel creatief. Als je boven de 1 gaat kan je vreemde of onlogische resultaten krijgen.
+Je kan dit juist een hoge waarde geven als je creatieve en onvoorspelbare resultaten wil krijgen. Een waarde van 2 is heel creatief. 
 
 ```javascript
 const model = new ChatOpenAI({
-    temperature: 0.0, 
+    temperature: 0.3, 
     azureOpenAIApiKey: process.env.AZURE_OPENAI_KEY,
     //...etc
 })
@@ -112,6 +112,9 @@ messages.push(
 const chat2 = await model.invoke(messages)
 console.log(chat2.content)
 ```
+
+<br><Br><br>
+
 ### Classes voor roles
 
 Langchain biedt classes aan om de roles wat duidelijker te maken in je code:
