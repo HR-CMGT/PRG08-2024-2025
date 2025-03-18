@@ -1,15 +1,22 @@
 # Les 8
 
-> ⚠️ Deprecation warning - deze code wordt binnenkort bijgewerkt naar de nieuwste langchain versie.
-
 ## Eigen documenten lezen met een taalmodel
 
 In deze oefening gaan we vragen over een document beantwoorden met een taalmodel. Je werkt in drie losse projecten:
 
-- Voorbereiding: tekst inladen, embedden, model opslaan
-- Server: model inladen, vragen beantwoorden met LLM
-- Client: vragen sturen vanuit de user interface
+- Voorbereiding: tekst inladen, vectordata maken, opslaan
+- Vectordata inladen en vragen beantwoorden
 
+<br>
+
+
+> ⚠️ Updated naar langchain 0.3. Zorg dat je de laatste langchain versie hebt:
+```sh
+npm install @langchain/openai @langchain/community @langchain/core @langchain/textsplitter faiss-node
+```
+
+<br>
+<br>
 <br>
 
 ### Inhoud
@@ -19,33 +26,34 @@ In deze oefening gaan we vragen over een document beantwoorden met een taalmodel
 - Tekstbestand inlezen
 - Vragen beantwoorden
 - Vector stores
+- Chat history
 - Privacy en copyright
 
 <br><br><br>
 
 ## Tekst omzetten naar vectoren
 
-In het college heb je gezien waarom teksten als `vectordata` worden gebruikt in taalmodellen. Jouw tekst moet je dus omzetten naar vectordata. Dit noemen we `embedding`. Om tekst te `embedden` heb je een taalmodel nodig dat *geen* volledig chat model is. OpenAI gebruikt hier het `ada` model voor. 
-
-We gebruiken het `embedding` (ada) model om vectordata te maken. We hebben het `chat` model (chatgpt) uit de vorige les ook nodig om vragen te stellen. De waarden voor de keys staan in de `.env` file.
+Taalmodellen werken met `vectordata` om verbanden tussen teksten te kunnen leggen. Jouw tekst moet je dus omzetten naar vectordata. Dit noemen we `embedding`. Om tekst te `embedden` heb je een taalmodel nodig dat *geen* volledig chat model is. OpenAI gebruikt hier het `ada` model voor:
 
 ```js
 import { OpenAIEmbeddings, ChatOpenAI } from "@langchain/openai"
 
-const chatmodel = new ChatOpenAI({
+// om te chatten
+const model = new ChatOpenAI({
     temperature: 0.3,
     azureOpenAIApiKey: process.env.AZURE_OPENAI_API_KEY,
     azureOpenAIApiVersion: process.env.OPENAI_API_VERSION,
     azureOpenAIApiInstanceName: process.env.INSTANCE_NAME,
-    azureOpenAIApiDeploymentName: process.env.ENGINE_NAME, // dit is het chatgpt3.5 model
+    azureOpenAIApiDeploymentName: process.env.ENGINE_NAME, // chatgpt3.5
 })
 
+// om embeddings te maken
 const embeddings = new OpenAIEmbeddings({
     temperature: 0.1,
     azureOpenAIApiKey: process.env.AZURE_OPENAI_API_KEY,
     azureOpenAIApiVersion: process.env.OPENAI_API_VERSION,
     azureOpenAIApiInstanceName: process.env.INSTANCE_NAME,
-    azureOpenAIApiDeploymentName: process.env.DEPLOYMENT_NAME,  // ⚠️ ada taalmodel voor het maken van embeddings
+    azureOpenAIApiDeploymentName: process.env.DEPLOYMENT_NAME,  // ada
 })
 ```
 #### Hello world test
@@ -57,154 +65,121 @@ console.log(`Created vector with ${vectordata.length} values.`)
 ```
 [Langchain documentatie voor Azure OpenAI embedding](https://js.langchain.com/docs/integrations/text_embedding/azure_openai).
 
-<br>
+<br><br><Br>
 
 ## Tekstbestand inlezen
 
-Langchain heeft verschillende opties om tekstbestanden te lezen, zoals [.txt, PDF, JSON, CSV, etc.](https://js.langchain.com/docs/modules/data_connection/document_loaders/). Je kan zelfs een [hele github repository](https://js.langchain.com/docs/integrations/document_loaders/web_loaders/github#usage) inlezen. In dit voorbeeld lezen we een `.txt` file. De ingelezen tekst 'knip' je op in chunks. Doordat de chuncks een vaste grootte hebben kan het gebeuren dat je midden in een zin/passage knipt. Om te voorkomen dat je chunks met halve informatie krijgt geef je de chunks een overlap. De grootte van de chunks en de overlap moet je zelf kiezen.
+Langchain heeft verschillende opties om tekstbestanden te lezen, zoals [.txt, PDF, JSON, CSV, etc.](https://js.langchain.com/docs/modules/data_connection/document_loaders/). Je kan zelfs een [hele github repository](https://js.langchain.com/docs/integrations/document_loaders/web_loaders/github#usage) inlezen. In dit voorbeeld lezen we een `.txt` file. De ingelezen tekst 'knip' je op in chunks. Doordat de chuncks een vaste grootte hebben kan het gebeuren dat je midden in een zin/passage knipt. Om te voorkomen dat je chunks met halve informatie krijgt geef je de chunks een overlap. 
 
 ```js
-import { RecursiveCharacterTextSplitter } from "langchain/text_splitter"
-import { TextLoader } from "langchain/document_loaders/fs/text"
-import { MemoryVectorStore } from "langchain/vectorstores/memory"
-import { RetrievalQAChain } from "langchain/chains"
+import { TextLoader } from "langchain/document_loaders/fs/text";
+import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
+import { MemoryVectorStore } from "langchain/vectorstores/memory";
 
-const loader = new TextLoader("./myfile.txt")
-const data = await loader.load()
-const textSplitter = new RecursiveCharacterTextSplitter({chunkSize: 1500, chunkOverlap: 100})
-const splitDocs = await textSplitter.splitDocuments(data)
+let vectorStore
+
+async function createVectorstore() {
+    const loader = new TextLoader("./public/example.txt");
+    const docs = await loader.load();
+    const textSplitter = new RecursiveCharacterTextSplitter({ chunkSize: 1000, chunkOverlap: 200 });
+    const splitDocs = await textSplitter.splitDocuments(docs);
+    console.log(`Document split into ${splitDocs.length} chunks. Now saving into vector store`);
+    vectorStore = await MemoryVectorStore.fromDocuments(splitDocs, embeddings);
+}
 ```
 <br><br><br>
 
-## Vectordata maken en vragen stellen
-Je gaat de ingeladen tekstdata omzetten naar vectordata. In dit voorbeeld slaan we de vectordata op in een `MemoryVectorStore`. 
-```js
-const vectorStore = await MemoryVectorStore.fromDocuments(splitDocs, embeddings)
-```
-🤯 Je kan nu vragen stellen aan je eigen document! 
+## Vragen stellen over de tekst
+
+In bovenstaand voorbeeld slaan we de vectordata op in een `MemoryVectorStore`. Hier kan je vragen aan stellen. Dit werkt als volgt:
+
+- Je geeft een prompt.
+- Langchain zoekt in je vectorstore naar tekst die daar het beste bij past.
+- Het prompt en het zoekresultaat worden naar OpenAI gestuurd om er een mooi antwoord van te maken.
 
 ```js
-const chain = RetrievalQAChain.fromLLM(chatmodel, vectorStore.asRetriever())
-const response = await chain.call({ query: "who is the text about?" })
-console.log(response.text)
+async function askQuestion(){
+    const relevantDocs = await vectorStore.similaritySearch("What is this document about?",3);
+    const context = relevantDocs.map(doc => doc.pageContent).join("\n\n");
+    console.log("Asking the model...");
+    const response = await model.invoke([
+        ["system", "Use the following context to answer the user's question. Only use information from the context."],
+        ["user", `Context: ${context}\n\nQuestion: What is this document about?`]
+    ]);
+    console.log("\nAnswer found:");
+    console.log(response.content);
+}
 ```
-We hebben nu kunnen testen of we kunnen werken met het opslaan van vectordata en het stellen van vragen. Om deze app af te maken gaan we nog twee dingen toevoegen:
-
-- Automatisch bijhouden van ***chat history***. Dit is optioneel, het zorgt ervoor dat je een conversatie kan voeren waarbij eerdere antwoorden ook meegenomen worden.
-- Opslaan van de ***VectorStore*** zodat je niet telkens opnieuw vectordata hoeft aan te maken voordat de chat begint.
 
 <br><br><br>
 
-### Automatic Chat History
+## Vectorstore bewaren
 
-In onderstaand voorbeeld wordt de chat history automatisch bijgehouden dankzij de `BufferMemory` class van langchain. Je hoeft nu niet meer zelf een chat history in een array op te slaan.
+De `MemoryVectorStore` blijft niet bewaard tussen sessies. Daardoor moet je de embeddings telkens opnieuw maken, dat kost tijd en tokens. Om dat te voorkomen kan je de embeddings opslaan in een vectorstore:
 
-We geven de `vectorStore` en de `bufferMemory` mee aan langchain als we een vraag stellen.
-
-```js
-const memory = new BufferMemory({ memoryKey: "chat_history", returnMessages: true })
-const chain = ConversationalRetrievalQAChain.fromLLM(model, vectorStore.asRetriever(), { memory })
-const answer = await chain.call({ question: "Waar gaat deze tekst over?" })
-console.log(answer)
-```
-
-### Achtergrond informatie: de conversatie-ketting
-
-Je hebt nu met relatief weinig code een chatbot waarmee je kunt praten over je document. Dit is wat LangChain voor je doet nadat je een `call` met een `question` doet: 
-* De `question` wordt samen met de `chat_history` naar het chatmodel gestuurd met als prompt:  
-  'Gebruik deze `chat_history` en vervolgvraag `question` om een op zichzelf staande vraag te maken'
-* Het chatmodel stuurt een op zichzelf staande vraag terug.
-* Er wordt een call gedaan naar het embeddingsmodel om de op zichzelf staande vraag te embedden.
-* Deze embedding wordt gebruikt om relevante teksten voor deze vraag in de vectorstore op te zoeken.
-* Daarna wordt de op zichzelf staande vraag, samen met de relevante teksten naar het chatmodel gestuurd met prompt:  
-  'Gebruik deze teksten om antwoord te geven op deze vraag'
-* Het chatmodel stuurt een anwtoord terug dat komt uit de informatie van jouw documenten.
-* Het antwoord wordt samen met jouw `question` toegevoegd aan de `chat_history`.
-
-<br><br><br>
-
-## Vector stores
-
-Het doen van prompts (genereren van tokens) kost geld. Een simpele prompt kost bijna niets, maar het maken van embeddings kan sneller oplopen, als je veel tekst laat embedden. Daarnaast is het zonde om steeds dezelfde embeddings te laten maken, vandaar dat je de wilt kunnen opslaan. Bekijk [hier een lijst van vectorstores](https://js.langchain.com/docs/integrations/vectorstores) die je via langchain kan gebruiken. In het algemeen kan je dit onderscheid maken:
-
-- *Lokaal bestand*. De vectordata wordt als lokaal bestand binnen je project opgeslagen.
+- *Lokaal bestand*. De vectordata wordt als lokaal bestand binnen je project opgeslagen, bv. met FAISS.
 - *Vector database*. Dit is een "echte" database op je systeem, zoals ChromaDB, MongoDB.
 - *Cloud database*. Je vectordata staat in de cloud, waardoor het vanuit meerdere projecten online toegankelijk is. Sommige cloud services, zoals [pinecone](https://www.pinecone.io) bieden 1 gratis online vectorstore.
 
+In dit codevoorbeeld slaan we de vectorstore op met FAISS. 
+
+#### data opslaan
+```js
+import { FaissStore } from "@langchain/community/vectorstores/faiss";
+
+vectorStore = await FaissStore.fromDocuments(splitDocs, embeddings);
+await vectorStore.save("vectordatabase"); // geef hier de naam van de directory waar je de data gaat opslaan
+```
+#### data inlezen
+```js
+vectorStore = await FaissStore.load("vectordatabase", embeddings); // dezelfde naam van de directory 
+```
+> ⚠️ ***Let op dat je de data maar 1x hoeft op te slaan.*** Om die reden is het handiger om met twee losse `.js` files te werken. Een voor het maken van vectordata, en een voor het inlezen en vragen stellen.
+
 <br><br><br>
 
+### Chat History
 
-## FAISS
-
-Voor deze les werken we met [FAISS - Facebook Vector Store](https://js.langchain.com/docs/integrations/vectorstores/faiss). 
-
-#### Aanmaken en opslaan vectordata
-
-Plaats je code voor het aanmaken van vectordata in een eigen `.js` file.
+In bovenstaand code voorbeeld moet je zelf in een array een chat history bijhouden, als dat nodig is in jouw applicatie. Een chat history zorgt ervoor dat OpenAI de hele conversatie kan volgen, in plaats van alleen individuele prompts.
 
 ```js
-import { FaissStore } from "langchain/vectorstores/faiss"
+let history = [
+    ["system", "Use the following context to answer the user's question. Only use information from the context."],
+    ["user", `Context: ${context}\n\nQuestion: What is this document about?`]
+]
+const response = await model.invoke(history);
 
-const loader = new TextLoader("public/lord-of-the-rings.txt")
-const data = await loader.load()
-const textSplitter = new RecursiveCharacterTextSplitter({ chunkSize: 1000, chunkOverlap: 2 })
-const splitDocs = await textSplitter.splitDocuments(data)
-
-// hier maken we de FAISS vectorstore en slaan de data daarin op
-const vectorStore = await FaissStore.fromDocuments(splitDocs, embeddings)
-const directory = "database"
-await vectorStore.save(directory)
-console.log("store is saved!")
+// antwoord toevoegen aan chat history
+history.push(["ai", response.content])
 ```
+<br>
 
-#### Vragen stellen aan vectordata
+#### Expert level
 
-Plaats je code voor het stellen van vragen in een eigen `.js` file. Hierin kan je nu dezelfde `faiss` store inladen die je in het vorige proces had opgeslagen.
-
-```js
-import { FaissStore } from "langchain/vectorstores/faiss"
-import { ChatOpenAI } from "@langchain/openai"
-import { OpenAIEmbeddings } from "@langchain/openai"
-import { ConversationalRetrievalQAChain } from "langchain/chains"
-import { BufferMemory } from "langchain/memory"
-
-const KEY = process.env.OPENAI_API_KEY
-const embeddings = new OpenAIEmbeddings({ openAIApiKey: KEY })
-const directory = "database"
-const vectorStore = await FaissStore.load(directory,embeddings)
-
-const model = new ChatOpenAI({ temperature: 0.1, modelName: "gpt-3.5-turbo",  openAIApiKey: KEY })
-const memory = new BufferMemory({ memoryKey: "chat_history", returnMessages: true })
-const chain = ConversationalRetrievalQAChain.fromLLM(model,vectorStore.asRetriever(),{ memory })
-
-async function answerQuestion(prompt) {
-    const result = await chain.call({ question: prompt })
-    return result.text
-}
-```
+[Gebruik langchain classes voor het automatisch bijhouden van chat history](https://js.langchain.com/docs/how_to/qa_chat_history_how_to/)
 
 <br><br><br>
 
 
 ## Server
 
-Op je `express` server *(zie [les 6](../les6/README.md))* voeg je nu de FAISS data toe. Het bestand waarmee je vectordata aanmaakt wordt niet gebruikt op de server. Dit bestand roep je handmatig aan op het moment dat je andere teksten wil kunnen bevragen.
+Op je `express` server *(zie [les 6](../les6/README.md))* voeg je nu de FAISS data toe en de code waarmee je vragen aan het document kan stellen. Het genereren van de tekstdata hoeft niet persé op de server te staan.
+
+#### React integratie
+
+Omdat alle "document code" op de server plaatsvindt hoef je in React je prompt code niet te veranderen.
+
 
 <br><br><br>
 
 
 ## Troubleshooting
 
-Je krijgt een error over `size of k`. OpenAI verwacht minimaal 3 chunks in je tekst. Als er minder zijn kan je dit aangeven. In dit voorbeeld zijn er maar 2 chunks:
+Let op dat je de laatste versie van langchain en faiss hebt geinstalleerd.
 
-```js
-const chain = RetrievalQAChain.fromLLM(model, vectorStore.asRetriever({ k: 2 }))
+```sh
+npm install @langchain/openai @langchain/community @langchain/core @langchain/textsplitter faiss-node
 ```
-
-De FAISS documentatie is recent veranderd. Je kan deze waarschuwing krijgen. 
-
-> *[WARNING]: Importing from "langchain/vectorstores/faiss" is deprecated. Instead, please add the "@langchain/community" package to your project with e.g. `npm install @langchain/community` en `import from "@langchain/community/vectorstores/faiss"`.*
-
 
 
 <br><br><br>
