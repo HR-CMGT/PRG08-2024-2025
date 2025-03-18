@@ -32,18 +32,18 @@ import { OpenAIEmbeddings, ChatOpenAI } from "@langchain/openai"
 
 const chatmodel = new ChatOpenAI({
     temperature: 0.3,
-    azureOpenAIApiKey: process.env...,
-    azureOpenAIApiVersion: process.env...,
-    azureOpenAIApiInstanceName: process.env...,
-    azureOpenAIApiDeploymentName: process.env..., // hier vul je het `chatgpt` model in
+    azureOpenAIApiKey: process.env.AZURE_OPENAI_API_KEY,
+    azureOpenAIApiVersion: process.env.OPENAI_API_VERSION,
+    azureOpenAIApiInstanceName: process.env.INSTANCE_NAME,
+    azureOpenAIApiDeploymentName: process.env.ENGINE_NAME, // dit is het chatgpt3.5 model
 })
 
 const embeddings = new OpenAIEmbeddings({
     temperature: 0.1,
-    azureOpenAIApiKey: process.env...,
-    azureOpenAIApiVersion: process.env...,
-    azureOpenAIApiInstanceName: process.env...,
-    azureOpenAIApiDeploymentName: process.env...,  // hier vul je het 'ada' model in
+    azureOpenAIApiKey: process.env.AZURE_OPENAI_API_KEY,
+    azureOpenAIApiVersion: process.env.OPENAI_API_VERSION,
+    azureOpenAIApiInstanceName: process.env.INSTANCE_NAME,
+    azureOpenAIApiDeploymentName: process.env.DEPLOYMENT_NAME,  // ⚠️ ada taalmodel voor het maken van embeddings
 })
 ```
 #### Hello world test
