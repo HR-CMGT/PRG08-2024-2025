@@ -1,5 +1,9 @@
 # AI Audio
 
+Het werken met audio is niet goed ondersteund in langchain. Je kan beter rechtstreeks een audio model aanroepen, bv. van OpenAI, Azure of [Elevenlabs](https://elevenlabs.io/docs/api-reference/text-to-speech/convert).
+
+<Br><br><br>
+
 ### Whisper
 
 Als je met AI tools van Azure of OpenAI audio wil lezen of genereren, dan zal je een api key nodig hebben, en je audio code moet dan dus op de server draaien. De gegenereerde audio moet je dan vervolgens weer naar de client sturen.
@@ -47,7 +51,7 @@ async function azureWhisper() {
 
 ## Text to speech
 
-OpenAI heeft een text-to-speech model dat je via de `openai sdk` kan aanroepen, of je roept de restful api aan via `fetch`. Hieronder een voorbeeld van `fetch` in `node.js`.
+OpenAI heeft een text-to-speech model dat je via de `openai sdk` kan aanroepen, of via `fetch`. Hieronder een voorbeeld van `fetch` in `node.js`.
 
 ```js
 import fs from 'fs/promises';
@@ -77,6 +81,8 @@ async function textToSpeech(text, voice = "alloy", apiKey) {
     }
 }
 
+// node: save the file in a directory
+// browser: you can assign the file to an audio element
 async function saveAudioFileNode(audioData, filename = "result.mp3") {
     try {
         await fs.writeFile(filename, Buffer.from(audioData));
@@ -100,7 +106,13 @@ async function demo() {
 demo().catch(console.error);
 ```
 
-Azure heeft een heel uitgebreid model voor text-to-speech. Dit kan je helaas alleen gebruiken via de ***Azure SDK*** en niet via langchain.
-
-
 <br><br><br>
+
+## Links
+
+Let op het verschil tussen het gebruiken van een SDK (zoals OpenAI SDK en Azure SDK) en het aanroepen van een REST API met `fetch`. Dit laatste is vaak eenvoudiger op te zetten.
+
+- [OpenAI docs](https://platform.openai.com/docs/api-reference/chat/create?lang=node.js)
+- [Azure REST API](https://learn.microsoft.com/en-us/rest/api/azure/)
+- [Elevenlabs API](https://elevenlabs.io/docs/api-reference/text-to-speech/convert)
+

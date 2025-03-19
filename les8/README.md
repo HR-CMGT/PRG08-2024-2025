@@ -21,7 +21,6 @@ npm install @langchain/openai @langchain/community @langchain/core @langchain/te
 
 ### Inhoud
 
-- Werken met grote hoeveelheden tekst
 - Tekst omzetten naar vectoren
 - Tekstbestand inlezen
 - Vragen beantwoorden
@@ -140,7 +139,7 @@ vectorStore = await FaissStore.load("vectordatabase", embeddings); // dezelfde n
 
 ### Chat History
 
-In bovenstaand code voorbeeld moet je zelf in een array een chat history bijhouden, als dat nodig is in jouw applicatie. Een chat history zorgt ervoor dat OpenAI de hele conversatie kan volgen, in plaats van alleen individuele prompts.
+In bovenstaand code voorbeeld stuur je een array naar het taalmodel om een antwoord te krijgen. Als je dit antwoord en opvolgende vragen telkens aan deze array toevoegt ontstaat een chat history. Dit helpt het model om de conversatie te kunnen volgen.
 
 ```js
 let history = [
@@ -152,8 +151,6 @@ const response = await model.invoke(history);
 // antwoord toevoegen aan chat history
 history.push(["ai", response.content])
 ```
-<br>
-
 #### Expert level
 
 [Gebruik langchain classes voor het automatisch bijhouden van chat history](https://js.langchain.com/docs/how_to/qa_chat_history_how_to/)

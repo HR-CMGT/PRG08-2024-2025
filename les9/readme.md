@@ -2,19 +2,18 @@
 
 ## Verbeteren chatbot
 
-- Opmaak en code antwoorden van een LLM correct tonen
-- Externe API's toevoegen zoals het weerbericht. Het LLM gebruiken om daar iets over te zeggen.
-- Function calling
-- Serverless functies voor live hosting op sites zoals Vercel.com.
-- Spraak en spraakherkenning van de browser
-- Spraak van OpenAI
+- Opmaak tonen
+- Serverless hosting
+- Externe API
+- Tools
+- Spraak 
 - Expert links
 
 <br><br><br>
 
-## Opmaak en code tonen
+## Opmaak tonen
 
-Een LLM kan tekst met kopjes, vette tekst en lijstjes terug geven. Daarnaast kan ook correct opgemaakte code terugkomen waarin de spaties belangrijk zijn. Om dit correct te tonen moet je een markdown converter gebruiken die het antwoord van een LLM kan tonen als markdown, in plaats van plain text.
+Een LLM kan markdown tekst met kopjes, vette tekst en lijstjes terug geven. Daarnaast kan ook correct opgemaakte code terugkomen waarin de spaties belangrijk zijn. Om dit correct te tonen moet je een markdown converter gebruiken die het antwoord van een LLM kan tonen als markdown, in plaats van plain text.
 
 #### Voorbeeld ShowdownJS
 
@@ -29,14 +28,26 @@ document.querySelector("#div").innerHTML = converter.makeHtml(promptresult);
 
 <br><Br><br>
 
+
+## Serverless hosting
+
+Je kan je project live zetten op een webserver, als die webserver `node` ondersteunt en een `node server` kan draaien. Dit kan je doen op je HR studentenhosting. Het nadeel is dat je zelf moet monitoren wanneer de server is uitgevallen.
+
+Er zijn ook online ***node hosting*** providers te vinden zoals [vercel.com](https://vercel.com), [netlify.com](https://netlify.com), [render.com](https://render.com), [codesandbox.com](https://codesandbox.com), [github codespaces](https://github.com/features/codespaces), [huggingface spaces](https://huggingface.co/spaces), [stackblitz.com](https://stackblitz.com), [deno.com](https://deno.com), [amazon serverless webservices](https://aws.amazon.com/serverless/), etc. Deze maken gebruik van ***serverless functions*** zodat er geen live node server hoeft te draaien.
+
+> 🔥 [Bekijk dit code voorbeeld voor het werken met serverless](./serverless.md)
+
+<br><br><br>
+
 ## Externe API's toevoegen
 
-Een LLM bevat geen live informatie over bijvoorbeeld het *recente nieuws, het weer, sportuitslagen, etc.* Dit kan je oplossen door zelf een API call te doen en het resultaat daarvan door het LLM te laten uitleggen. In dit voorbeeld van een `weather app` krijg je advies over kleding die past bij het huidige weer:
+Een LLM bevat geen live informatie over bijvoorbeeld het *recente nieuws, het weer, sportuitslagen, etc.* Dit kan je oplossen door zelf een API call te doen en het resultaat daarvan door het LLM te laten uitleggen. 
+
+Dit is handig als je al vantevoren weet welke informatie de gebruiker nodig gaat hebben, bijvoorbeeld in een *weather app*.
 
 ```js
 const weatherApiKey = 'YOUR_WEATHER_API_KEY';
-const city = 'Rotterdam';
-const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherApiKey}&units=metric`;
+const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=rotterdam&appid=${weatherApiKey}&units=metric`;
 
 async function getWeather() {
   const response = await fetch(apiUrl)
@@ -61,7 +72,7 @@ talkAboutWeather();
 
 <br><br><br>
 
-## Function calling (tools)
+## Tools
 
 Je zal bij het gebruiken van taalmodellen gemerkt hebben dat deze niet óveral goed in zijn, bv:
 
@@ -77,15 +88,13 @@ Je zal bij het gebruiken van taalmodellen gemerkt hebben dat deze niet óveral g
 -	Een grafiek tekenen die echt klopt
 -	Inloggen op een beveiligde website
 
-Het zou natuurlijk heel handig zijn als een taalmodel begrijpt wanneer een van deze situaties van toepassing is, en dat het model dan zelf een javascript functie kan aanroepen waarin deze functionaliteit correct uitgevoerd kan worden.
+Bij het aanmaken van een taalmodel kan je ook functies doorgeven die dit wel kunnen. Hierdoor kan je taalmodel uit zichzelf die functie aanroepen als het taalmodel vindt dat dit nodig is.
 
-Dit concept heet `function calling / tool calling / agents`. Het taalmodel krijgt nu toegang tot javascript functies in jouw project en gaat zelf bedenken wanneer deze functies aangeroepen moeten worden. 
-
-[Bekijk hier een compleet code voorbeeld voor het werken met tools in een taalmodel](../snippets/functions.md)
+[Code voorbeeld voor het werken met tools in een taalmodel](../snippets/functions.md)
 
 <br>
 
-## Ideëen voor applicaties
+### Tool applicaties
 
 -	Je haalt data op van een externe API (inspiratie: https://apilist.fun)
 -	Je logt in op een beveiligde website (dit kan je eigen CRUD applicatie zijn)
@@ -95,7 +104,7 @@ Dit concept heet `function calling / tool calling / agents`. Het taalmodel krijg
 
 <br>
 
-### Code voorbeelden
+### Tool voorbeelden
 
 - [Code Voorbeeld: laat het taalmodel een berekening maken](../snippets/functions.md)
 - [Een tool definiëren](https://js.langchain.com/docs/concepts/tools/)
@@ -107,67 +116,13 @@ Dit concept heet `function calling / tool calling / agents`. Het taalmodel krijg
 
 <br><br><br>
 
-## Serverless functies
-
-Je kan je project live zetten op een webserver, als die webserver `node` ondersteunt en ook continu de `node server` kan draaien. Dit kan je doen op je HR studentenhosting. Het nadeel is dat je zelf moet monitoren wanneer de server is uitgevallen.
-
-Er zijn ook online ***node hosting*** providers te vinden zoals *`vercel.com`, `netlify.com`, `render.com`, `codesandbox.com`, `github codespaces`, `huggingface spaces`, `stackblitz.com`, `deno.com`, `amazon serverless webservices`, etc...*. Deze maken gebruik van ***serverless functions*** zodat er geen live node server hoeft te draaien. 
-
-Om hiermee te werken moet je je node code omzetten naar `pure functions`: functies die een waarde verwachten en een waarde teruggeven. Er zijn geen global variables of state beschikbaar in je serverless app.
-
-#### Voorbeeld
-
-Maak een vercel project als volgt aan:
-
-```
-PROJECT FOLDER
-├── index.html
-├── index.js
-└── API
-      └── hello.js
-```
-In `api/hello.js` plaats je de serverless code:
-
-```js
-import type { VercelRequest, VercelResponse } from '@vercel/node'
-
-export default function handler(req, res) {
-  const { name = 'World' } = req.query
-  return res.json({
-    message: `Hello ${name}!`,
-  })
-}
-```
-Vanuit `index.js` kan je de serverless function aanroepen:
-
-```js
-async function fetchGreeting(name) {
-  try {
-    const response = await fetch(`/api/hello?name=${name}`);
-    const data = await response.json();
-    console.log(data.message); // "Hello Action Henk!" 
-  } catch (error) {
-    console.error('Error fetching the API:', error);
-  }
-}
-
-fetchGreeting('Action Henk');
-```
-
-#### Links
-
-- [Hello World Serverless](https://vercel.com/templates/other/nodejs-serverless-function-express)
-- [Vercel Serverless documentation](https://vercel.com/docs/functions)
-
-<br><br><br>
-
-## Audio
+## Spraak
 
 [De browser heeft spraak én spraakherkenning ingebouwd](https://github.com/HR-CMGT/PRG08-2024-2025/blob/main/snippets/speech.md). Voor client apps is dit de handigste manier om met spraak te werken, omdat de audio verwerking nu helemaal aan de client-side is. Het nadeel is dat de stemmen erg wisselen per browser.
 
-### AI Audio
+### AI Spraak
 
-- [Voorbeeldcode "whisper" (spraakherkenning) en "tts" (text-to-speech)](./audio.md)
+- [Voorbeeldcode spraakherkenning en text-to-speech](./audio.md)
 - [Elevenlabs API](https://elevenlabs.io/docs/api-reference/text-to-speech/convert)
 
 <br><br><br>
