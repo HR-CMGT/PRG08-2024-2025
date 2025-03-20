@@ -102,10 +102,13 @@ Dit kan je testen via [Postman](https://www.postman.com), [Hoppscotch](https://h
 
 Voeg een `Client` map toe waarin je je frontend gaat bouwen:
 
+
 ```
 SERVER
-├── .gitignore
 ├── .env
+├── .gitignore
+├── package.json
+├── node_modules
 ├── server.js
 CLIENT
 ├── index.html
