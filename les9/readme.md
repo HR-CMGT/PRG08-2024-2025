@@ -35,7 +35,7 @@ Je kan je project live zetten op een webserver, als die webserver `node` onderst
 
 Er zijn ook online ***node hosting*** providers te vinden zoals [vercel.com](https://vercel.com), [netlify.com](https://netlify.com), [render.com](https://render.com), [codesandbox.com](https://codesandbox.com), [github codespaces](https://github.com/features/codespaces), [huggingface spaces](https://huggingface.co/spaces), [stackblitz.com](https://stackblitz.com), [deno.com](https://deno.com), [amazon serverless webservices](https://aws.amazon.com/serverless/), etc. Deze maken gebruik van ***serverless functions*** zodat er geen live node server hoeft te draaien.
 
-> 🔥 [Bekijk dit code voorbeeld voor het werken met serverless](./serverless.md)
+> 🔥 [Bekijk dit code voorbeeld voor het werken met serverless](../snippets/serverless.md)
 
 <br><br><br>
 
@@ -122,7 +122,7 @@ Bij het aanmaken van een taalmodel kan je ook functies doorgeven die dit wel kun
 
 ### AI Spraak
 
-- [Voorbeeldcode spraakherkenning en text-to-speech](./audio.md)
+- [Voorbeeldcode spraakherkenning en text-to-speech](../snippets/audio.md)
 - [Elevenlabs API](https://elevenlabs.io/docs/api-reference/text-to-speech/convert)
 
 <br><br><br>

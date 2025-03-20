@@ -32,9 +32,10 @@ const response = await model.invoke({
 
 #### Itereren
 
-Werkt een prompt niet zoals je gehoopt had, lees hem dan nog eens goed en bedenk waarom de prompt verkeerd geïnterpreteerd zou kunnen worden. Je kan ook aan ChatGPT vragen om de prompt te verbeteren 🤯.
+Werkt een prompt niet zoals je gehoopt had, lees hem dan nog eens goed en bedenk waarom de prompt verkeerd geïnterpreteerd zou kunnen worden. Je kan aan ChatGPT vragen om de prompt te verbeteren *(promptception🤯)*.
 
 #### Technieken
+
 * Geef de AI een rol die past bij wat je aan hem gaat vragen.
   *  ‘Je bent een zeer creatieve kinderboekenschrijver’
   *  ‘Je bent een extreem nauwkeurige wetenschapper gespecialiseerd in…’
@@ -52,7 +53,6 @@ Werkt een prompt niet zoals je gehoopt had, lees hem dan nog eens goed en bedenk
   * ‘Geef een samenvatting van de tekst tussen <context></context>’.
   * ‘Het onderwerp voor het verhaal dat je moet verzinnen staat tussen [onderwerp][/onderwerp]’.
 
-
 * Begeleid het ‘denkproces’ van het model
   * ‘De gebruiker wil graag een recept. Bedenk welke gerechten populair zijn in de Indische keuken die snel klaar zijn. De gebruiker heeft de volgende ingrediënten …. Kies een Indisch recept dat je daarmee zou kunnen maken in 30 minuten.’
 
@@ -66,11 +66,7 @@ Als je aan het debuggen bent is het handig om voorspelbare resultaten te krijgen
 Je kan dit juist een hoge waarde geven als je creatieve en onvoorspelbare resultaten wil krijgen. Een waarde van 2 is heel creatief. 
 
 ```javascript
-const model = new ChatOpenAI({
-    temperature: 0.3, 
-    azureOpenAIApiKey: process.env.AZURE_OPENAI_KEY,
-    //...etc
-})
+const model = new AzureChatOpenAI({ temperature: 0.3 })
 ```
 Je kan ook per prompt de temperature meegeven:
 

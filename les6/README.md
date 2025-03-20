@@ -4,7 +4,7 @@
 
 In deze les gaan we het `node` project opzetten dat je nodig hebt voor de inleveropdracht. We beginnen met het aanroepen van het taalmodel met de `langchain` library. Als dat lukt voegen we een webserver toe op dezelfde manier als we hebben gedaan bij PRG06.
 
-- [Stap 1: OpenAI aanroepen](./langchain.md)
+- [Stap 1: Azure OpenAI aanroepen](./langchain.md)
 - [Stap 2: Webproject opzetten](./webproject.md)
 
 

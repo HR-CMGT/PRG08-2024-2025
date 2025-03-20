@@ -6,9 +6,7 @@ Het werken met audio is niet goed ondersteund in langchain. Je kan beter rechtst
 
 ### Whisper
 
-Als je met AI tools van Azure of OpenAI audio wil lezen of genereren, dan zal je een api key nodig hebben, en je audio code moet dan dus op de server draaien. De gegenereerde audio moet je dan vervolgens weer naar de client sturen.
-
-Je kan je mp3 file naar *Whisper* sturen om spraak om te zetten naar tekst. Dit werkt het makkelijkst als je rechtstreeks OpenAI aanroept met je eigen OpenAI api key:
+Je kan een mp3 file naar *Whisper* sturen om spraak om te zetten naar tekst. Dit werkt het makkelijkst als je rechtstreeks OpenAI aanroept met je eigen OpenAI api key:
 
 ```js
 import { OpenAIWhisperAudio } from "@langchain/community/document_loaders/fs/openai_whisper_audio";
@@ -51,7 +49,9 @@ async function azureWhisper() {
 
 ## Text to speech
 
-OpenAI heeft een text-to-speech model dat je via de `openai sdk` kan aanroepen, of via `fetch`. Hieronder een voorbeeld van `fetch` in `node.js`.
+Om met text-to-speech te werken moet je rechtstreeks OpenAI aanroepen. Dit kan niet via azure omdat we op azure geen TTS model hosten. Langchain  heeft hier geen classes voor.
+
+Je hebt vervolgens de keuze om de `openai` sdk te installeren via `npm install openai`, of je kan de `REST API` van OpenAI aanroepen met `fetch`. Hieronder een voorbeeld van `fetch`. Dit werkt zowel in de browser als in node. In node moet je het resultaat als bestand opslaan. In de browser moet je het resultaat in een audio element plaatsen.
 
 ```js
 import fs from 'fs/promises';
@@ -110,7 +110,7 @@ demo().catch(console.error);
 
 ## Links
 
-Let op het verschil tussen het gebruiken van een SDK (zoals OpenAI SDK en Azure SDK) en het aanroepen van een REST API met `fetch`. Dit laatste is vaak eenvoudiger op te zetten.
+Let op het verschil tussen het gebruiken van een SDK (zoals OpenAI SDK en Azure SDK) en het aanroepen van een REST API met `fetch`. 
 
 - [OpenAI docs](https://platform.openai.com/docs/api-reference/chat/create?lang=node.js)
 - [Azure REST API](https://learn.microsoft.com/en-us/rest/api/azure/)

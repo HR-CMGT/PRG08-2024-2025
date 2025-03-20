@@ -1,5 +1,7 @@
 # Les 6 - deel 1
 
+In dit deel gaan we [langchain](https://js.langchain.com/docs/introduction/) gebruiken om vanuit code een Azure OpenAI taalmodel aan te roepen.
+
 - Zorg dat je [NodeJS 22](https://nodejs.org/en) hebt geïnstalleerd.
 - Installeer [JSONFormatter](https://chromewebstore.google.com/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa) of een andere browser extensie waarmee je JSON kan bekijken.
 
@@ -25,13 +27,11 @@ node_modules
 De `.env` file:
 
 ```sh
-OPENAI_API_TYPE=___
-OPENAI_API_VERSION=___
-OPENAI_API_BASE=___
-AZURE_OPENAI_API_KEY=___
-DEPLOYMENT_NAME=___
-ENGINE_NAME=___
-INSTANCE_NAME=___
+AZURE_OPENAI_API_VERSION=
+AZURE_OPENAI_API_INSTANCE_NAME=
+AZURE_OPENAI_API_KEY=
+AZURE_OPENAI_API_DEPLOYMENT_NAME=
+AZURE_EMBEDDING_DEPLOYMENT_NAME=
 ```
 
 > *🚨 Deze waarden haal je uit de presentatie. Deel de API keys en de ENV file niet met anderen. Plaats de API keys niet online.*
@@ -63,10 +63,9 @@ Test of het inlezen van je `.env` is gelukt!
 [Langchain](https://js.langchain.com/docs/get_started/introduction) is de API die we in `server.js` gaan gebruiken om te werken met Azure OpenAI (ChatGPT). 
 
 ```sh
-npm install langchain @langchain/core
-npm install @langchain/openai
+npm install langchain @langchain/core @langchain/openai
 ```
-> *Let op dat je deze commando's in de server map uitvoert. De server map ziet er nu zo uit:*
+*Let op dat je deze commando's in de server map uitvoert. De server map ziet er nu zo uit:*
 
 ```
 SERVER
@@ -77,29 +76,25 @@ SERVER
 └── server.js
 ```
 
-> *In `package.json` moet je aangeven dat je met modules werkt: `"type": "module",`*
+⚠️ *In `package.json` moet je aangeven dat je met modules werkt: `"type": "module",`*
 
 <br><br><br>
 
-## OpenAI aanroepen
+## Azure OpenAI aanroepen
 
 Je kan nu een chatbot aanmaken en met het `invoke()` commando een prompt sturen. Let op dat de `env` file ingelezen is: `node --env-file=.env server.js`
 
 ```js
-import { ChatOpenAI } from "@langchain/openai"
+import { AzureChatOpenAI } from "@langchain/openai";
 
-const model = new ChatOpenAI({
-    azureOpenAIApiKey: process.env.AZURE_OPENAI_API_KEY, 
-    azureOpenAIApiVersion: process.env.OPENAI_API_VERSION, 
-    azureOpenAIApiInstanceName: process.env.INSTANCE_NAME, 
-    azureOpenAIApiDeploymentName: process.env.ENGINE_NAME, 
-})
+const model = new AzureChatOpenAI({ temperature: 1 });
 
-async function tellJoke() {
-    const joke = await model.invoke("Tell me a Javascript joke!")
-    console.log(joke.content)
+async function simpleTest() {
+    const chat = await model.invoke("Why do cats meow?")
+    console.log(chat.content)
 }
-tellJoke()
+
+await simpleTest()
 ```
 
 
@@ -122,16 +117,16 @@ tellJoke()
 
 <br><br><br>
 
-## Optioneel: eigen OpenAI KEY gebruiken
+## Optioneel: OpenAI gebruiken
 
-Als je zelf een key hebt voor OpenAI mag je die ook gebruiken. Het aanmaken van het model ziet er dan iets anders uit. Afhankelijk van je abonnement kan je hier `gpt-3.5-turbo` of `gpt-4` gebruiken. [Je kan hier een eigen key aanvragen](https://platform.openai.com/docs/introduction).
+Als je zelf een key hebt voor OpenAI mag je die ook gebruiken. Het aanmaken van het model ziet er dan iets anders uit. Afhankelijk van je abonnement kan je nu ook `gpt-4o` gebruiken. [Je kan hier een eigen key aanvragen](https://platform.openai.com/docs/introduction).
 
 ```js
 import { ChatOpenAI } from "@langchain/openai"
 
 const model = new ChatOpenAI({
-    modelName: "gpt-3.5-turbo",
-    openAIApiKey: process.env.OPEN_AI_KEY
+    modelName: "gpt-4o",
+    openAIApiKey: process.env.OPENAI_API_KEY
 })
 ```
 
@@ -140,13 +135,5 @@ const model = new ChatOpenAI({
 ## Links
 
 - [LangChain](https://js.langchain.com/docs/get_started/quickstart)
-- [Langchain Azure instellingen](https://js.langchain.com/docs/integrations/chat/azure)
-- [Node Express Hello World](https://expressjs.com/en/starter/hello-world.html)
-- [JSON teruggeven vanuit Express](https://expressjs.com/en/5x/api.html#res.json)
-- [Voorbeeld fetch met POST](https://jasonwatmore.com/post/2021/09/05/fetch-http-post-request-examples)
-
-In de lessen benaderen we Azure OpenAI via LangChain. Je kan hier meer lezen over Azure en OpenAI.
-
-- [Eigen OpenAI key aanvragen](https://platform.openai.com/docs/introduction)
-- [OpenAI API](https://platform.openai.com/docs/introduction)
-- [Azure REST API](https://learn.microsoft.com/en-gb/azure/ai-services/openai/reference)
+- [Langchain Azure instellingen](https://js.langchain.com/docs/integrations/chat/azure/)
+- [More chat models in langchain](https://js.langchain.com/docs/integrations/chat/)

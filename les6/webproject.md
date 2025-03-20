@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
 app.listen(3000, () => console.log(`Server running on http://localhost:3000`))
 ```
 
-Start de server!
+Start de server! Gebruik `--watch` voor auto restart.
 
 ```sh
 node --env-file=.env --watch server.js
@@ -52,9 +52,10 @@ In plaats van `hello world` gaan we nu een javascript joke terug sturen, die is 
 ```js
 import express from 'express'
 import cors from 'cors'
-import { ChatOpenAI } from "@langchain/openai"
+import { AzureChatOpenAI } from "@langchain/openai";
 
-const model = new ChatOpenAI({...})
+const model = new AzureChatOpenAI({ temperature: 1 });
+
 const app = express()
 app.use(cors())
 
@@ -63,12 +64,12 @@ app.get('/', async (req, res) => {
   res.json({ message: result })
 })
 
-app.listen(3000, () => console.log(`Server running on http://localhost:3000`))
-
 async function tellJoke() {
     const joke = await model.invoke("Tell me a Javascript joke!")
     return joke.content
 }
+
+app.listen(3000, () => console.log(`Server running on http://localhost:3000`))
 ```
 Test of je nu via http://localhost:3000 een javascript joke terug krijgt!
 

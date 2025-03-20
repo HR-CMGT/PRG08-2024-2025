@@ -2,15 +2,12 @@
 
 ## Eigen documenten lezen met een taalmodel
 
-In deze oefening gaan we vragen over een document beantwoorden met een taalmodel. Je werkt in drie losse projecten:
+In deze oefening gaan we vragen over een document beantwoorden met een taalmodel. Je werkt in twee losse projecten:
 
 - Voorbereiding: tekst inladen, vectordata maken, opslaan
 - Vectordata inladen en vragen beantwoorden
 
-<br>
-
-
-> ⚠️ Updated naar langchain 0.3. Zorg dat je de laatste langchain versie hebt:
+Installeer de benodigde packages:
 ```sh
 npm install @langchain/openai @langchain/community @langchain/core @langchain/textsplitter faiss-node
 ```
@@ -35,25 +32,15 @@ npm install @langchain/openai @langchain/community @langchain/core @langchain/te
 Taalmodellen werken met `vectordata` om verbanden tussen teksten te kunnen leggen. Jouw tekst moet je dus omzetten naar vectordata. Dit noemen we `embedding`. Om tekst te `embedden` heb je een taalmodel nodig dat *geen* volledig chat model is. OpenAI gebruikt hier het `ada` model voor:
 
 ```js
-import { OpenAIEmbeddings, ChatOpenAI } from "@langchain/openai"
+import { AzureChatOpenAI, AzureOpenAIEmbeddings } from "@langchain/openai";
+import { MemoryVectorStore } from "langchain/vectorstores/memory";
 
-// om te chatten
-const model = new ChatOpenAI({
-    temperature: 0.3,
-    azureOpenAIApiKey: process.env.AZURE_OPENAI_API_KEY,
-    azureOpenAIApiVersion: process.env.OPENAI_API_VERSION,
-    azureOpenAIApiInstanceName: process.env.INSTANCE_NAME,
-    azureOpenAIApiDeploymentName: process.env.ENGINE_NAME, // chatgpt3.5
-})
+const model = new AzureChatOpenAI({temperature: 1});
 
-// om embeddings te maken
-const embeddings = new OpenAIEmbeddings({
-    temperature: 0.1,
-    azureOpenAIApiKey: process.env.AZURE_OPENAI_API_KEY,
-    azureOpenAIApiVersion: process.env.OPENAI_API_VERSION,
-    azureOpenAIApiInstanceName: process.env.INSTANCE_NAME,
-    azureOpenAIApiDeploymentName: process.env.DEPLOYMENT_NAME,  // ada
-})
+const embeddings = new AzureOpenAIEmbeddings({
+    temperature: 0,
+    azureOpenAIApiEmbeddingsDeploymentName: process.env.AZURE_EMBEDDING_DEPLOYMENT_NAME
+});
 ```
 #### Hello world test
 
@@ -62,7 +49,7 @@ const vectordata = await embeddings.embedQuery("Hello world")
 console.log(vectordata)
 console.log(`Created vector with ${vectordata.length} values.`)
 ```
-[Langchain documentatie voor Azure OpenAI embedding](https://js.langchain.com/docs/integrations/text_embedding/azure_openai).
+[Langchain documentatie voor Azure OpenAI embedding](https://js.langchain.com/docs/integrations/text_embedding/).
 
 <br><br><Br>
 
@@ -162,10 +149,6 @@ history.push(["ai", response.content])
 
 Op je `express` server *(zie [les 6](../les6/README.md))* voeg je nu de FAISS data toe en de code waarmee je vragen aan het document kan stellen. Het genereren van de tekstdata hoeft niet persé op de server te staan.
 
-#### React integratie
-
-Omdat alle "document code" op de server plaatsvindt hoef je in React je prompt code niet te veranderen.
-
 
 <br><br><br>
 
@@ -199,6 +182,8 @@ Bovenstaande code is gebruikt voor de [PRG4 assistent van jaar 1](https://ai-ass
 
  ## Links
 
-- [Langchain Azure OpenAI Text Embedding](https://js.langchain.com/docs/integrations/text_embedding/azure_openai)
-- [Langchain document loaders](https://js.langchain.com/docs/modules/data_connection/document_loaders/)
+- [Langchain Azure OpenAI Chat](https://js.langchain.com/docs/integrations/chat/)
+- [Langchain Azure OpenAI Text Embedding](https://js.langchain.com/docs/integrations/text_embedding/)
+- [Langchain document loaders](https://js.langchain.com/docs/integrations/document_loaders/)
+- [Langchain vector stores](https://js.langchain.com/docs/integrations/vectorstores/)
 - [FAISS - Facebook Vector Store](https://js.langchain.com/docs/integrations/vectorstores/faiss)
