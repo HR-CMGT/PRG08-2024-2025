@@ -1,6 +1,7 @@
 # AI Audio
 
-Het werken met audio is niet goed ondersteund in langchain. Je kan beter rechtstreeks een audio model aanroepen, bv. van OpenAI, Azure of [Elevenlabs](https://elevenlabs.io/docs/api-reference/text-to-speech/convert).
+- Whisper (speech > text)
+- TTS (text > speech)
 
 <Br><br><br>
 
@@ -49,9 +50,9 @@ async function azureWhisper() {
 
 ## Text to speech
 
-Om met text-to-speech te werken moet je rechtstreeks OpenAI aanroepen. Dit kan niet via azure omdat we op azure geen TTS model hosten. Langchain  heeft hier geen classes voor.
+Er zijn veel TTS modellen beschikbaar, zoals [OpenAI](https://platform.openai.com/docs/guides/text-to-speech) en [Elevenlabs](https://elevenlabs.io/docs/api-reference/text-to-speech/convert). De CMGT Azure hosting heeft geen TTS model. 
 
-Je hebt vervolgens de keuze om de `openai` sdk te installeren via `npm install openai`, of je kan de `REST API` van OpenAI aanroepen met `fetch`. Hieronder een voorbeeld van `fetch`. Dit werkt zowel in de browser als in node. In node moet je het resultaat als bestand opslaan. In de browser moet je het resultaat in een audio element plaatsen.
+Je kan openai installeren via `npm install openai`, of je kan de `REST API` van OpenAI aanroepen met `fetch`. Hieronder een voorbeeld van de REST API. 
 
 ```js
 import fs from 'fs/promises';
