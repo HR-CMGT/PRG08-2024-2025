@@ -1,33 +1,40 @@
 # Les 8
 
-## Eigen documenten lezen met een taalmodel
+## Vragen stellen over documenten.
 
-In deze oefening gaan we vragen over een document beantwoorden met een taalmodel. Je werkt in twee losse projecten:
+Een chatbot kan praten met bezoekers van je website. Het kan erg handig zijn als de chatbot dan ook specifieke vragen over jouw product of service kan beantwoorden. Denk aan een camera shop waarbij de chatbot alles weet over de camera's die in jouw shop staan. Om dat te bereiken kan je als webdeveloper vantevoren de data over camera's leesbaar maken voor het taalmodel. 
 
-- Voorbereiding: tekst inladen, vectordata maken, opslaan
-- Vectordata inladen en vragen beantwoorden
+![chatbot](../images/chat-example.png)
+
+#### Voorbereiding
+
+- Tekstbestand inlezen
+- Tekst omzetten naar vectordata
+- Vectordata opslaan
+- Let op privacy en copyright
+
+#### Webserver
+
+- Vectordata inlezen
+- Zoeken in vectordata naar relevante tekst voor de vraag van de gebruiker
+- OpenAI API gebruiken om hier een netjes antwoord van te maken
+
+<br>
+
+[🚀 Bekijk deze uitleg om te zien waarom we tekst omzetten naar vectordata](https://ig.ft.com/generative-ai/)
+
+<br><br><br>
+
+# Voorbereiding
+
+De voorbereiding doe je in een apart project of `.js` file.
+
+## Werken met vectordata
 
 Installeer de benodigde packages:
 ```sh
 npm install @langchain/openai @langchain/community @langchain/core @langchain/textsplitter faiss-node
 ```
-
-<br>
-<br>
-<br>
-
-### Inhoud
-
-- Tekst omzetten naar vectoren
-- Tekstbestand inlezen
-- Vragen beantwoorden
-- Vector stores
-- Chat history
-- Privacy en copyright
-
-<br><br><br>
-
-## Tekst omzetten naar vectoren
 
 Taalmodellen werken met `vectordata` om verbanden tussen teksten te kunnen leggen. Jouw tekst moet je dus omzetten naar vectordata. Dit noemen we `embedding`. Om tekst te `embedden` heb je een taalmodel nodig dat *geen* volledig chat model is. OpenAI gebruikt hier het `ada` model voor:
 
@@ -42,7 +49,7 @@ const embeddings = new AzureOpenAIEmbeddings({
     azureOpenAIApiEmbeddingsDeploymentName: process.env.AZURE_EMBEDDING_DEPLOYMENT_NAME
 });
 ```
-#### Hello world test
+#### "Hello world" omzetten naar vectoren
 
 ```js
 const vectordata = await embeddings.embedQuery("Hello world")
@@ -75,9 +82,9 @@ async function createVectorstore() {
 ```
 <br><br><br>
 
-## Vragen stellen over de tekst
+## Test: vragen stellen
 
-In bovenstaand voorbeeld slaan we de vectordata op in een `MemoryVectorStore`. Hier kan je vragen aan stellen. Dit werkt als volgt:
+Om te zien of het omzetten naar vectoren is gelukt gaan we als test een vraag stellen:
 
 - Je geeft een prompt.
 - Langchain zoekt in je vectorstore naar tekst die daar het beste bij past.
@@ -87,7 +94,6 @@ In bovenstaand voorbeeld slaan we de vectordata op in een `MemoryVectorStore`. H
 async function askQuestion(){
     const relevantDocs = await vectorStore.similaritySearch("What is this document about?",3);
     const context = relevantDocs.map(doc => doc.pageContent).join("\n\n");
-    console.log("Asking the model...");
     const response = await model.invoke([
         ["system", "Use the following context to answer the user's question. Only use information from the context."],
         ["user", `Context: ${context}\n\nQuestion: What is this document about?`]
@@ -99,68 +105,24 @@ async function askQuestion(){
 
 <br><br><br>
 
-## Vectorstore bewaren
+## Vectorstores
 
 De `MemoryVectorStore` blijft niet bewaard tussen sessies. Daardoor moet je de embeddings telkens opnieuw maken, dat kost tijd en tokens. Om dat te voorkomen kan je de embeddings opslaan in een vectorstore:
 
-- *Lokaal bestand*. De vectordata wordt als lokaal bestand binnen je project opgeslagen, bv. met FAISS.
+- *Lokaal bestand*. De vectordata wordt als lokaal bestand binnen je project opgeslagen, wij werken met FAISS.
 - *Vector database*. Dit is een "echte" database op je systeem, zoals ChromaDB, MongoDB.
 - *Cloud database*. Je vectordata staat in de cloud, waardoor het vanuit meerdere projecten online toegankelijk is. Sommige cloud services, zoals [pinecone](https://www.pinecone.io) bieden 1 gratis online vectorstore.
 
-In dit codevoorbeeld slaan we de vectorstore op met FAISS. 
 
-#### data opslaan
+#### Vectordata opslaan
 ```js
 import { FaissStore } from "@langchain/community/vectorstores/faiss";
 
 vectorStore = await FaissStore.fromDocuments(splitDocs, embeddings);
 await vectorStore.save("vectordatabase"); // geef hier de naam van de directory waar je de data gaat opslaan
 ```
-#### data inlezen
-```js
-vectorStore = await FaissStore.load("vectordatabase", embeddings); // dezelfde naam van de directory 
-```
+
 > ⚠️ ***Let op dat je de data maar 1x hoeft op te slaan.*** Om die reden is het handiger om met twee losse `.js` files te werken. Een voor het maken van vectordata, en een voor het inlezen en vragen stellen.
-
-<br><br><br>
-
-### Chat History
-
-In bovenstaand code voorbeeld stuur je een array naar het taalmodel om een antwoord te krijgen. Als je dit antwoord en opvolgende vragen telkens aan deze array toevoegt ontstaat een chat history. Dit helpt het model om de conversatie te kunnen volgen.
-
-```js
-let history = [
-    ["system", "Use the following context to answer the user's question. Only use information from the context."],
-    ["user", `Context: ${context}\n\nQuestion: What is this document about?`]
-]
-const response = await model.invoke(history);
-
-// antwoord toevoegen aan chat history
-history.push(["ai", response.content])
-```
-#### Expert level
-
-[Gebruik langchain classes voor het automatisch bijhouden van chat history](https://js.langchain.com/docs/how_to/qa_chat_history_how_to/)
-
-<br><br><br>
-
-
-## Server
-
-Op je `express` server *(zie [les 6](../les6/README.md))* voeg je nu de FAISS data toe en de code waarmee je vragen aan het document kan stellen. Het genereren van de tekstdata hoeft niet persé op de server te staan.
-
-
-<br><br><br>
-
-
-## Troubleshooting
-
-Let op dat je de laatste versie van langchain en faiss hebt geinstalleerd.
-
-```sh
-npm install @langchain/openai @langchain/community @langchain/core @langchain/textsplitter faiss-node
-```
-
 
 <br><br><br>
 
@@ -168,15 +130,45 @@ npm install @langchain/openai @langchain/community @langchain/core @langchain/te
 
 Bij het maken van embeddings verstuur je een document naar OpenAI en/of Microsoft. Het is daarom belangrijk dat je geen data verstuurt die auteursrechtelijk beschermd is. Om data helemaal veilig te houden zou je kunnen werken met een [Lokaal LLM of je eigen LLM hosting](../snippets/local.md)
 
+<br><br><br>
 
-<br>
-<br>
-<br>
+# Web server
+
+In je `server.js` file kan je nu code toevoegen om vragen over de tekst te kunnen stellen:
+
+### Vectordata inlezen
+```js
+import { FaissStore } from "@langchain/community/vectorstores/faiss";
+
+vectorStore = await FaissStore.load("vectordatabase", embeddings); // dezelfde naam van de directory 
+```
+
+<br><br><br>
+
+### Vragen stellen
+
+Je kan bovenstaande code voor `askQuestion()` gebruiken in je `server.js`. Je kan er ook voor kiezen om de chat history bij te houden, door vragen en antwoorden telkens in de array te pushen.
+
+```js
+let history = [
+    ["system", "Use the following context to answer the user's question. Only use information from the context."],
+    ["user", `Context: ${context}\n\nQuestion: What is this document about?`]
+]
+const response = await model.invoke(history);
+// antwoord toevoegen aan chat history
+history.push(["ai", response.content])
+```
+
+<br><br><br>
 
 
-## Voorbeeld
+## Tips en troubleshooting
 
-Bovenstaande code is gebruikt voor de [PRG4 assistent van jaar 1](https://ai-assistent-mu.vercel.app)
+- De gebruiker hoeft geen document te kunnen uploaden. 
+- Je kan ook PDFs, Word documenten of hele Github repositories omzetten naar vectordata.
+- Aan de server kant maak je één keer vectordata aan. Dit hoef je niet telkens opnieuw te doen om vragen te kunnen stellen.
+- Let op dat je de laatste versie van langchain en faiss hebt geinstalleerd.
+- [Voorbeeld: PRG4 assistent van jaar 1](https://ai-assistent-mu.vercel.app)
 
 <br><br><br>
 
@@ -187,3 +179,4 @@ Bovenstaande code is gebruikt voor de [PRG4 assistent van jaar 1](https://ai-ass
 - [Langchain document loaders](https://js.langchain.com/docs/integrations/document_loaders/)
 - [Langchain vector stores](https://js.langchain.com/docs/integrations/vectorstores/)
 - [FAISS - Facebook Vector Store](https://js.langchain.com/docs/integrations/vectorstores/faiss)
+- [Classes voor het automatisch bijhouden van chat history](https://js.langchain.com/docs/how_to/qa_chat_history_how_to/)
