@@ -102,7 +102,7 @@ console.log(chat1.content)
 Het antwoord van de ai voeg je toe aan de `messages` array met de juiste rol, gevolgd door een nieuwe vraag. Je geeft de hele array door aan het taalmodel.
 ```js
 messages.push(
-    ["ai", chat1.content],
+    ["assistant", chat1.content],
     ["human", "Can you explain that a bit more?"]
 )
 const chat2 = await model.invoke(messages)
