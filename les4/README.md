@@ -44,23 +44,20 @@ We voegen de [ML5](https://learn.ml5js.org/#/reference/neural-network) library t
 ```html
 <script src="https://unpkg.com/ml5@1/dist/ml5.min.js"></script>
 ```
-Maak een ML5 Neural Network aan voor classification.
-
+Maak het ML5 neural network aan. Je kan hier `cpu` instellen als WebGL niet werkt op jouw machine.
 ```js
-// "webgl" of "cpu" instellen. gebruik alleen cpu als je pc of browser geen wegGL ondersteunt.
 ml5.setBackend("webgl");
-
 const nn = ml5.neuralNetwork({ task: 'classification', debug: true })
 ```
 Voeg de cat/dog data toe. Vul dit zelf helemaal in.
-```
+```js
 nn.addData([18,9.2,8.1,2], {label:"cat"})
 nn.addData([20.1,17,15.5,5], {label:"dog"})
 // vul hier zelf de rest van de data in
 // ...
 ```
 Nu kan je het netwerk trainen op je data:
-```
+```js
 nn.normalizeData()
 nn.train({ epochs: 10 }, () => finishedTraining()) 
 async function finishedTraining(){    
