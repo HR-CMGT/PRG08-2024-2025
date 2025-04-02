@@ -178,6 +178,7 @@ Dit is je game of applicatie die door de eindgebruiker gebruikt gaat worden. Hie
 ## Model laden
 
 ```js
+ml5.setBackend("webgl");
 const nn = ml5.neuralNetwork({ task: 'classification', debug: true })
 const modelDetails = {
     model: 'model/model.json',
