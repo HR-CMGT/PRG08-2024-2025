@@ -42,16 +42,25 @@ Om te oefenen gebruiken we dezelfde cat/dog data als in week 6.
 We voegen de [ML5](https://learn.ml5js.org/#/reference/neural-network) library toe aan ons project met een `<script>` tag.
 
 ```html
-<script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+<script src="https://unpkg.com/ml5@1/dist/ml5.min.js"></script>
 ```
-We maken een neural network aan voor classification, en voegen de cat/dog data toe. Vul dit zelf helemaal in.
+Maak een ML5 Neural Network aan voor classification.
 
 ```js
+// "webgl" of "cpu" instellen. gebruik alleen cpu als je pc of browser geen wegGL ondersteunt.
+ml5.setBackend("webgl");
+
 const nn = ml5.neuralNetwork({ task: 'classification', debug: true })
+```
+Voeg de cat/dog data toe. Vul dit zelf helemaal in.
+```
 nn.addData([18,9.2,8.1,2], {label:"cat"})
 nn.addData([20.1,17,15.5,5], {label:"dog"})
 // vul hier zelf de rest van de data in
 // ...
+```
+Nu kan je het netwerk trainen op je data:
+```
 nn.normalizeData()
 nn.train({ epochs: 10 }, () => finishedTraining()) 
 async function finishedTraining(){    
