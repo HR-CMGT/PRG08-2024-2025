@@ -91,9 +91,9 @@ Zorg dat de `console.log()` uit de vorige opdracht nu de versimpelde data toont.
 
 <br><br><br>
 
-## Data opslaan als json
+## Gelabelde data opslaan als json
 
-Je gaat nu je poses uit de vorige opdracht opslaan in een JSON bestand. Dit kan je handmatig doen door telkens een array uit de console te copy pasten. Je moet ook het label dat bij de pose hoort toevoegen. Je JSON file kan er dan als volgt uit gaan zien. [Zie ook dit voorbeeld bestand](./data/data-rps.json).
+Je gaat nu je poses uit de vorige opdracht opslaan met labels. Je kan dit bv. copy>pasten uit de console. Je JSON file kan er dan als volgt uit gaan zien. [Zie ook dit voorbeeld bestand](./data/data-rps.json).
 
 
 ```js
@@ -104,6 +104,9 @@ Je gaat nu je poses uit de vorige opdracht opslaan in een JSON bestand. Dit kan 
     // .. en nog meer poses voor paper en scissors
 ]
 ```
+### Localstorage
+
+Een andere optie is om je gelabelde data in localstorage te plaatsen: `localStorage.setItem("posedata", JSON.stringify(mydata))`
 
 <br>
 <br>
