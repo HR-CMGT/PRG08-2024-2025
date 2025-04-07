@@ -44,7 +44,7 @@ const test = data.slice(Math.floor(data.length * 0.8) + 1)
 We trainen het model nu alleen met de `train` dataset, zoals je ook gedaan hebt in les 6 en 7. Vervolgens ga je voor elk datapunt in je `test` dataset een voorspelling doen. Omdat je voor de `test` data ook het label beschikbaar hebt, kan je vergelijken of de voorspelling overeenkomt met het echte label. Hier zie je een voorbeeld met 1 pose uit de testdata:
 
 ```js
-const testpose = {pose:[3,4,6], label:"rock"}
+const testpose = {pose:[3,4,6], label:"rock"} // voorbeeld. doe dit voor elk punt in je test dataset
 const prediction = await nn.classify(testpose.pose)
 console.log(`Ik voorspelde: ${prediction[0].label}. Het correcte antwoord is: ${testpose.label}`)
 ```
