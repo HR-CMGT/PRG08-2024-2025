@@ -132,7 +132,13 @@ Het omzetten van data was meer werk dan het tonen van poses uit de webcam! Dit i
 
 Nu we posedata als json file hebben kunnen we dit leren aan KNN. Mocht je nog geen werkend JSON bestand hebben gebruik dan [dit voorbeeld bestand](./data/data-rps.json).
 
-*json laden*
+*json laden met import*
+
+```js
+import posedata from './posedata.json' with { type: "json" };
+```
+
+*json laden met fetch*
 ```js
 fetch("mydata.json")
     .then(response => response.json())
