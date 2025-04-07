@@ -113,7 +113,13 @@ Je gaat nu je poses uit de vorige opdracht opslaan in een JSON bestand. Dit kan 
 
 We kunnen nu met het KNN algoritme herkennen of iemand een `rock,paper,scissors` gebaar maakt voor de webcam. Begin met het leren van de poses:
 
-*json laden*
+*json laden met import*
+
+```js
+import posedata from './posedata.json' with { type: "json" };
+```
+
+*json laden met fetch*
 ```js
 fetch("mydata.json")
     .then(response => response.json())
