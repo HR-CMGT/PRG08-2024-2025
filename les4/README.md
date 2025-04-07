@@ -261,6 +261,18 @@ nn.addData([2,3,4], {label:"rock"})
 nn.addData([5,3,1], {label:"paper"})
 let result = await nn.classify([2,3,4,5,6,7])
 ```
+#### ✅ Data toevoegen mag wel in verschillende formaten:
+```js
+nn.addData([2,3,4], ["rock"])
+nn.addData([5,3,1], ["paper"])
+let result = await nn.classify([2,3,1])
+```
+```js
+nn.addData({r:200, g:10, b: 10}, {label:"red"})
+nn.addData({r:20, g:200, b: 10}, {label:"green"})
+let result = await nn.classify({r:18: g:180, b:5})
+```
+
 <br>
 <br>
 <br>
