@@ -141,15 +141,15 @@ nn = ml5.neuralNetwork({ task: 'classification', debug: true });
 console.log(`adding ${diabetesdata.length} cases`)
 
 for (let person of diabetesdata) {
-    let input = {
-        pregnancies: person.pregnancies,
-        glucose: person.glucose,
-        bloodPressure: person.bloodpressure,
-        skinthickness: person.skinthickness,
-        insulin: person.insulin,
-        bmi: person.bmi,
-        age: person.age
-    };
+    let input = [
+        person.pregnancies,
+        person.glucose,
+        person.bloodpressure,
+        person.skinthickness,
+        person.insulin,
+        person.bmi,
+        person.age
+    ];
     nn.addData(input, { label: String(person.outcome) })
 }
 nn.normalizeData()
