@@ -123,12 +123,15 @@ We hebben tot nu toe ons algoritme (`K-Nearest-Neighbour` en `Neural Network`) g
 | Animals |    `[fangs, eggs, legs]` | `mammal` |
 | Mushrooms |  `[color, size, weight]` |`poisonous` |
 | Titanic passenger | `[Female, age, class]` | `survived` |
+| Diabetes | `[glucose, age, bloodPressure]` | `outcome` |
+
+<br>
 
 ### Oefening : voorspellen diabetes
 
 Gebruik de [diabetes JSON dataset](./diabetes.json). Hiermee kan je naar aanleiding van fysieke eigenschappen van personen voorspellen of zij diabetes hebben (of een grote kans hebben om te gaan krijgen).
 
-Het inladen van data is vergelijkbaar met het MediaPipe project. Let op dat je het *label* correct uit de JSON haalt. In dit geval bepaalt `outcome` of de persoon diabetes heeft of niet.
+Het inladen van data is vergelijkbaar met het MediaPipe project. Let op dat je het *label* correct uit de JSON haalt. In dit geval bepaalt `outcome` of de persoon diabetes heeft of niet. In de JSON is dit 0 of 1, voor ML5 moet dit een string zijn.
 
 ```js
 import diabetesdata from './diabetes.json' with { type: "json" };
@@ -136,18 +139,21 @@ ml5.setBackend('webgl');
 nn = ml5.neuralNetwork({ task: 'classification', debug: true });
 
 console.log(`adding ${diabetesdata.length} cases`)
+
 for (let person of diabetesdata) {
     let input = {
         pregnancies: person.pregnancies,
         glucose: person.glucose,
-        bloodPressure: person.bloodPressure,
+        bloodPressure: person.bloodpressure,
         skinthickness: person.skinthickness,
         insulin: person.insulin,
         bmi: person.bmi,
         age: person.age
     };
-    nn.addData(input, { label: person.outcome })
+    nn.addData(input, { label: String(person.outcome) })
 }
+nn.normalizeData()
+nn.train({ epochs: 30 }, () => console.log("finished training!")
 ```
 
 #### Andere data gebruiken
