@@ -124,9 +124,35 @@ We hebben tot nu toe ons algoritme (`K-Nearest-Neighbour` en `Neural Network`) g
 | Mushrooms |  `[color, size, weight]` |`poisonous` |
 | Titanic passenger | `[Female, age, class]` | `survived` |
 
-#### Oefening
+### Oefening : voorspellen diabetes
 
-Zoek een [dataset voor classification](https://www.kaggle.com/datasets?tags=13302-Classification), en maak hier een model en voorspelling mee.
+Gebruik de [diabetes JSON dataset](./diabetes.json). Hiermee kan je naar aanleiding van fysieke eigenschappen van personen voorspellen of zij diabetes hebben (of een grote kans hebben om te gaan krijgen).
+
+Het inladen van data is vergelijkbaar met het MediaPipe project. Let op dat je het *label* correct uit de JSON haalt. In dit geval bepaalt `outcome` of de persoon diabetes heeft of niet.
+
+```js
+import diabetesdata from './diabetes.json' with { type: "json" };
+ml5.setBackend('webgl');
+nn = ml5.neuralNetwork({ task: 'classification', debug: true });
+
+console.log(`adding ${diabetesdata.length} cases`)
+for (let person of diabetesdata) {
+    let input = {
+        pregnancies: person.pregnancies,
+        glucose: person.glucose,
+        bloodPressure: person.bloodPressure,
+        skinthickness: person.skinthickness,
+        insulin: person.insulin,
+        bmi: person.bmi,
+        age: person.age
+    };
+    nn.addData(input, { label: person.outcome })
+}
+```
+
+#### Andere data gebruiken
+
+Zoek een [dataset voor classification](https://www.kaggle.com/datasets?tags=13302-Classification). Dit kan je [omzetten naar JSON](https://csvjson.com/) zodat je het als dataset voor ML5 kan gebruiken.
 
 <br>
 <br>
