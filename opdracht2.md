@@ -16,7 +16,7 @@ Voor de lessen en inleveropdrachten kan je jouw frontend en backend lokaal draai
 
 - Gebruik de praktijklessen om met problemen bij je docent langs te lopen
 - Als de Azure OpenAI API key niet werkt, geef dit dan zo snel mogelijk aan bij je docenten.
-- Je kan dit tijdelijk oplossen door even de [Fake LLM](https://js.langchain.com/docs/integrations/llms/fake) te gebruiken, zodat je in elk geval door kan werken aan je app.
+- Je kan dit tijdelijk oplossen door even de [Fake LLM](https://js.langchain.com/docs/integrations/chat/fake) te gebruiken, zodat je in elk geval door kan werken aan je app.
 - Je kan ook besluiten om een eigen `OpenAI API Key` aan te vragen.
 
 <br><br><br>
