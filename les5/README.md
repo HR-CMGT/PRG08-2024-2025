@@ -74,7 +74,7 @@ let machine = new knn.kNear(k)
 ```
 ### Neural networks
 
-Een neural network heeft veel [parameters](https://learn.ml5js.org/#/reference/neural-network?id=arguments-for-ml5neuralnetworkoptions) die je kan aanpassen. 
+Een neural network heeft veel [parameters](https://docs.ml5js.org/#/reference/neural-network?id=ml5neuralnetwork) die je kan aanpassen. 
 
 - Het aantal `epochs` bepaalt hoe lang het model moet proberen zichzelf te verbeteren.
 - De `learning rate` bepaalt hoe snel het model zichzelf corrigeert.
