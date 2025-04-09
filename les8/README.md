@@ -168,13 +168,14 @@ history.push(["ai", response.content])
 
 De reden dat we RAG gebruiken is dat veel taalmodellen nog een klein *context window* hebben. Dit is de hoeveelheid data die het model tegelijkertijd in het geheugen kan houden, en dus iets over kan zeggen. Hieronder een overzicht van context windows voor verschillende taalmodellen.
 
-| Model	| Context Window (tokens)	| Words |
-|-------|---------------------------|-------|
-| ChatGPT‑3.5  | ~4.096 | ~6.150 |
-| LLaMA 2  |	~4.096| ~6.150 |
-| GPT‑4o|	~128.000 |	~192.000 |
-| Anthropic Claude 3 | ~200,000 |  ~150.000 |
-| Google Gemini 2.5 | up to ~1.000.000 | ~1.500.000	|
+| Model                  | Context Window (tokens) | Words (approx.)         |
+|------------------------|--------------------------|--------------------------|
+| ChatGPT‑3.5           | ~4,096                   | 2,730 – 3,150 words      |
+| LLaMA 2               | ~4,096                   | 2,730 – 3,150 words      |
+| GPT‑4o                | ~128,000                 | 85,300 – 98,500 words    |
+| Anthropic Claude 3    | ~200,000                 | 133,300 – 153,800 words  |
+| Google Gemini 2.5     | ~1,000,000               | 666,700 – 769,200 words  |
+
 
 Omdat het context window van nieuwe modellen heel groot is, is het soms handiger om gewoon je hele document mee te sturen in het eerste gebruikersprompt. Dit geldt ook als je document eigenlijk maar heel klein is. Het meesturen van het hele document noemen we ***CAG*** (Cache Augmented Generation). Dit is sneller dan het eerst opslaan van je data in een vectordatabase, om vervolgens in die vectordatabase te zoeken naar het juiste antwoord.
 
