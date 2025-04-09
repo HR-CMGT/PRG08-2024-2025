@@ -176,7 +176,7 @@ De reden dat we RAG gebruiken is dat veel taalmodellen nog een klein *context wi
 | Anthropic Claude 3 | ~200,000 |  ~150.000 |
 | Google Gemini 2.5 | up to ~1.000.000 | ~1.500.000	|
 
-Omdat het context window van nieuwe modellen heel groot is, is het soms handiger om gewoon je hele document mee te sturen in het eerste gebruikersprompt. Dit gaat dan sneller dan het eerst opslaan van je data in een vectordatabase, om vervolgens in die vectordatabase te zoeken naar het juiste antwoord.
+Omdat het context window van nieuwe modellen heel groot is, is het soms handiger om gewoon je hele document mee te sturen in het eerste gebruikersprompt. Dit geldt ook als je document eigenlijk maar heel klein is. Het meesturen van het hele document noemen we ***CAG*** (Cache Augmented Generation). Dit is sneller dan het eerst opslaan van je data in een vectordatabase, om vervolgens in die vectordatabase te zoeken naar het juiste antwoord.
 
 Ter vergelijking: één A4'tje bevat ongeveer 500 woorden, *The Lord of the Rings* bevat ongeveer 480.000 woorden.
 
