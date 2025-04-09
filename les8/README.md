@@ -2,7 +2,9 @@
 
 ## Vragen stellen over documenten.
 
-Een chatbot kan praten met bezoekers van je website. Het kan erg handig zijn als de chatbot dan ook specifieke vragen over jouw product of service kan beantwoorden. Denk aan een camera shop waarbij de chatbot alles weet over de camera's die in jouw shop staan. Om dat te bereiken kan je als webdeveloper vantevoren de data over camera's leesbaar maken voor het taalmodel. 
+Een chatbot kan praten met bezoekers van je website. Het kan erg handig zijn als de chatbot dan ook specifieke vragen over jouw product of service kan beantwoorden. Denk aan een camera shop waarbij de chatbot alles weet over de camera's die in jouw shop staan. Om dat te bereiken kan je als webdeveloper vantevoren de data over jouw service beschikbaar maken voor het taalmodel. 
+
+Een manier om dat te bereiken is om data over jouw shop/service klaar te zetten voor gebruik door een taalmodel. Dit heet ***RAG***: *Retrieval Augmented Generation*.
 
 ![chatbot](../images/chat-example.png)
 
@@ -158,6 +160,25 @@ const response = await model.invoke(history);
 // antwoord toevoegen aan chat history
 history.push(["ai", response.content])
 ```
+
+<br><br><br>
+
+
+## CAG en context window
+
+De reden dat we RAG gebruiken is dat veel taalmodellen nog een klein *context window* hebben. Dit is de hoeveelheid data die het model tegelijkertijd in het geheugen kan houden, en dus iets over kan zeggen. Hieronder een overzicht van context windows voor verschillende taalmodellen.
+
+| Model	| Context Window (tokens)	| Words |
+|-------|---------------------------|-------|
+| ChatGPT‑3.5  | ~4.096 | ~6.150 |
+| LLaMA 2  |	~4.096| ~6.150 |
+| GPT‑4o|	~128.000 |	~192.000 |
+| Anthropic Claude 3 | ~200,000 |  ~150.000 |
+| Google Gemini 2.5 | up to ~1.000.000 | ~1.500.000	|
+
+Omdat het context window van nieuwe modellen heel groot is, is het soms handiger om gewoon je hele document mee te sturen in het eerste gebruikersprompt. Dit gaat dan sneller dan het eerst opslaan van je data in een vectordatabase, om vervolgens in die vectordatabase te zoeken naar het juiste antwoord.
+
+Ter vergelijking: één A4'tje bevat ongeveer 500 woorden, *The Lord of the Rings* bevat ongeveer 480.000 woorden.
 
 <br><br><br>
 
