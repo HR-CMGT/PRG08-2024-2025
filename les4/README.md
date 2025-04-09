@@ -273,6 +273,18 @@ nn.addData({r:20, g:200, b: 10}, {label:"green"})
 let result = await nn.classify({r:18: g:180, b:5})
 ```
 
+### Fouten bij model laden
+
+Als je na het laden errors krijgt zoals: `expected Dense, got null` of `classify is not a function`, dan is de kans groot dat je `model.json` niet goed is geladen. Dubbelcheck op spelfouten in de bestandsnamen en zorg dat het model in de juiste map staat:
+
+```js
+const options = {
+    model: "./model/model.json",
+    metadata: "./model/model_meta.json",
+    weights: "./model/model.weights.bin"
+}
+```
+
 <br>
 <br>
 <br>
