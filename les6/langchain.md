@@ -3,7 +3,7 @@
 In dit deel gaan we [langchain](https://js.langchain.com/docs/introduction/) gebruiken om vanuit code een Azure OpenAI taalmodel aan te roepen.
 
 - Zorg dat je [NodeJS 22](https://nodejs.org/en) hebt geïnstalleerd.
-- Installeer [JSONFormatter](https://chromewebstore.google.com/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa) of een andere browser extensie waarmee je JSON kan bekijken.
+- Installeer [Postman](https://www.postman.com) of een ander REST client om je backend te kunnen testen.
 
 <br><br><br>
 
