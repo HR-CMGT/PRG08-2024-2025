@@ -164,7 +164,7 @@ history.push(["ai", response.content])
 <br><br><br>
 
 
-## CAG en context window
+## Context window
 
 De reden dat we RAG gebruiken is dat veel taalmodellen nog een klein *context window* hebben. Dit is de hoeveelheid data die het model tegelijkertijd in het geheugen kan houden, en dus iets over kan zeggen. Hieronder een overzicht van context windows voor verschillende taalmodellen.
 
@@ -177,7 +177,7 @@ De reden dat we RAG gebruiken is dat veel taalmodellen nog een klein *context wi
 | Google Gemini 2.5     | ~1,000,000               | 666,700 – 769,200 words  |
 
 
-Omdat het context window van nieuwe modellen heel groot is, is het soms handiger om gewoon je hele document mee te sturen in het eerste gebruikersprompt. Dit geldt ook als je document eigenlijk maar heel klein is. Het meesturen van het hele document noemen we ***CAG*** (Cache Augmented Generation). Dit is sneller dan het eerst opslaan van je data in een vectordatabase, om vervolgens in die vectordatabase te zoeken naar het juiste antwoord. Het voordeel van RAG is dat je minder tokens "verbrandt" doordat je minder data naar het taalmodel stuurt. Die tokens kunnen duur zijn, afhankelijk van de service die je gebruikt.
+Omdat het context window van nieuwe modellen heel groot is, is het soms handiger om gewoon je hele document mee te sturen in het eerste gebruikersprompt. Dit geldt ook als je document eigenlijk maar heel klein is. Dit is sneller dan het eerst opslaan van je data in een vectordatabase, om vervolgens in die vectordatabase te zoeken naar het juiste antwoord. Het voordeel van RAG is dat je minder tokens "verbrandt" doordat je minder data naar het taalmodel stuurt. Die tokens kunnen duur zijn, afhankelijk van de service die je gebruikt.
 
 Ter vergelijking: één A4'tje bevat ongeveer 500 woorden, *The Lord of the Rings* bevat ongeveer 480.000 woorden.
 
