@@ -122,9 +122,9 @@ Bij het aanmaken van een taalmodel kan je ook functies doorgeven die dit wel kun
 
 ### AI Spraak
 
-- [Voorbeeldcode spraakherkenning en text-to-speech](../snippets/audio.md)
 - [Whisper code snippets](https://github.com/HR-CMGT/PRG08-2024-2025/blob/main/snippets/aispeech.md)
 - [Elevenlabs API](https://elevenlabs.io/docs/api-reference/text-to-speech/convert)
+- [Kokoro TTS Open Source](https://kokorottsai.com)
 
 <br><br><br>
 
