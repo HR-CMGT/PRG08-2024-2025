@@ -51,7 +51,7 @@ const embeddings = new AzureOpenAIEmbeddings({
     azureOpenAIApiEmbeddingsDeploymentName: process.env.AZURE_EMBEDDING_DEPLOYMENT_NAME
 });
 ```
-#### "Hello world" omzetten naar vectoren
+#### "Hello world" omzetten naar vector
 
 ```js
 const vectordata = await embeddings.embedQuery("Hello world")
