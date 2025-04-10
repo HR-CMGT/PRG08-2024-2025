@@ -17,7 +17,6 @@ In PRG06 heb je geleerd te werken met node express. Installeer het als volgt:
 ```sh
 npm install express
 npm install cors
-npm install body-parser
 ```
 Om te oefenen maken we een `get` request die `hello world` terug geeft in JSON formaat:
 
