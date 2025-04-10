@@ -40,7 +40,7 @@ Start de server! Gebruik `--watch` voor auto restart.
 node --env-file=.env --watch server.js
 ```
 
-Roep de server aan in je adresbalk van je browser (http://localhost:3000) of via [Postman](https://www.postman.com), [Hoppscotch](https://hoppscotch.io) of [Thunder Client](https://www.thunderclient.com). Als het goed is krijg je `hello world` terug als JSON.
+Test je server (http://localhost:3000) via [Postman](https://www.postman.com), [Hoppscotch](https://hoppscotch.io) of [Thunder Client](https://www.thunderclient.com). Als het goed is krijg je `hello world` terug als JSON.
 
 <br><br><br>
 
