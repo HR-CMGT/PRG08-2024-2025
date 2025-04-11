@@ -80,19 +80,15 @@ Je zal bij het gebruiken van taalmodellen gemerkt hebben dat deze niet óveral g
 -	Belasting aangifte doen
 -	Het weerbericht tonen
 -	Sportuitslagen tonen
+-   Koers van aandelen, bitcoin of valuta 
 -	Op google zoeken
 -	Het licht aan doen (smarthome)
--	Dobbelstenen gooien
 -	Een robot besturen
 -	CRUD functies (lezen en schrijven naar een database)
 -	Een grafiek tekenen die echt klopt
 -	Inloggen op een beveiligde website
 
-Bij het aanmaken van een taalmodel kan je ook functies doorgeven die dit wel kunnen. Hierdoor kan je taalmodel uit zichzelf die functie aanroepen als het taalmodel vindt dat dit nodig is.
-
-[Code voorbeeld voor het werken met tools in een taalmodel](../snippets/functions.md)
-
-<br>
+Bij het aanmaken van een taalmodel kan je functies doorgeven die dit kunnen. Hierdoor kan je taalmodel die functie aanroepen als het taalmodel vindt dat dit nodig is. [Code voorbeeld voor het werken met tools in een taalmodel](../snippets/functions.md)
 
 ### Tool applicaties
 
@@ -101,8 +97,6 @@ Bij het aanmaken van een taalmodel kan je ook functies doorgeven die dit wel kun
 -	Je stuurt een externe applicatie aan (bv. een app van https://ifttt.com, je [raspberry pi smarthome](https://www.home-assistant.io/installation/raspberrypi/), of je eigen javascript game)
 -	Je doet een zoekopdracht op de LLM search engine https://tavily.com
 -	Zeg tegen je [fotolijstje](https://www.youtube.com/watch?v=L5PvQj1vfC4) dat je vandaag een foto van een kat met een piratenhoedje wil zien.
-
-<br>
 
 ### Tool voorbeelden
 
@@ -118,13 +112,15 @@ Bij het aanmaken van een taalmodel kan je ook functies doorgeven die dit wel kun
 
 ## Spraak
 
-[De browser heeft spraak én spraakherkenning ingebouwd](https://github.com/HR-CMGT/PRG08-2024-2025/blob/main/snippets/speech.md). Voor client apps is dit de handigste manier om met spraak te werken, omdat de audio verwerking nu helemaal aan de client-side is. Het nadeel is dat de stemmen erg wisselen per browser.
+[De browser heeft spraak én spraakherkenning ingebouwd](https://github.com/HR-CMGT/PRG08-2024-2025/blob/main/snippets/speech.md). Voor client apps is dit de handigste manier om met spraak te werken, omdat de audio verwerking nu helemaal aan de client-side is. Het nadeel is dat de stemmen erg wisselen per browser / OS.
 
 ### AI Spraak
 
-- [Whisper code snippets](https://github.com/HR-CMGT/PRG08-2024-2025/blob/main/snippets/aispeech.md)
-- [Elevenlabs API](https://elevenlabs.io/docs/api-reference/text-to-speech/convert)
-- [Kokoro TTS Open Source](https://kokorottsai.com)
+- [OpenAI Whisper code snippets](https://github.com/HR-CMGT/PRG08-2024-2025/blob/main/snippets/aispeech.md)
+- [Elevenlabs](https://elevenlabs.io/docs/api-reference/text-to-speech/convert)
+- [Spark](https://sparkaudio.github.io/spark-tts)
+- [Sesame](https://huggingface.co/sesame/csm-1b)
+- [Kokoro](https://kokorottsai.com)
 
 <br><br><br>
 

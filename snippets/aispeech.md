@@ -9,6 +9,7 @@ Voor de meeste van de text-to-speech of speech-to-text API's heb je een eigen AP
 
 ## APIs
 
+- [OpenAI](https://platform.openai.com/docs/api-reference/chat/create?lang=node.js)
 - [Elevenlabs](https://elevenlabs.io/docs/api-reference/text-to-speech/convert)
 - [Spark](https://sparkaudio.github.io/spark-tts)
 - [Sesame](https://huggingface.co/sesame/csm-1b)
