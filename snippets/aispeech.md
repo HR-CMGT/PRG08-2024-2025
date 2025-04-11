@@ -1,9 +1,18 @@
 # AI Spraak
 
-Je kan via Langchain classes of via de OpenAI API speech-to-text en text-to-speech doen.
+Voor de meeste van de text-to-speech of speech-to-text API's heb je een eigen API key nodig.
+
+## Code examples
 
 - Whisper (speech to text) met Langchain en Azure
 - OpenAI Fetch API (speech to text en text to speech)
+
+## APIs
+
+- [Elevenlabs](https://elevenlabs.io/docs/api-reference/text-to-speech/convert)
+- [Spark](https://sparkaudio.github.io/spark-tts)
+- [Sesame](https://huggingface.co/sesame/csm-1b)
+- [Kokoro](https://kokorottsai.com)
 
 <br><bR><br>
 
