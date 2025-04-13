@@ -21,9 +21,10 @@ let result = await model.invoke(engineeredPrompt)
 Je kan de lengte van het antwoord bepalen met `maxTokens`. 
 
 ```js
-const response = await model.invoke({
-    prompt: "Can you ask me a question in German so I can practice?",
-    max_tokens: 100 // Adjust as needed
+const model = new AzureChatOpenAI({
+    temperature: 0.5,
+    verbose: false,
+    maxTokens: 30 // Adjust as needed
 });
 ```
 
