@@ -63,6 +63,7 @@ Test of het inlezen van je `.env` is gelukt!
 [Langchain](https://js.langchain.com/docs/get_started/introduction) is de API die we in `server.js` gaan gebruiken om te werken met Azure OpenAI (ChatGPT). 
 
 ```sh
+npm init -y
 npm install langchain @langchain/core @langchain/openai
 ```
 *Let op dat je deze commando's in de server map uitvoert. De server map ziet er nu zo uit:*
