@@ -59,6 +59,29 @@ async function main() {
 main();
 ```
 
+<br><bR><br>
+
+## Fetch vanuit frontend
+
+Omdat je model lokaal draait zonder API key kan je ook rechtstreeks via `fetch` resultaten opvragen uit je frontend:
+
+```js
+const response = await fetch('http://127.0.0.1:11434/api/generate', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    model: 'llama3', // Replace with your model's name
+    prompt: "Why is grass green?",
+    stream: false // Set to true if you want streaming responses
+  })
+})
+const data = await response.json();
+console.log(data.response);
+```
+> *Het kan zijn dat je CORS moet aanzetten in je lokale AI tool*.
+
 <br><br><br>
 
 ## Documenten bevragen
