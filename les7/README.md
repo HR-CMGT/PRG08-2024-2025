@@ -110,6 +110,20 @@ const chat2 = await model.invoke(messages)
 console.log(chat2.content)
 ```
 
+<br><br><br>
+
+## Chat history per client
+
+In bovenstaand voorbeeld is de chat history een variabele binnen de node applicatie. Dit klopt eigenlijk niet, want als er meerdere clients tegelijk verbonden zijn, gaan hun chat histories door elkaar lopen.
+
+- Hou de chat history bij *in de browser* in plaats van op de server, en geef die telkens mee, met elke prompt.
+- Je hebt de optie om de chat history in `localStorage` op te slaan. Dan blijft de history ook bewaard nadat je de browser afsluit. 
+
+```js
+messages.push(["human", "what do you mean by that?"])
+localStorage.setItem("myChatHistory", JSON.stringify(messages))
+```
+
 <br><Br><br>
 
 ### Classes voor roles
@@ -127,20 +141,7 @@ const messages = [
 ]
 ```
 
-<br><br><br>
 
-## Chat history per client
-
-In bovenstaand voorbeeld is de chat history een variabele binnen de node applicatie. Maar als je tegelijk met meerdere web clients bent verbonden, krijgt niet elke user een eigen chat history. Hier zijn verschillende oplossingen voor:
-
-- Geef elke verbonden client een unieke ID, en hou per ID een eigen chat history bij.
-- Of hou de chat history bij *in de browser* in plaats van op de server, en geef die telkens mee. 
-- Je hebt dan ook de optie om de chat history in `localStorage` op te slaan. Dan blijft de history zelfs bewaard nadat je de browser afsluit.
-
-```js
-messages.push(["human", "what do you mean by that?"])
-localStorage.setItem("myChatHistory", JSON.stringify(messages))
-```
 
 <br><br><br>
 
