@@ -155,7 +155,38 @@ for await (const chunk of stream) {
     console.log(chunk.content)
 }
 ```
-***Streaming in frontend*** : deze stream werkt in de `node` omgeving, maar nu moet je de response ook als stream terug sturen naar de browser. Dit kan met een [readablestream en fetch](https://www.loginradius.com/blog/engineering/guest-post/http-streaming-with-nodejs-and-fetch-api/).
+
+### Streaming in Express
+
+In Express gebruiken we normaal `res.send` (of `res.json`) om een response te sturen. Dit stuurt dan de headers, content en sluit de verbinding met de client. Je kunt dit zelf ook volledig uitschrijven.
+
+```js
+// headers, content, en end in één
+res.send("Hello World"); 
+
+// hetzelfde maar dan uitgeschreven
+res.setHeader("Content-Type", "text/plain");
+res.write("Hello World");
+res.end();
+```
+Omdat je na `write` niet automatisch de verbinding sluit, kan je dit gebruiken om je eigen webservice ook streaming te maken.
+
+```js
+app.post('/hamstercolony', async (req, res) => {
+    const stream = await model.stream("Write an introduction for a book about a colony of tiny hamsters.");
+    res.setHeader("Content-Type", "text/plain");
+    for await (const chunk of stream) {
+        console.log(chunk.content);
+        res.write(chunk.content);
+    }
+    res.end();
+}
+```
+
+### Streaming in frontent
+Met fetch kan je een *readable stream* gebruiken om de response in chuncks af te handelen, in plaats van wachten tot de response helemaal ontvangen is.
+* [readablestream en fetch](https://www.loginradius.com/blog/engineering/guest-post/http-streaming-with-nodejs-and-fetch-api/).
+* [Streams API](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API/Using_readable_streams)
 
 
 
