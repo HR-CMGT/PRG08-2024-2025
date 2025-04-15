@@ -4,6 +4,11 @@ using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
+// CODE VOORBEELD
+// OpenAI API aanroepen om een tekst op te halen
+// in het component zitten public variabelen voor de prompt, personality, voice, en api key
+
+
 // package manager > install by name:
 // com.unity.nuget.newtonsoft-json
 
