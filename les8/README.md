@@ -35,7 +35,7 @@ De voorbereiding doe je in een apart project of `.js` file.
 
 Installeer de benodigde packages:
 ```sh
-npm install @langchain/openai @langchain/community @langchain/core @langchain/textsplitter faiss-node
+npm install @langchain/openai @langchain/community @langchain/core @langchain/textsplitters faiss-node
 ```
 
 Taalmodellen werken met `vectordata` om verbanden tussen teksten te kunnen leggen. Jouw tekst moet je dus omzetten naar vectordata. Dit noemen we `embedding`. Om tekst te `embedden` heb je een taalmodel nodig dat *geen* volledig chat model is. OpenAI gebruikt hier het `ada` model voor:
