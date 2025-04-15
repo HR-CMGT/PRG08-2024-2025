@@ -118,11 +118,25 @@ console.log(chat2.content)
 In bovenstaand voorbeeld is de chat history een variabele binnen de node applicatie. Dit klopt eigenlijk niet, want als er meerdere clients tegelijk verbonden zijn, gaan hun chat histories door elkaar lopen.
 
 - Hou de `[messages]` chat history bij *in de browser* in plaats van op de server. Nieuwe prompts voeg je toe aan die array, en daarna geef je de hele `[messages]` array mee in je `POST` request.
-- Je hebt nu ook de optie om de chat history in `localStorage` op te slaan. Dan blijft de history ook bewaard nadat je de browser afsluit. 
+- Let op dat de `ai`, `human` en `system` roles nu ook in de client worden bijgehouden.
+- Je hebt nu ook de optie om de chat history in `localStorage` op te slaan via `localStorage.setItem(JSON.stringify(messages))`.
+
+### Client script.js
 
 ```js
-messages.push(["human", "what do you mean by that?"])
-localStorage.setItem("myChatHistory", JSON.stringify(messages))
+async function askQuestion(e) {
+    e.preventDefault()
+    messages.push(["user", field.value]]
+    const options = {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ messages }) // geef de hele messages array mee
+    }
+    const response = await fetch("http://localhost:3000/ask", options)
+}
 ```
 
 <br><Br><br>
