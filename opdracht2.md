@@ -12,12 +12,6 @@ Voor de lessen en inleveropdrachten kan je jouw frontend en backend lokaal draai
 
 <br><br><br>
 
-## React
-
-Je kan je taalserver aanroepen vanuit een React frontend.
-
-<br><br><br>
-
 ## Voorbeeld 1
 
 ![poemclock](./images/poemclock.png) <br>
