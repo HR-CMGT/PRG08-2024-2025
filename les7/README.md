@@ -188,7 +188,39 @@ Met fetch kan je een *readable stream* gebruiken om de response in chuncks af te
 * [readablestream en fetch](https://www.loginradius.com/blog/engineering/guest-post/http-streaming-with-nodejs-and-fetch-api/).
 * [Streams API](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API/Using_readable_streams)
 
+<br><br><br>
 
+## Niet alles is een chat app
+
+Je hoeft niet altijd een chat applicatie te bouwen. Je kan het LLM ook gebruiken om op andere manieren live content te genereren. In dit voorbeeld genereert de AI een JSON file die we rechtstreeks kunnen afspelen in de `tone.js` music library. Dit kan je gebruiken om live muziekjes te genereren die op dat moment bij je applicatie passen.
+
+#### Prompt
+```sh
+Can you create a JSON file for use with tone.js, it should contain notes for a chord progression. Do not use any comments or explanation, only return pure JSON
+```
+#### Result
+```json
+{
+  "chordProgression": [
+    {
+      "chord": "Cmaj7",
+      "notes": ["C4", "E4", "G4", "B4"]
+    },
+    {
+      "chord": "G7",
+      "notes": ["G3", "B3", "D4", "F4"]
+    },
+    {
+      "chord": "Am7",
+      "notes": ["A3", "C4", "E4", "G4"]
+    },
+    {
+      "chord": "Fmaj7",
+      "notes": ["F3", "A3", "C4", "E4"]
+    }
+  ]
+}
+```
 
 
 <br><br><bR>
