@@ -200,7 +200,7 @@ app.post('/hamstercolony', async (req, res) => {
 
 ### Streaming in frontend
 Met fetch kan je een *readable stream* gebruiken om de response in chuncks af te handelen, in plaats van wachten tot de response helemaal ontvangen is.
-* [readablestream en fetch](https://www.loginradius.com/blog/engineering/guest-post/http-streaming-with-nodejs-and-fetch-api/).
+* [stream en fetch](https://github.com/HR-CMGT/PRG08-2024-2025/blob/main/snippets/streaming.md).
 * [Streams API](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API/Using_readable_streams)
 
 <br><br><br>
