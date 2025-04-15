@@ -4,6 +4,7 @@
 - Temperature
 - Context window en chat history
 - Streaming
+- Niet alles is een chat app
 - Toepassing bedenken
 - Documentatie
 
