@@ -12,27 +12,6 @@ Voor de lessen en inleveropdrachten kan je jouw frontend en backend lokaal draai
 
 <br><br><br>
 
-## Troubleshooting
-
-- Gebruik de praktijklessen om met problemen bij je docent langs te lopen
-- Als de Azure OpenAI API key niet werkt, geef dit dan zo snel mogelijk aan bij je docenten.
-- Je kan dit tijdelijk oplossen door even de [Fake LLM](https://js.langchain.com/docs/integrations/chat/fake) te gebruiken, zodat je in elk geval door kan werken aan je app.
-- Je kan ook besluiten om een eigen `OpenAI API Key` aan te vragen.
-
-<br><br><br>
-
-
-## Links
-
-Code snippets en links voor werken met AI in Javascript
-
-- [LangChain](https://js.langchain.com/docs/get_started/quickstart)
-- [Prompt Engineering](https://platform.openai.com/docs/guides/prompt-engineering)
-- [Browser speech](./snippets/speech.md)
-- [OpenAI API](https://platform.openai.com/docs/introduction)
-
-<br><br><br>
-
 ## React
 
 Je kan je taalserver aanroepen vanuit een React frontend.
@@ -69,6 +48,7 @@ D) Fortnite
 
 - Vraag je LLM om een goed idee!
 - Je chatbot hoeft niet altijd op een vraag te wachten. Je kan ook automatisch (bv. via `setInterval`) prompts uitvoeren, om een vraag aan je gebruiker te stellen.
+- [Use cases for LLM models](https://www.projectpro.io/article/large-language-model-use-cases-and-applications/887)
 - Maak een online chatbot die vragen kan beantwoorden over een bepaald onderwerp. Voed de chatbot met veel data over dat onderwerp. 
 - Geef je chatbot een persoonlijkheid die bij het onderwerp past, bijvoorbeeld door alle gesproken lines van een filmkarakter uit een filmscript te halen. [Harry Potter dataset](https://www.kaggle.com/datasets/gulsahdemiryurek/harry-potter-dataset).
 - Plaats je chatbot op discord, [tutorial hier](https://dev.to/rtagliavia/how-to-create-a-discord-bot-with-discordjs-and-nodejs-plb) en [hier](https://www.freecodecamp.org/news/discord-ai-chatbot/)
@@ -98,6 +78,19 @@ D) Fortnite
 
 <br><br><br>
 
+## Troubleshooting
+
+- Gebruik de praktijklessen om met problemen bij je docent langs te lopen
+- Als de Azure OpenAI API key niet werkt, geef dit dan zo snel mogelijk aan bij je docenten.
+- Je kan dit tijdelijk oplossen door even de [Fake LLM](https://js.langchain.com/docs/integrations/chat/fake) te gebruiken, zodat je in elk geval door kan werken aan je app.
+- Je kan ook besluiten om een eigen `OpenAI API Key` aan te vragen.
+
+<br><br><br>
+
 ## Links
 
-- [Use cases for LLM models](https://www.projectpro.io/article/large-language-model-use-cases-and-applications/887)
+- [LangChain](https://js.langchain.com/docs/get_started/quickstart)
+- [Prompt Engineering](https://platform.openai.com/docs/guides/prompt-engineering)
+- [Browser speech](./snippets/speech.md)
+- [OpenAI API](https://platform.openai.com/docs/introduction)
+
