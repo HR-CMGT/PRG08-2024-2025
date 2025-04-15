@@ -126,7 +126,7 @@ In bovenstaand voorbeeld is de chat history een variabele binnen de node applica
 ```js
 async function askQuestion(e) {
     e.preventDefault()
-    messages.push(["user", field.value]]
+    messages.push(["human", field.value]]
     const options = {
         method: 'POST',
         mode: 'cors',
