@@ -47,6 +47,7 @@ Je kan MediaPipe en KNN toepassen in een React project
 ![poemclock](./images/poemclock.png)
 
 - Vraag je LLM om een goed idee!
+- Je chatbot hoeft niet altijd op een vraag te wachten. Je kan ook automatisch (bv. via `setInterval`) prompts uitvoeren, om een vraag aan je gebruiker te stellen.
 - Maak een online chatbot die vragen kan beantwoorden over een bepaald onderwerp. Voed de chatbot met veel data over dat onderwerp. 
 - Geef je chatbot een persoonlijkheid die bij het onderwerp past, bijvoorbeeld door alle gesproken lines van een filmkarakter uit een filmscript te halen. [Harry Potter dataset](https://www.kaggle.com/datasets/gulsahdemiryurek/harry-potter-dataset).
 - Plaats je chatbot op discord, [tutorial hier](https://dev.to/rtagliavia/how-to-create-a-discord-bot-with-discordjs-and-nodejs-plb) en [hier](https://www.freecodecamp.org/news/discord-ai-chatbot/)
