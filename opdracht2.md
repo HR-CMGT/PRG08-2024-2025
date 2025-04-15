@@ -21,7 +21,7 @@ De Poem Clock schrijft elke 15 minuten een gedicht over de huidige tijd
 
 ## Voorbeeld 2
 
-De game quiz stelt 10 vragen over recente games en houdt een score bij.
+De game quiz stelt 10 vragen over recente games. Elk antwoord staat in een button waar je op kan klikken. De AI weet of het antwoord goed is en houdt een score bij.
 
 #### Prompt
 ```
