@@ -117,8 +117,8 @@ console.log(chat2.content)
 
 In bovenstaand voorbeeld is de chat history een variabele binnen de node applicatie. Dit klopt eigenlijk niet, want als er meerdere clients tegelijk verbonden zijn, gaan hun chat histories door elkaar lopen.
 
-- Hou de chat history bij *in de browser* in plaats van op de server, en geef die telkens mee, met elke prompt.
-- Je hebt de optie om de chat history in `localStorage` op te slaan. Dan blijft de history ook bewaard nadat je de browser afsluit. 
+- Hou de `[messages]` chat history bij *in de browser* in plaats van op de server. Nieuwe prompts voeg je toe aan die array, en daarna geef je de hele `[messages]` array mee in je `POST` request.
+- Je hebt nu ook de optie om de chat history in `localStorage` op te slaan. Dan blijft de history ook bewaard nadat je de browser afsluit. 
 
 ```js
 messages.push(["human", "what do you mean by that?"])
@@ -222,6 +222,11 @@ Can you create a JSON file for use with tone.js, it should contain notes for a c
   ]
 }
 ```
+<br><br><br>
+
+## Automatisch prompten
+
+Je LLM applicatie hoeft niet altijd op een vraag te wachten. Je kan ook automatisch (bv. via `setInterval`) prompts uitvoeren, bijvoorbeeld om sporadisch een vraag aan je gebruiker te stellen.
 
 
 <br><br><bR>
