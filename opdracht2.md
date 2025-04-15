@@ -35,16 +35,37 @@ Code snippets en links voor werken met AI in Javascript
 
 ## React
 
-Je kan MediaPipe en KNN toepassen in een React project
-
-- [MediaPipe](./snippets/react.md)
-- [KNN](./snippets/reactknn.md)
+Je kan je taalserver aanroepen vanuit een React frontend.
 
 <br><br><br>
 
-## Inspiratie
+## Voorbeeld 1
 
-![poemclock](./images/poemclock.png)
+![poemclock](./images/poemclock.png) <br>
+De Poem Clock schrijft elke 15 minuten een gedicht over de huidige tijd
+
+<Br>
+
+## Voorbeeld 2
+
+De game quiz stelt 10 vragen over recente games en houdt een score bij.
+
+#### Prompt
+```
+kan je een quizvraag met 4 antwoorden bedenken over recente videogames? 1 antwoord is goed
+```
+#### Resultaat
+```
+Welke van de volgende games is ontwikkeld door de studio FromSoftware?
+
+A) The Legend of Zelda: Breath of the Wild
+B) Dark Souls III
+C) Super Mario Odyssey
+D) Fortnite
+```
+<br>
+
+## Inspiratie
 
 - Vraag je LLM om een goed idee!
 - Je chatbot hoeft niet altijd op een vraag te wachten. Je kan ook automatisch (bv. via `setInterval`) prompts uitvoeren, om een vraag aan je gebruiker te stellen.
