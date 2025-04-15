@@ -166,7 +166,7 @@ history.push(["ai", response.content])
 
 ## Context window
 
-De reden dat we RAG gebruiken is dat veel taalmodellen nog een klein *context window* hebben. Dit is de hoeveelheid data die het model tegelijkertijd in het geheugen kan houden, en dus iets over kan zeggen. Hieronder een overzicht van context windows voor verschillende taalmodellen.
+De reden dat we RAG gebruiken is dat veel taalmodellen nog een klein context window hebben. Dit is de hoeveelheid data die het model tegelijkertijd in het geheugen kan houden, en dus iets over kan zeggen. Hieronder een overzicht van context windows voor verschillende taalmodellen.
 
 | Model                  | Context Window (tokens) | Words (approx.)         |
 |------------------------|--------------------------|--------------------------|
@@ -177,9 +177,13 @@ De reden dat we RAG gebruiken is dat veel taalmodellen nog een klein *context wi
 | Google Gemini 2.5     | ~1,000,000               | 666,700 – 769,200 words  |
 
 
-Omdat het context window van nieuwe modellen heel groot is, is het soms handiger om gewoon je hele document mee te sturen in het eerste gebruikersprompt. Dit geldt vooral als je document eigenlijk maar heel klein is. Dit is sneller dan het eerst opslaan van je data in een vectordatabase, om vervolgens in die vectordatabase te zoeken naar het juiste antwoord. Het voordeel van RAG is dat je minder tokens "verbrandt" doordat je minder data naar het taalmodel stuurt. Die tokens kunnen duur zijn, afhankelijk van de service die je gebruikt.
+Omdat het context window van nieuwe modellen heel groot is, is het mogelijk om gewoon je hele document mee te sturen aan het beginn van de gebruikersprompt. Deze modellen cachen hun prompts namelijk, waardoor alleen de eerste keer de hele prompt verwerkt hoeft te worden. Bij elk volgend request wordt het eerste deel van de prompt uit cache gehaald, en alleen het nieuwe deel dat niet in cache zit verwerkt. Het model reageert hierdoor sneller, en is ook goedkoper doordat er minder tokens verbruikt worden. We noemen dit **CAG** (*Cache Augmented Generation*). Dit is sneller dan het eerst opslaan van je data in een vectordatabase, om vervolgens in die vectordatabase te zoeken naar het juiste antwoord.<br>
+Oudere modellen beschikken niet over cache, toch kan het handig zijn om ook hier het volledige document in de prompt te zetten als het document maar klein is.
 
 Ter vergelijking: één A4'tje bevat ongeveer 500 woorden, *The Lord of the Rings* bevat ongeveer 480.000 woorden.
+
+[Prompt Caching](https://platform.openai.com/docs/guides/prompt-caching)<br>
+[Azure prompt caching support](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/prompt-caching#supported-models)
 
 <br><br><br>
 
