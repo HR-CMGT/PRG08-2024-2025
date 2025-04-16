@@ -187,6 +187,18 @@ Ter vergelijking: één A4'tje bevat ongeveer 500 woorden, *The Lord of the Ring
 
 <br><br><br>
 
+## Chat history
+
+In bovenstaand voorbeeld wordt geen chat history bijgehouden. Dit kan je zelf toevoegen door de `[messages]` array uit de vorige les te integreren met de code uit deze les.
+
+<br><br><br>
+
+## Typen documenten die je kan laden
+
+- [Files laden](https://js.langchain.com/docs/integrations/document_loaders/file_loaders/)
+- [Web content laden](https://js.langchain.com/docs/integrations/document_loaders/web_loaders/)
+
+<br><br><br>
 
 ## Tips en troubleshooting
 
@@ -202,7 +214,5 @@ Ter vergelijking: één A4'tje bevat ongeveer 500 woorden, *The Lord of the Ring
 
 - [Langchain Azure OpenAI Chat](https://js.langchain.com/docs/integrations/chat/)
 - [Langchain Azure OpenAI Text Embedding](https://js.langchain.com/docs/integrations/text_embedding/)
-- [Langchain document loaders](https://js.langchain.com/docs/integrations/document_loaders/)
 - [Langchain vector stores](https://js.langchain.com/docs/integrations/vectorstores/)
 - [FAISS - Facebook Vector Store](https://js.langchain.com/docs/integrations/vectorstores/faiss)
-- [Classes voor het automatisch bijhouden van chat history](https://js.langchain.com/docs/how_to/qa_chat_history_how_to/)
