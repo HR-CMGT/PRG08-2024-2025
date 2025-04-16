@@ -18,13 +18,22 @@ Een LLM kan markdown tekst met kopjes, vette tekst en lijstjes terug geven. Daar
 #### Voorbeeld ShowdownJS
 
 ```js
-let promptresult = fetch("Can you write a simple `hello world` react component?")
-let converter = new showdown.Converter()
-document.querySelector("#div").innerHTML = converter.makeHtml(promptresult);
+const promptResult = await fetch("Can you write a simple `hello world` react component?");
+const converter = new showdown.Converter();
+document.querySelector("#div").innerHTML = converter.makeHtml(promptResult);
 ```
 
 - [ShowDown](https://showdownjs.com)
 - [Marked](https://marked.js.org)
+
+In React werkt dit niet, omdat JSX (net als Blade) htmlentities gebruikt bij variabelen om XSS te voorkomen. Je moet daarvoor expliciet aangeven dat je weet dat je iets 'dangerous' doet.
+
+#### Voorbeeld ShowdownJS in React
+
+```js
+// sla de response op in een state variable 'promptResult', en maak een converter aan (zie voorbeeld hierboven)
+<div dangerouslySetInnerHTML={{ __html: converter.makeHtml(promptResult) }}></div>
+```
 
 <br><Br><br>
 
