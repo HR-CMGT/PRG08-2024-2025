@@ -39,32 +39,30 @@ async function openAIWhisper() {
 
 ## Azure Whisper
 
-Langchain heeft hier geen ondersteuning voor, maar je kan Azure Whisper toch aanroepen via een omweg:
+Langchain heeft hier geen ondersteuning voor, maar je kan Azure Whisper toch aanroepen via een omweg. 
+Bij deployments geven we *'deploy-whisper'* als model mee.
 
 ```js
-async function azureWhisper() {
-    const filePath = "./hello.mp3";
+import { OpenAIWhisperAudio } from "@langchain/community/document_loaders/fs/openai_whisper_audio";
 
-    const azureOpenAIConfig = {
-        azureOpenAIApiKey: process.env.AZURE_OPENAI_API_KEY,
-        azureOpenAIApiInstanceName: process.env.INSTANCE_NAME,
-        azureOpenAIApiDeploymentName: "deploy-whisper",
-        azureOpenAIApiVersion: process.env.OPENAI_API_VERSION, 
-    };
+async function azureWhisper() {
+    const filePath = "whisper/audio/hoor_de_wind_liam.mp3";
 
     const loader = new OpenAIWhisperAudio(filePath, {
-        transcriptionCreateParams: { language: "en" },
+        transcriptionCreateParams: { language: "nl" },
         clientOptions: {
-            apiKey: azureOpenAIConfig.azureOpenAIApiKey,
-            baseURL: `https://${azureOpenAIConfig.azureOpenAIApiInstanceName}.openai.azure.com/openai/deployments/${azureOpenAIConfig.azureOpenAIApiDeploymentName}`,
-            defaultQuery: { 'api-version': azureOpenAIConfig.azureOpenAIApiVersion },
-            defaultHeaders: { 'api-key': azureOpenAIConfig.azureOpenAIApiKey },
+            apiKey: process.env.AZURE_OPENAI_API_KEY,
+            baseURL: `https://${process.env.AZURE_OPENAI_API_INSTANCE_NAME}.openai.azure.com/openai/deployments/deploy-whisper`,
+            defaultQuery: { 'api-version': process.env.AZURE_OPENAI_API_VERSION },
+            defaultHeaders: { 'api-key': process.env.AZURE_OPENAI_API_KEY },
         },
     });
 
     const docs = await loader.load();
     console.log(docs[0].pageContent);
 }
+
+await azureWhisper();
 ```
 <br><bR><br>
 
