@@ -53,6 +53,14 @@ async function fetchGreeting(name) {
 fetchGreeting('Action Henk');
 ```
 
+<br><br><br>
+
+#### Vectorstores
+
+Omdat een `serverless` omgeving stateless is, kan je geen FAISS vectorstore lokaal inladen, om daar dan later vragen aan te kunnen stellen. Je kan wel voor iedere prompt een call naar een online vectordatabase doen, bijvoorbeeld [PineCone](https://www.pinecone.io). Daar moet je dan ook weer een API key voor aanmaken.
+
+<br><br><br>
+
 #### CORS
 
 In dit geval staan de frontend en de serverless code op dezelfde server. Als je de server vanuit een ander domein wil kunnen aanroepen moet je `cors` aanzetten op de server.
