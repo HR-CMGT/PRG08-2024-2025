@@ -105,6 +105,8 @@ async function askQuestion(){
 }
 ```
 
+- [Wat is similarity search?](https://www.pinecone.io/learn/what-is-similarity-search/)
+
 <br><br><br>
 
 ## Vectorstores
