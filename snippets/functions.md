@@ -104,7 +104,7 @@ for (const toolCall of result.tool_calls) {
 Het resultaat van de tool calls zit nu ook in de `messages` array. Dit kan je zien met `console.log(messages)`. Om hier weer een *human readable* bericht van te maken geven we de hele array nog een keer aan langchain:
 
 ```js
-const endresult = await llmWithTools.invoke(messages);
+const endresult = await modelWithTools.invoke(messages);
 console.log(endresult.content);
 ```
 
