@@ -130,7 +130,7 @@ await vectorStore.save("vectordatabase"); // geef hier de naam van de directory 
 
 #### Vectordata in de cloud
 
-- [Pinecone is een cloud vectordatabase](../snippets/pinecone.md)
+- [Code snippet voor werken met Pinecone vectordatabase](../snippets/pinecone.md)
 
 <br><br><br>
 
