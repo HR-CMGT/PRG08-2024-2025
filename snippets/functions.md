@@ -3,6 +3,9 @@
 Een taalmodel heeft geen kennis van recent nieuws, sportuitslagen, het weer, of andere hele specifieke recente informatie. Ook is een taalmodel niet altijd goed in berekeningen en kan een taalmodel niet uit zichzelf een game of een smarthome besturen. Zaken waar een taalmodel niet goed in is:
 
 - Berekeningen maken
+- Een email sturen
+- Een afspraak in google calendar plaatsen
+- Een nummer afspelen op spotify
 - Belasting aangifte doen
 - Het weerbericht tonen
 - Sportuitslagen tonen
