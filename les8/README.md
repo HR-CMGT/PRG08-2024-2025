@@ -128,6 +128,10 @@ await vectorStore.save("vectordatabase"); // geef hier de naam van de directory 
 
 > ⚠️ ***Let op dat je de data maar 1x hoeft op te slaan.*** Om die reden is het handiger om met twee losse `.js` files te werken. Een voor het maken van vectordata, en een voor het inlezen en vragen stellen.
 
+#### Vectordata in de cloud
+
+- [Pinecone is een cloud vectordatabase](../snippets/pinecone.md)
+
 <br><br><br>
 
 ## Privacy en copyright
