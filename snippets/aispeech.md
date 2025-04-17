@@ -46,7 +46,7 @@ Bij deployments geven we *'deploy-whisper'* als model mee.
 import { OpenAIWhisperAudio } from "@langchain/community/document_loaders/fs/openai_whisper_audio";
 
 async function azureWhisper() {
-    const filePath = "whisper/audio/hoor_de_wind_liam.mp3";
+    const filePath = "audio.mp3";
 
     const loader = new OpenAIWhisperAudio(filePath, {
         transcriptionCreateParams: { language: "nl" },
