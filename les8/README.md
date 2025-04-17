@@ -216,3 +216,4 @@ Ter vergelijking: één A4'tje bevat ongeveer 500 woorden, *The Lord of the Ring
 - [Langchain Azure OpenAI Text Embedding](https://js.langchain.com/docs/integrations/text_embedding/)
 - [Langchain vector stores](https://js.langchain.com/docs/integrations/vectorstores/)
 - [FAISS - Facebook Vector Store](https://js.langchain.com/docs/integrations/vectorstores/faiss)
+- [PineCone - Code Snippets](https://github.com/HR-CMGT/PRG08-2024-2025/blob/main/snippets/pinecone.md)
