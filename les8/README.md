@@ -84,6 +84,13 @@ async function createVectorstore() {
 ```
 <br><br><br>
 
+## Typen documenten die je kan laden
+
+- [Files laden](https://js.langchain.com/docs/integrations/document_loaders/file_loaders/)
+- [Web content laden](https://js.langchain.com/docs/integrations/document_loaders/web_loaders/)
+
+<br><br><br>
+
 ## Test: vragen stellen
 
 Om te zien of het omzetten naar vectoren is gelukt gaan we als test een vraag stellen:
@@ -191,12 +198,6 @@ Ter vergelijking: één A4'tje bevat ongeveer 500 woorden, *The Lord of the Ring
 [Prompt Caching](https://platform.openai.com/docs/guides/prompt-caching)<br>
 [Azure prompt caching support](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/prompt-caching#supported-models)
 
-<br><br><br>
-
-## Typen documenten die je kan laden
-
-- [Files laden](https://js.langchain.com/docs/integrations/document_loaders/file_loaders/)
-- [Web content laden](https://js.langchain.com/docs/integrations/document_loaders/web_loaders/)
 
 <br><br><br>
 
