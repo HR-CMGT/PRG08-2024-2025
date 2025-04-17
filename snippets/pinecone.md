@@ -3,6 +3,13 @@
 Met Pinecone kan je een cloud vectordatabase aanmaken. Je kan dan rechtstreeks requests aan de cloud database sturen.
 Je hebt een API_KEY van pinecone nodig, en de naam van je database. Dit plaats je in de env file:
 
+```sh
+npm install @langchain/pinecone
+npm install @pinecone-database/pinecone
+```
+
+<br>
+
 #### .env
 
 ```sh
