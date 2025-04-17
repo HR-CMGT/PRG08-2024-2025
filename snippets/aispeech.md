@@ -48,7 +48,7 @@ async function azureWhisper() {
     const azureOpenAIConfig = {
         azureOpenAIApiKey: process.env.AZURE_OPENAI_API_KEY,
         azureOpenAIApiInstanceName: process.env.INSTANCE_NAME,
-        azureOpenAIApiDeploymentName: "deploy-whisper"
+        azureOpenAIApiDeploymentName: "deploy-whisper",
         azureOpenAIApiVersion: process.env.OPENAI_API_VERSION, 
     };
 
@@ -169,3 +169,7 @@ const buffer = Buffer.from(await response.arrayBuffer());
 await writeFile("speech.mp3", buffer);
 console.log("✅ Speech saved to speech.mp3");
 ```
+
+#### Bronnen
+
+- Kijk ook naar [openAi FM](https://www.openai.fm/)
