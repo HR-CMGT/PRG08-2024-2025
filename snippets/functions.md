@@ -24,21 +24,29 @@ Dit kan je toevoegen door je eigen `tools` te schrijven en die toe te voegen aan
 
 <br><br><br>
 
+## Function
+
+De functie die door het taalmodel aangeroepen kan worden, is een gewone javascript functie. Let op dat eventuele arguments in een object binnenkomen:
+
+```js
+const multiplyFunction = ({ a, b }) => a * b;
+```
+
+<br><br><br>
+
 ## Tool 
 
-Het verschil tussen een gewone `javascript function` en een `tool function` is dat je een *schema* moet meegeven waar precies in staat welke variabelen verwacht worden in de functie. 
+Je kan hier nu een tool van maken zodat het taalmodel de functie snapt:
 
 ```js
 import { AzureChatOpenAI } from "@langchain/openai"
 import { HumanMessage, AIMessage, ToolMessage, SystemMessage } from "@langchain/core/messages";
 import { tool } from "@langchain/core/tools";
 
-const multiplyFunction = ({ a, b }) => a * b;
-
 const multiply = tool(multiplyFunction, {
     name: "multiply",                       // een naam die voor het taalmodel duidelijk maakt wat de tool doet
     description: "Multiply two numbers",    // beschrijf wat de tool doet en wanneer het taalmodel dit nodig heeft
-    schema: {                               // geef aan welke arguments de tool verwacht. voor "multiply" zijn dat twee getallen
+    schema: {                               // geef aan welke arguments de tool verwacht. voor "multiply" zijn dat twee getallen met de namen a en b
         type: "object",
         properties: {
             a: { type: "number" },
@@ -128,10 +136,9 @@ if (response.tool_calls.length > 0) {
 
 <br><br><br>
 
-## TIP
+## Tips
 
 - Let op dat je na elke `let result = await model.invoke(...)` het resultaat toevoegt aan de chat history met `messages.push(result)` !
-
 
 <br><br><br>
 
@@ -139,17 +146,15 @@ if (response.tool_calls.length > 0) {
 
 # Tavily voorbeeld
 
-[Tavily](https://tavily.com) is een web search engine waarmee het taalmodel kan "googlen". In dit voorbeeld moet je ook de `zod` library installeren, dit maakt het werken met schema's iets overzichtelijker.
+[Tavily](https://tavily.com) is een web search engine waarmee het taalmodel kan "googlen". 
 
 ```sh
 npm install @tavily/core
-npm install zod
 ```
 
-#### Tavily Instellen
+#### Tavily function
 
 ```js
-import { z } from "zod";
 import { tavily } from "@tavily/core";
 
 const client = tavily({ apiKey: process.env.TAVILY_KEY });
@@ -169,14 +174,17 @@ export async function searchTavily({query}) {
 #### Tool bouwen
 
 ```js
-const newsTool = tool(searchTavily,{
-        name: "searchTavily",
-        description: "Fetches any kind of recent news from an online search engine. This is recent news that the language model would otherwise not know about.", // helps the llm to understand when to use the tool
-        schema: z.object({
-            query: z.string().describe("The subject that the news should be about."), // helps the llm to format the input
-        }),
-    }
-);
+const newsTool = tool(searchTavily, {
+    name: "searchTavily",
+    description: "Fetches any kind of recent news about a subject, from an online search engine.", 
+    schema: {
+        type: "object",
+        properties: {
+            subject: { type: "string" },
+        },
+        required: ["subject"],
+    },
+});
 
 const model = new AzureChatOpenAI({
     temperature:0.2
