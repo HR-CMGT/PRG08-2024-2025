@@ -197,6 +197,8 @@ const model = new AzureChatOpenAI({
 
 ## Links
 
+- [Tavily web search](https://docs.tavily.com/documentation/quickstart)
+- [Open Weather Data](https://home.openweathermap.org)
 - [Een tool definiëren](https://js.langchain.com/docs/concepts/tools/)
 - [Een tool automatisch laten uitvoeren door het taalmodel](https://js.langchain.com/docs/concepts/tool_calling/)
 - [OpenAI LangChain Function Calling](https://js.langchain.com/docs/integrations/chat/openai)
