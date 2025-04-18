@@ -83,13 +83,16 @@ talkAboutWeather();
 
 ## Tools
 
-Je zal bij het gebruiken van taalmodellen gemerkt hebben dat deze niet óveral goed in zijn, bv:
+Een nieuwe toevoeging aan taalmodellen is dat zij zelf kunnen bepalen wanneer een externe API call *(bv. ophalen van het weerbericht)* nodig is voor de prompt van de gebruiker. Je gaat dan niet meer zelf de weerdata ophalen, maar je geeft de functie die dat doet aan het taalmodel. Dit heet ***"tool calling"***. 
 
 -	Berekeningen maken
+-	Een email sturen
+- Een afspraak in google calendar plaatsen
+- Een nummer afspelen op spotify
 -	Belasting aangifte doen
 -	Het weerbericht tonen
 -	Sportuitslagen tonen
--   Koers van aandelen, bitcoin of valuta 
+- Koers van aandelen, bitcoin of valuta 
 -	Op google zoeken
 -	Het licht aan doen (smarthome)
 -	Een robot besturen
