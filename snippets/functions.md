@@ -36,9 +36,9 @@ import { tool } from "@langchain/core/tools";
 const multiplyFunction = ({ a, b }) => a * b;
 
 const multiply = tool(multiplyFunction, {
-    name: "multiply",
-    description: "Multiply two numbers",
-    schema: {
+    name: "multiply",                       // een naam die voor het taalmodel duidelijk maakt wat de tool doet
+    description: "Multiply two numbers",    // beschrijf wat de tool doet en wanneer het taalmodel dit nodig heeft
+    schema: {                               // geef aan welke arguments de tool verwacht. voor "multiply" zijn dat twee getallen
         type: "object",
         properties: {
             a: { type: "number" },
@@ -52,6 +52,16 @@ const multiply = tool(multiplyFunction, {
 let resultA = await multiply.invoke({ a: 3, b: 4 });
 console.log(resultA)
 ```
+<Br><Br><br>
+
+### Chat History
+
+De chat history is erg belangrijk by tool calling, omdat het taalmodel ook de resultaten van toolcalls moet bijhouden. In de system prompt kan je ook nog wat meer uitleg geven over de tools. In dit voorbeeld gebruiken we de `roles` uit langchain:  `SystemMessage`, `AIMessage`, `HumanMessage`, en daar is nu een nieuwe rol bij gekomen: `ToolMessage`.
+
+```js
+const messages = [new SystemMessage("You are a helpful assistant, you can use the multiply tool to multiply two numbers")]
+```
+
 <br>
 <br>
 <br>
@@ -74,21 +84,25 @@ const model = new AzureChatOpenAI({
 Het model bepaalt zelf wanneer de tool aangeroepen moet worden, dit kan je als volgt testen:
 
 ```js
-const messages = [new HumanMessage("What is 3 * 12??")]
-const result = await modelWithTools.invoke(messages)
+messages.push(new HumanMessage("What is 3 * 12?"))
+const result = await model.invoke(messages)
 messages.push(result)
+
+console.log("I want to call the following tools")
+console.log(result.tool_calls)
 ```
 <br><br><br>
 
 ## Tool calls uitvoeren
 
-Als het model vindt dat er tool calls uitgevoerd moeten worden dan zal de `content` leeg zijn, en de `tool_calls` array gevuld zijn. Dit moet je handmatig checken met een `if` statement of een `for` loop. Als er `tool_calls` in de response zitten, dan moet je die via `invoke` zelf uitvoeren:
+Als het model vindt dat er tool calls uitgevoerd moeten worden dan zal de `content` leeg zijn, en de `tool_calls` array gevuld zijn. Dit moet je handmatig checken met een `for` loop. 
+
+Als er `tool_calls` in de response zitten, dan moet je die via `invoke` zelf uitvoeren:
 
 ```js
-console.log("I want to call the following tools")
-console.log(result.tool_calls)
+const tools = [multiply]; 
+const toolsByName = Object.fromEntries(tools.map(tool => [tool.name, tool]));
 
-const toolsByName = {multiply: multiply};
 for (const toolCall of result.tool_calls) {
     const selectedTool = toolsByName[toolCall.name];
     console.log("now trying to call " + toolCall.name);
@@ -102,30 +116,18 @@ for (const toolCall of result.tool_calls) {
 
 ## Eindresultaat
 
-Het resultaat van de tool calls zit nu ook in de `messages` array. Dit kan je zien met `console.log(messages)`. Om hier weer een *human readable* bericht van te maken geven we de hele array nog een keer aan langchain:
+Als er *geen* tool calls waren, dan is je `result` gewoon het antwoord van het taalmodel dat je zonder tools ook zou krijgen. Als er *wel* tool calls gedaan zijn, dan moet je het resultaat daarvan nog een keer naar het taalmodel sturen, om het *human readable* te maken.
 
 ```js
-const endresult = await modelWithTools.invoke(messages);
-console.log(endresult.content);
+if (response.tool_calls.length > 0) {
+    response = await model.invoke(messages);
+    console.log(response.content);
+}
 ```
 
 
 <br><br><br>
 
-## Tips
-
-Let op dat je alle resultaten steeds in de `messages` array pushed. Dit zorgt ervoor dat langchain je prompts en tool results automatisch in het juiste formaat zet voor het taalmodel.
-
-Je kan ook beginnen met system instructions om nog duidelijker aan het taalmodel uit te leggen dat er functies gebruikt kunnen worden.
-
-```js
-const messages = [
-    new SystemMessage("You are a happy little weather assistant. You can use the fetchWeather tool to get the current weather data for a specific location."),
-    new HumanMessage("What is the weather in Tokyo?")
-]
-const result = await modelWithTools.invoke(messages);
-```
-<br><br><br>
 
 
 ### Tavily voorbeeld
