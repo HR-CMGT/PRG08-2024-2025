@@ -130,11 +130,19 @@ const result = await modelWithTools.invoke(messages);
 
 ### Tavily voorbeeld
 
-[Tavily](https://tavily.com) is een web search engine waarmee het taalmodel kan "googlen". 
+[Tavily](https://tavily.com) is een web search engine waarmee het taalmodel kan "googlen". In dit voorbeeld moet je ook de `zod` library installeren, dit maakt het werken met schema's iets overzichtelijker.
+
+```sh
+npm install @tavily/core
+npm install zod
+```
 
 #### Tavily Instellen
 
 ```js
+import { z } from "zod";
+import { tavily } from "@tavily/core";
+
 const client = tavily({ apiKey: process.env.TAVILY_KEY });
 const options = {topic: "news", timeRange: "m", includeAnswer: "true", maxResults:1, days: 5 }
 
