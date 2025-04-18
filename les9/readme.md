@@ -84,25 +84,7 @@ Een nieuwe toevoeging aan taalmodellen is dat zij zelf kunnen bepalen wanneer ee
 -	Een grafiek tekenen die echt klopt
 -	Inloggen op een beveiligde website
 
-Bij het aanmaken van een taalmodel kan je functies doorgeven die dit kunnen. Hierdoor kan je taalmodel die functie aanroepen als het taalmodel vindt dat dit nodig is. [Code voorbeeld voor het werken met tools in een taalmodel](../snippets/functions.md)
-
-### Tool applicaties
-
--	Je haalt data op van een externe API (inspiratie: https://apilist.fun)
--	Je logt in op een beveiligde website (dit kan je eigen CRUD applicatie zijn)
--	Je stuurt een externe applicatie aan (bv. een app van https://ifttt.com, je [raspberry pi smarthome](https://www.home-assistant.io/installation/raspberrypi/), of je eigen javascript game)
--	Je doet een zoekopdracht op de LLM search engine https://tavily.com
--	Zeg tegen je [fotolijstje](https://www.youtube.com/watch?v=L5PvQj1vfC4) dat je vandaag een foto van een kat met een piratenhoedje wil zien.
-
-### Tool voorbeelden
-
-- [Code Voorbeeld: laat het taalmodel een berekening maken](../snippets/functions.md)
-- [Een tool definiëren](https://js.langchain.com/docs/concepts/tools/)
-- [Een tool automatisch laten uitvoeren door het taalmodel](https://js.langchain.com/docs/concepts/tool_calling/)
-- [OpenAI LangChain Function Calling](https://js.langchain.com/docs/integrations/chat/openai)
-- [OpenAI Agents in Langchain](https://js.langchain.com/docs/modules/agents/)
-
-
+[Bekijk het code voorbeeld voor het werken met tools in een taalmodel](../snippets/functions.md)
 
 <br><br><br>
 
