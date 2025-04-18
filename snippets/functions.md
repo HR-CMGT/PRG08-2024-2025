@@ -61,14 +61,9 @@ console.log(resultA)
 Via `bindTools` kan je aan het model duidelijk maken welke tools je geschreven hebt, je kan meerdere tools tegelijk doorgeven.
 
 ```js
-const model = new ChatOpenAI({
-    temperature:0.5,
-    azureOpenAIApiKey: process.env.AZURE_OPENAI_API_KEY,
-    azureOpenAIApiVersion: process.env.OPENAI_API_VERSION,
-    azureOpenAIApiInstanceName: process.env.INSTANCE_NAME,
-    azureOpenAIApiDeploymentName: process.env.ENGINE_NAME,
-})
-const modelWithTools = model.bindTools([multiply]);
+const model = new AzureChatOpenAI({
+    temperature:0.2
+}).bindTools([newsTool])
 ```
 <br>
 <br>
