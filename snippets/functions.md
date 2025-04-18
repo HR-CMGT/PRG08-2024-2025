@@ -63,7 +63,7 @@ Via `bindTools` kan je aan het model duidelijk maken welke tools je geschreven h
 ```js
 const model = new AzureChatOpenAI({
     temperature:0.2
-}).bindTools([newsTool])
+}).bindTools([multiply])
 ```
 <br>
 <br>
