@@ -2,9 +2,7 @@
 
 ## Vragen stellen over documenten.
 
-Een chatbot kan praten met bezoekers van je website. Het kan erg handig zijn als de chatbot dan ook specifieke vragen over jouw product of service kan beantwoorden. Denk aan een camera shop waarbij de chatbot alles weet over de camera's die in jouw shop staan. Om dat te bereiken kan je als webdeveloper vantevoren de data over jouw service beschikbaar maken voor het taalmodel. 
-
-Een manier om dat te bereiken is om data over jouw shop/service klaar te zetten voor gebruik door een taalmodel. Dit heet ***RAG***: *Retrieval Augmented Generation*.
+Een chatbot kan praten met bezoekers van je website. Het kan erg handig zijn als de chatbot dan ook specifieke vragen over jouw product of service kan beantwoorden. Denk aan een camera shop waarbij de chatbot alles weet over de camera's die in jouw shop staan. Of [dit voorbeeld van de CMGT assistent die alles weet over het vak PRG4](https://ai-assistent-mu.vercel.app). Om dat te bereiken kan je als webdeveloper vantevoren de data over jouw service beschikbaar maken voor het taalmodel. Dit heet ***RAG***: *Retrieval Augmented Generation*.
 
 ![chatbot](../images/chat-example.png)
 
@@ -88,6 +86,7 @@ async function createVectorstore() {
 
 - [Files laden](https://js.langchain.com/docs/integrations/document_loaders/file_loaders/)
 - [Web content laden](https://js.langchain.com/docs/integrations/document_loaders/web_loaders/)
+- [Voorbeeld githubloader : CMGT assistent](https://ai-assistent-mu.vercel.app)
 
 <br><br><br>
 
