@@ -128,9 +128,16 @@ if (response.tool_calls.length > 0) {
 
 <br><br><br>
 
+## TIP
+
+- Let op dat je na elke `let result = await model.invoke(...)` het resultaat toevoegt aan de chat history met `messages.push(result)` !
 
 
-### Tavily voorbeeld
+<br><br><br>
+
+
+
+# Tavily voorbeeld
 
 [Tavily](https://tavily.com) is een web search engine waarmee het taalmodel kan "googlen". In dit voorbeeld moet je ook de `zod` library installeren, dit maakt het werken met schema's iets overzichtelijker.
 
