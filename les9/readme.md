@@ -15,7 +15,7 @@
 
 Een LLM kan markdown tekst met kopjes, vette tekst en lijstjes terug geven. Daarnaast kan ook correct opgemaakte code terugkomen waarin de spaties belangrijk zijn. Om dit correct te tonen moet je een markdown converter gebruiken die het antwoord van een LLM kan tonen als markdown, in plaats van plain text.
 
-#### Voorbeeld ShowdownJS
+#### Code voorbeeld ShowdownJS
 
 ```js
 const promptResult = await fetch("Can you write a simple `hello world` react component?");
@@ -23,12 +23,14 @@ const converter = new showdown.Converter();
 document.querySelector("#div").innerHTML = converter.makeHtml(promptResult);
 ```
 
+- [Live voorbeeld CMGT assistant](https://ai-assistent-mu.vercel.app)
 - [ShowDown](https://showdownjs.com)
 - [Marked](https://marked.js.org)
 
-In React werkt dit niet, omdat JSX (net als Blade) htmlentities gebruikt bij variabelen om XSS te voorkomen. Je moet daarvoor expliciet aangeven dat je weet dat je iets 'dangerous' doet.
 
-#### Voorbeeld ShowdownJS in React
+#### ShowdownJS in React
+
+In React werkt dit niet, omdat JSX (net als Blade) htmlentities gebruikt bij variabelen om XSS te voorkomen. Je moet daarvoor expliciet aangeven dat je weet dat je iets 'dangerous' doet.
 
 ```js
 // sla de response op in een state variable 'promptResult', en maak een converter aan (zie voorbeeld hierboven)
