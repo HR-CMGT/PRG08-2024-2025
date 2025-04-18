@@ -8,14 +8,23 @@ Om hiermee te werken moet je je node code omzetten naar `pure functions`: functi
 
 <br><br><br>
 
-### Voorbeeld
+### Vercel
 
-Maak een vercel project als volgt aan:
+- Maak een nieuw project op de Vercel omgeving. Volg de [getting started instructies](https://vercel.com/docs/getting-started-with-vercel/template)
+- Kies het [meest simpele starter template: nodejs hello world](https://vercel.com/templates/other/nodejs-serverless-function-express).
+- Link Vercel met jouw github. Dit zorgt ervoor dat een push naar jouw github automatisch op Vercel wordt gedeployed. 
+- De packages uit jouw `package.json` worden automatisch in je vercel project geinstalleerd.
+- Binnen de vercel omgeving moet je `env` variabelen aanmaken. Dit staat dus niet in een `.env` file *(deployment > settings > environment variables)*.
+
+### Project
+
+Lokaal ziet je project er als volgt uit. 
 
 ```
 PROJECT FOLDER
 ├── index.html
 ├── index.js
+├── package.json
 └── API
       └── hello.js
 ```
@@ -58,6 +67,8 @@ fetchGreeting('Action Henk');
 #### Vectorstores
 
 Omdat een `serverless` omgeving stateless is, kan je geen FAISS vectorstore lokaal inladen, om daar dan later vragen aan te kunnen stellen. Je kan wel voor iedere prompt een call naar een online vectordatabase doen, bijvoorbeeld [PineCone](https://www.pinecone.io). Daar moet je dan ook weer een API key voor aanmaken.
+
+- [Pinecone Code Snippet](https://github.com/HR-CMGT/PRG08-2024-2025/blob/main/snippets/pinecone.md)
 
 <br><br><br>
 
