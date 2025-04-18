@@ -29,7 +29,9 @@ Dit kan je toevoegen door je eigen `tools` te schrijven en die toe te voegen aan
 De functie die door het taalmodel aangeroepen kan worden, is een gewone javascript functie. Let op dat eventuele arguments in een object binnenkomen:
 
 ```js
-const multiplyFunction = ({ a, b }) => a * b;
+function multiplyFunction({ a, b }) {
+    return a * b;
+}
 ```
 
 <br><br><br>
