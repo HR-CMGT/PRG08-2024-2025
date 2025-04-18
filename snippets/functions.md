@@ -29,7 +29,7 @@ Dit kan je toevoegen door je eigen `tools` te schrijven en die toe te voegen aan
 Het verschil tussen een gewone `javascript function` en een `tool function` is dat je een *schema* moet meegeven waar precies in staat welke variabelen verwacht worden in de functie. 
 
 ```js
-import { ChatOpenAI } from "@langchain/openai"
+import { AzureChatOpenAI } from "@langchain/openai"
 import { HumanMessage, AIMessage, ToolMessage, SystemMessage } from "@langchain/core/messages";
 import { tool } from "@langchain/core/tools";
 
