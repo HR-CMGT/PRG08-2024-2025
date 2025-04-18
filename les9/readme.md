@@ -48,9 +48,9 @@ Er zijn ook online ***node hosting*** providers te vinden zoals [vercel.com](htt
 
 <br><br><br>
 
-## Externe API's toevoegen
+## Data meegeven van een externe API
 
-Een LLM bevat geen live informatie over bijvoorbeeld het *recente nieuws, het weer, sportuitslagen, etc.* Dit kan je oplossen door zelf een API call te doen en het resultaat daarvan door het LLM te laten uitleggen. 
+Een LLM bevat geen live informatie over bijvoorbeeld het *recente nieuws, het weer, sportuitslagen, etc.* Dit kan je oplossen door zelf een API call te doen. Het resultaat van die call geef je dan als prompt aan het taalmodel.
 
 Dit is handig als je al vantevoren weet welke informatie de gebruiker nodig gaat hebben, bijvoorbeeld in een *weather app*.
 
