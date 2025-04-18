@@ -50,31 +50,15 @@ Er zijn ook online ***node hosting*** providers te vinden zoals [vercel.com](htt
 
 ## Data meegeven van een externe API
 
-Een LLM bevat geen live informatie over bijvoorbeeld het *recente nieuws, het weer, sportuitslagen, etc.* Dit kan je oplossen door zelf een API call te doen. Het resultaat van die call geef je dan als prompt aan het taalmodel.
-
-Dit is handig als je al vantevoren weet welke informatie de gebruiker nodig gaat hebben, bijvoorbeeld in een *weather app*.
+Een LLM bevat geen live informatie over bijvoorbeeld het *recente nieuws, het weer, sportuitslagen, etc.* Dit kan je oplossen door zelf een API call te doen. Het resultaat van die call geef je dan als prompt aan het taalmodel. Dit is handig als je al vantevoren weet welke informatie de gebruiker nodig gaat hebben, bijvoorbeeld in een *weather app*.
 
 ```js
-const weatherApiKey = 'YOUR_WEATHER_API_KEY';
-const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=rotterdam&appid=${weatherApiKey}&units=metric`;
-
-async function getWeather() {
-  const response = await fetch(apiUrl)
-  return await response.json()
-}
-
-async function talkAboutWeather() {
-  const data = await getWeather();
-  console.log(`City: ${data.name}`);
-  console.log(`Temperature: ${data.main.temp}°C`);
-  console.log(`Weather: ${data.weather[0].description}`);
-
-  const result = await model.invoke(`Geef mij kledingadvies voor het weer ${data.weather[0].description} met een temperatuur van ${data.main.temp}`)
-  console.log(result.content)
-}
-
-// Laat het taalmodel praten over het weer
-talkAboutWeather();
+// vantevoren weerdata ophalen
+const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=rotterdam&appid=${YOUR_WEATHER_API_KEY}&units=metric`)
+const weatherdata = await response.json()
+// weerdata meegeven in prompt zodat het taalmodel er iets over kan zeggen
+const result = await model.invoke(`Geef mij kledingadvies voor het weer ${weatherdata.weather[0].description} met een temperatuur van ${weatherdata.weather[0].temp}`)
+console.log(result.content)
 ```
 
 - [Lijst van coole API's](https://apilist.fun)
