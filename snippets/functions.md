@@ -82,7 +82,7 @@ messages.push(result)
 
 ## Tool calls uitvoeren
 
-Als het model vindt dat er tool calls uitgevoerd moeten worden dan zal de `content` leeg zijn, en de `tool_calls` array gevuld zijn. Dit moet je handmatig checken met een `if` statement. Als er `tool_calls` in de response zitten, dan moet je die via `invoke` zelf uitvoeren:
+Als het model vindt dat er tool calls uitgevoerd moeten worden dan zal de `content` leeg zijn, en de `tool_calls` array gevuld zijn. Dit moet je handmatig checken met een `if` statement of een `for` loop. Als er `tool_calls` in de response zitten, dan moet je die via `invoke` zelf uitvoeren:
 
 ```js
 console.log("I want to call the following tools")
