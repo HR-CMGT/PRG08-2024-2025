@@ -7,6 +7,7 @@
 - Externe API
 - Tools
 - Spraak 
+- Extra modellen uitproberen
 - Expert links
 
 <br><br><br>
@@ -104,12 +105,49 @@ Een nieuwe toevoeging aan taalmodellen is dat zij zelf kunnen bepalen wanneer ee
 
 <br><br><br>
 
+### Extra modellen uitproberen
+
+Huggingface biedt een optie om via je [HuggingFace account gratis een beperkt aantal calls naar allerlei taalmodellen](https://huggingface.co/docs/inference-providers/en/index) te doen. 
+Je hoeft dan geen creditcard te hebben. Overzicht modellen en code voorbeeld.
+ 
+***DeepSeek 3 code fetch call***
+
+```js
+async function askQuestion() {
+    const key = "your_huggingface_key"
+
+    const response = await fetch(
+        "https://router.huggingface.co/novita/v3/openai/chat/completions",
+        {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${key}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                messages: [
+                    {
+                        role: "user",
+                        content: "What is the capital of the Netherlands?",
+                    },
+                ],
+                max_tokens: 500,
+                model: "deepseek/deepseek-v3-0324",
+                stream: false,
+            }),
+        }
+    );
+
+    const data = await response.json();
+    console.log(data);
+
+}
+```
 
 
 
 
-
-
+<br><bR><bR>
 
 
 ## Expert links
