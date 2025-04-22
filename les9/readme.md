@@ -107,58 +107,30 @@ Een nieuwe toevoeging aan taalmodellen is dat zij zelf kunnen bepalen wanneer ee
 
 ### Extra modellen uitproberen
 
-Huggingface biedt een optie om via je [HuggingFace account gratis een beperkt aantal calls naar allerlei taalmodellen](https://huggingface.co/docs/inference-providers/en/index) te doen. 
-Je hoeft dan geen creditcard te hebben.
+Huggingface biedt een optie om via je [HuggingFace account gratis een beperkt aantal calls naar allerlei taalmodellen](https://huggingface.co/docs/inference-providers/en/index) te doen. Je hoeft dan geen creditcard te hebben. Vanuit langchain werk je met de standaard `OpenAI` code.
 
-###DeepSeek 3 Langchain***
+***DeepSeek 3 Langchain***
 
-```js
-import { ChatOpenAI } from "langchain/chat_models/openai";
-
-const model = new ChatOpenAI({
-  configuration: {
-    baseURL: "https://router.huggingface.co/novita/v3/openai",
-    apiKey: "hf_xxxxxxxxxxxxxxxxxxxxxxxx",  // jouw huggingface key
-  },
-  modelName: "deepseek/deepseek-v3-0324",
-  maxTokens: 500,
-  streaming: false,
-});
-
+```sh
+npm install @langchain/openai 
 ```
 
-***DeepSeek 3 fetch***
-
 ```js
-async function askQuestion() {
-    const key = "your_huggingface_key"
+import { ChatOpenAI } from "@langchain/openai";
 
-    const response = await fetch(
-        "https://router.huggingface.co/novita/v3/openai/chat/completions",
-        {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${key}`,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                messages: [
-                    {
-                        role: "user",
-                        content: "What is the capital of the Netherlands?",
-                    },
-                ],
-                max_tokens: 500,
-                model: "deepseek/deepseek-v3-0324",
-                stream: false,
-            }),
-        }
-    );
+const model = new ChatOpenAI({
+    configuration: {
+        baseURL: "https://router.huggingface.co/novita/v3/openai",
+        apiKey: process.env.HUGGINGFACE_KEY,
+    },
+    modelName: "deepseek/deepseek-v3-0324",
+    maxTokens: 500,
+    streaming: false,
+});
 
-    const data = await response.json();
-    console.log(data);
-
-}
+const chat = await model.invoke("Why do beavers build dams?")
+console.log(chat.content)
+ 
 ```
 
 
