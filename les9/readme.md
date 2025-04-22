@@ -109,8 +109,25 @@ Een nieuwe toevoeging aan taalmodellen is dat zij zelf kunnen bepalen wanneer ee
 
 Huggingface biedt een optie om via je [HuggingFace account gratis een beperkt aantal calls naar allerlei taalmodellen](https://huggingface.co/docs/inference-providers/en/index) te doen. 
 Je hoeft dan geen creditcard te hebben.
- 
-***DeepSeek 3 code fetch call***
+
+###DeepSeek 3 Langchain***
+
+```js
+import { ChatOpenAI } from "langchain/chat_models/openai";
+
+const model = new ChatOpenAI({
+  configuration: {
+    baseURL: "https://router.huggingface.co/novita/v3/openai",
+    apiKey: "hf_xxxxxxxxxxxxxxxxxxxxxxxx",  // jouw huggingface key
+  },
+  modelName: "deepseek/deepseek-v3-0324",
+  maxTokens: 500,
+  streaming: false,
+});
+
+```
+
+***DeepSeek 3 fetch***
 
 ```js
 async function askQuestion() {
