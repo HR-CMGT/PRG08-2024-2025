@@ -1,5 +1,31 @@
 # 🫣 HuggingFace 
 
+## Langchain
+
+Huggingface biedt een optie om via je HuggingFace account gratis een beperkt aantal calls naar allerlei taalmodellen te doen. 
+Je hoeft dan geen creditcard te hebben. [Overzicht modellen en code voorbeeld](https://huggingface.co/docs/inference-providers/en/index).
+ 
+DeepSeek 3 voorbeeld
+ 
+```js
+// npm install @langchain/openai 
+import { ChatOpenAI } from "@langchain/openai";
+
+const model = new ChatOpenAI({
+    configuration: {
+        baseURL: "https://router.huggingface.co/novita/v3/openai",
+        apiKey: process.env.HUGGINGFACE_KEY,
+    },
+    modelName: "deepseek/deepseek-v3-0324",
+    maxTokens: 500,
+    streaming: false,
+});
+
+const chat = await model.invoke("Why do beavers build dams?")
+console.log(chat.content)
+ ```
+
+
 ## Spaces
 
 [HuggingFace Spaces](https://huggingface.co/spaces) biedt hosting met automatische javascript endpoints voor [LLM models](https://huggingface.co/blog/inference-endpoints-llm) 💰. In de [Geitje Space](https://huggingface.co/spaces/Rijgersberg/GEITje-7B-chat) kan je het Nederlandse taalmodel "geitje" uitproberen. Spaces van HuggingFace users bieden soms ook een javascript endpoint aan. 
