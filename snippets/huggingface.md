@@ -23,14 +23,16 @@ const model = new ChatOpenAI({
 
 const chat = await model.invoke("Why do beavers build dams?")
 console.log(chat.content)
- ```
+```
+
+<br><br><br>
 
 
 ## Spaces
 
 [HuggingFace Spaces](https://huggingface.co/spaces) biedt hosting met automatische javascript endpoints voor [LLM models](https://huggingface.co/blog/inference-endpoints-llm) 💰. In de [Geitje Space](https://huggingface.co/spaces/Rijgersberg/GEITje-7B-chat) kan je het Nederlandse taalmodel "geitje" uitproberen. Spaces van HuggingFace users bieden soms ook een javascript endpoint aan. 
 
-<br><Br>
+<br><Br><br>
 
 ## Transformers.js
 
@@ -53,5 +55,6 @@ console.log(result[0].label)
 
 ## Links
 
+- [Overzicht modellen en code voorbeeld](https://huggingface.co/docs/inference-providers/en/index).
 - [HuggingFace Transformers.js examples](https://huggingface.co/docs/transformers.js/en/pipelines)
 - [HuggingFace Text Models with support for transformers.js](https://huggingface.co/models?pipeline_tag=text-generation&library=transformers.js&sort=trending&search=onnx)
